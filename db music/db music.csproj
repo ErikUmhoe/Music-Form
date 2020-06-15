@@ -201,6 +201,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\artistsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +214,12 @@
     <Compile Include="Models\artist.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArtistIndexViewModel.cs" />
+    <Compile Include="Models\ArtistViewModel.cs" />
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\genre.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
@@ -234,6 +241,9 @@
       <DependentUpon>Songviewer.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\track.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewArtistListen.cs">
@@ -317,6 +327,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\artists\Create.cshtml" />
+    <Content Include="Views\artists\Delete.cshtml" />
+    <Content Include="Views\artists\Details.cshtml" />
+    <Content Include="Views\artists\Edit.cshtml" />
+    <Content Include="Views\artists\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

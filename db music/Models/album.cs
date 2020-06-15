@@ -14,6 +14,12 @@ namespace db_music.Models
     
     public partial class album
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public album()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int album_id { get; set; }
         public string album_comments { get; set; }
         public Nullable<System.DateTime> album_date_created { get; set; }
@@ -24,7 +30,7 @@ namespace db_music.Models
         public string album_image_file { get; set; }
         public string album_images { get; set; }
         public string album_information { get; set; }
-        public Nullable<int> album_listens { get; set; }
+        public int album_listens { get; set; }
         public string album_producer { get; set; }
         public string album_title { get; set; }
         public string album_tracks { get; set; }
@@ -33,5 +39,9 @@ namespace db_music.Models
         public string artist_name { get; set; }
         public string artist_url { get; set; }
         public string tags { get; set; }
+        public Nullable<int> artist_id { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

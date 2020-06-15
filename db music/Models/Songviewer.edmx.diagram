@@ -4,12 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1730cc46955c48799a661ba053f95e4f" Name="Diagram1">
+      <Diagram DiagramId="1730cc46955c48799a661ba053f95e4f" Name="Diagram1" ZoomLevel="99">
         <EntityTypeShape EntityType="testModel.album" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="testModel.artist" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="testModel.genre" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="testModel.track" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="testModel.ViewArtistListen" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="testModel.Comment" Width="1.5" PointX="7" PointY="4.75" />
+        <EntityTypeShape EntityType="testModel.User" Width="1.5" PointX="4.75" PointY="13.5" />
+        <AssociationConnector Association="testModel.FK_Comment_albums" />
+        <AssociationConnector Association="testModel.FK_Comment_artists" />
+        <AssociationConnector Association="testModel.FK_Comment_track" />
+        <AssociationConnector Association="testModel.FK_Comment_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

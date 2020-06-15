@@ -14,6 +14,12 @@ namespace db_music.Models
     
     public partial class track
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public track()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int track_id { get; set; }
         public string album_id { get; set; }
         public string album_title { get; set; }
@@ -53,5 +59,8 @@ namespace db_music.Models
         public string track_publisher { get; set; }
         public string track_title { get; set; }
         public string track_url { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

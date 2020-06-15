@@ -1,0 +1,172 @@
+﻿@model List<db_music.Models.ArtistViewModel>
+
+@{
+    ViewBag.Title = "Index";
+    var artists = Model.Artists
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Bio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_associated_labels)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_bio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_contact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_date_created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_donation_url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_favorites)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_flattr_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_handle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_image_file)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_images)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_members)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_paypal_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_related_projects)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_website)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_wikipedia_page)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tags)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_active_year_begin)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_active_year_end)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_associated_labels)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_bio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_comments)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_contact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_date_created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_donation_url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_favorites)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_flattr_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_handle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_image_file)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_images)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_latitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_longitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_members)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_paypal_name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_related_projects)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_website)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_wikipedia_page)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tags)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.artist_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.artist_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.artist_id })
+        </td>
+    </tr>
+}
+
+</table>

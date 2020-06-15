@@ -14,6 +14,12 @@ namespace db_music.Models
     
     public partial class artist
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public artist()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
+    
         public int artist_id { get; set; }
         public Nullable<int> artist_active_year_begin { get; set; }
         public string artist_active_year_end { get; set; }
@@ -39,5 +45,8 @@ namespace db_music.Models
         public string artist_website { get; set; }
         public string artist_wikipedia_page { get; set; }
         public string tags { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
