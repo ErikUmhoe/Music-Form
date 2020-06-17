@@ -21,7 +21,7 @@ namespace db_music.Models
         }
     
         public int album_id { get; set; }
-        public string album_comments { get; set; }
+        public int album_comments { get; set; }
         public Nullable<System.DateTime> album_date_created { get; set; }
         public Nullable<System.DateTime> album_date_released { get; set; }
         public string album_engineer { get; set; }
@@ -33,14 +33,15 @@ namespace db_music.Models
         public int album_listens { get; set; }
         public string album_producer { get; set; }
         public string album_title { get; set; }
-        public string album_tracks { get; set; }
+        public int album_tracks { get; set; }
         public string album_type { get; set; }
         public string album_url { get; set; }
+        public Nullable<int> artist_id { get; set; }
         public string artist_name { get; set; }
         public string artist_url { get; set; }
         public string tags { get; set; }
-        public Nullable<int> artist_id { get; set; }
     
+        public virtual artist artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
     }

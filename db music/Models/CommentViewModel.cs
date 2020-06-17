@@ -14,7 +14,7 @@ namespace db_music.Models
         public int? ArtistId { get; set; }
         public string Comment { get; set; }
         public string Type { get; set; }
-        public string Rating { get; set; }
+        public int Rating { get; set; }
         public DateTime CDate { get; set; }
         public CommentViewModel()
         {
