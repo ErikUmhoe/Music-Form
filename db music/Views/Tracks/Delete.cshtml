@@ -1,0 +1,328 @@
+﻿@model db_music.Models.Track
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Track</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.album_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.album_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.album_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.album_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.album_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.album_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.artist_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.artist_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.artist_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.artist_name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.artist_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.artist_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.artist_website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.artist_website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.art)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.art)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.license_image_file_large)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.license_image_file_large)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.license_parent_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.license_parent_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.license_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.license_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.license_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.license_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tags)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tags)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_bit_rate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_bit_rate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_composer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_composer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_copyright_c)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_copyright_c)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_copyright_p)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_copyright_p)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_date_created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_date_created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_date_recorded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_date_recorded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_disc_number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_disc_number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_explicit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_explicit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_explicit_notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_explicit_notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_favorites)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_favorites)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_file)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_file)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_genres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_genres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_image_file)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_image_file)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_information)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_information)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_instrumental)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_instrumental)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_interest)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_interest)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_language_code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_language_code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_listens)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_listens)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_lyricist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_lyricist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_publisher)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_publisher)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.track_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.track_url)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

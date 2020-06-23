@@ -201,18 +201,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\artistsController.cs" />
+    <Compile Include="Controllers\ArtistsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\album.cs">
+    <Compile Include="Models\Album.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AlbumViewModel.cs" />
-    <Compile Include="Models\artist.cs">
+    <Compile Include="Models\Artist.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistIndexViewModel.cs" />
@@ -221,9 +222,10 @@
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CommentViewModel.cs" />
-    <Compile Include="Models\genre.cs">
+    <Compile Include="Models\Genre.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Songviewer.Context.cs">
@@ -241,9 +243,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Songviewer.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\track.cs">
+    <Compile Include="Models\Track.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TrackViewModel.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
@@ -329,11 +332,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\artists\Create.cshtml" />
-    <Content Include="Views\artists\Delete.cshtml" />
-    <Content Include="Views\artists\Details.cshtml" />
-    <Content Include="Views\artists\Edit.cshtml" />
-    <Content Include="Views\artists\Index.cshtml" />
+    <Content Include="Views\Artists\Create.cshtml" />
+    <Content Include="Views\Artists\Delete.cshtml" />
+    <Content Include="Views\Artists\Details.cshtml" />
+    <Content Include="Views\Artists\Edit.cshtml" />
+    <Content Include="Views\Artists\Index.cshtml" />
+    <Content Include="Views\Tracks\Create.cshtml" />
+    <Content Include="Views\Tracks\Delete.cshtml" />
+    <Content Include="Views\Tracks\Details.cshtml" />
+    <Content Include="Views\Tracks\Edit.cshtml" />
+    <Content Include="Views\Tracks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

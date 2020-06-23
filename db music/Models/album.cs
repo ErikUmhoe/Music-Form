@@ -12,10 +12,10 @@ namespace db_music.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class album
+    public partial class Album
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public album()
+        public Album()
         {
             this.Comments = new HashSet<Comment>();
         }
@@ -41,7 +41,7 @@ namespace db_music.Models
         public string artist_url { get; set; }
         public string tags { get; set; }
     
-        public virtual artist artist { get; set; }
+        public virtual Artist Artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
     }

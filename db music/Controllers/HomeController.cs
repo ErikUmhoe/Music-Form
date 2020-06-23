@@ -10,7 +10,7 @@ namespace db_music.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "TracksController");
         }
 
         public ActionResult About()

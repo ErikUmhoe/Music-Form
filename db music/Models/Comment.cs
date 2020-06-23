@@ -25,9 +25,9 @@ namespace db_music.Models
         public string Type { get; set; }
         public System.DateTime Cdate { get; set; }
     
-        public virtual album album { get; set; }
-        public virtual artist artist { get; set; }
-        public virtual track track { get; set; }
+        public virtual Album Album { get; set; }
+        public virtual Artist Artist { get; set; }
+        public virtual Track Track { get; set; }
         public virtual User User { get; set; }
     }
 }

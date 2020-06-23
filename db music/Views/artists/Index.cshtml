@@ -12,12 +12,20 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.First().Bio)
+            @Html.DisplayNameFor(x => x.First().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.First().Name)
+            @Html.DisplayNameFor(x => x.First().Bio)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(x => x.First().NumAlbums)
+        </th>
+        <th>
+            @Html.DisplayNameFor( x => x.First().AvgRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.First().NumComments)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -27,6 +35,15 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumAlbums)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvgRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumComments)
         </td>
       
         <td>

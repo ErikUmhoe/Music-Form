@@ -11,7 +11,7 @@ using db_music.Utilities;
 
 namespace db_music.Controllers
 {
-    public class artistsController : Controller
+    public class ArtistsController : Controller
     {
         private testEntities db = new testEntities();
 
@@ -20,10 +20,10 @@ namespace db_music.Controllers
         {
             var index = new ArtistIndexViewModel();
             
-            foreach(var artist in db.artists)
+            foreach(var artist in db.Artists)
             {
                 var albums = new List<AlbumViewModel>();
-                foreach(var album in artist.albums)
+                foreach(var album in artist.Albums)
                 {
                     albums.Add(new AlbumViewModel
                     {
@@ -71,7 +71,7 @@ namespace db_music.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            artist artist = db.artists.Find(id);
+            Artist artist = db.Artists.Find(id);
             if (artist == null)
             {
                 return HttpNotFound();
@@ -103,11 +103,11 @@ namespace db_music.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_associated_labels,artist_bio,artist_comments,artist_contact,artist_date_created,artist_donation_url,artist_favorites,artist_flattr_name,artist_handle,artist_image_file,artist_images,artist_latitude,artist_location,artist_longitude,artist_members,artist_name,artist_paypal_name,artist_related_projects,artist_url,artist_website,artist_wikipedia_page,tags")] artist artist)
+        public ActionResult Create([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_associated_labels,artist_bio,artist_comments,artist_contact,artist_date_created,artist_donation_url,artist_favorites,artist_flattr_name,artist_handle,artist_image_file,artist_images,artist_latitude,artist_location,artist_longitude,artist_members,artist_name,artist_paypal_name,artist_related_projects,artist_url,artist_website,artist_wikipedia_page,tags")] Artist artist)
         {
             if (ModelState.IsValid)
             {
-                db.artists.Add(artist);
+                db.Artists.Add(artist);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -122,7 +122,7 @@ namespace db_music.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            artist artist = db.artists.Find(id);
+            Artist artist = db.Artists.Find(id);
             if (artist == null)
             {
                 return HttpNotFound();
@@ -135,7 +135,7 @@ namespace db_music.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_associated_labels,artist_bio,artist_comments,artist_contact,artist_date_created,artist_donation_url,artist_favorites,artist_flattr_name,artist_handle,artist_image_file,artist_images,artist_latitude,artist_location,artist_longitude,artist_members,artist_name,artist_paypal_name,artist_related_projects,artist_url,artist_website,artist_wikipedia_page,tags")] artist artist)
+        public ActionResult Edit([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_associated_labels,artist_bio,artist_comments,artist_contact,artist_date_created,artist_donation_url,artist_favorites,artist_flattr_name,artist_handle,artist_image_file,artist_images,artist_latitude,artist_location,artist_longitude,artist_members,artist_name,artist_paypal_name,artist_related_projects,artist_url,artist_website,artist_wikipedia_page,tags")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -153,7 +153,7 @@ namespace db_music.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            artist artist = db.artists.Find(id);
+            Artist artist = db.Artists.Find(id);
             if (artist == null)
             {
                 return HttpNotFound();
@@ -166,8 +166,8 @@ namespace db_music.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            artist artist = db.artists.Find(id);
-            db.artists.Remove(artist);
+            Artist artist = db.Artists.Find(id);
+            db.Artists.Remove(artist);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

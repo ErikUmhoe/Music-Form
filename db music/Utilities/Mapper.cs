@@ -1,8 +1,12 @@
-﻿using db_music.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
+using System.Web.Mvc;
+using db_music.Models;
 
 namespace db_music.Utilities
 {
@@ -10,7 +14,7 @@ namespace db_music.Utilities
     {
         private testEntities db = new testEntities();
 
-        public static AlbumViewModel ToAlbumViewModel(db_music.Models.album album)
+        public static AlbumViewModel ToAlbumViewModel(db_music.Models.Album album)
         {
             var vm = new AlbumViewModel
             {
@@ -33,7 +37,58 @@ namespace db_music.Utilities
             vm.AvgRating = comments.Count() / (decimal)comments.Sum(x => x.Rating);
             return vm;
         }
-        
+
+        public static TrackViewModel ToTrackViewModel(db_music.Models.Track track)
+        {
+            var vm = new TrackViewModel
+            {
+                Id = track.track_id,
+                AlbumTitle = track.album_title,
+                ArtistName = track.artist_name,
+                Tags = string.Join(", ", track.tags.Split(',')),
+                NumComments = track.Comments.Count,
+                AvgRating = track.Comments.Sum(x => x.Rating) / (decimal)track.Comments.Count,
+                Cdate = track.track_date_created,
+                RecordDate = track.track_date_recorded,
+                ExplicitRating = track.track_explicit,
+                Favorites = Int32.Parse(track.track_favorites),
+                Info = track.track_information,
+                LanguageCode = track.track_language_code,
+                Listens = track.track_listens,
+                TrackTitle = track.track_title,
+                TrackNumber = track.track_number,
+                TrackUrl = track.track_url,
+                Composer = track.track_composer
+            };
+            foreach(var comment in track.Comments)
+            {
+                vm.Comments.Add(Mapper.ToCommentViewModel(comment));
+            };
+            vm.Genres = Mapper.ToGenreViewModel(track.track_genres);
+            return vm;
+        }
+        public static List<GenreViewModel> ToGenreViewModel(string genreList)
+        {
+            List<GenreViewModel> vms = new List<GenreViewModel>();
+            var split = genreList.Split('}').ToList();
+            string newStr = "";
+            foreach (var str in split)
+            {
+                var s = str.Replace("{", "").Replace("}", "").Replace("'", "");
+                var split2 = s.Split(',');
+                Int32.TryParse(split2[0].Split(':')[1], out var genreId);
+                var genreTitle = split2[1].Split(':')[1];
+                vms.Add(new GenreViewModel
+                {
+                    Id = genreId,
+                    Title = genreTitle
+                });
+            }
+            return vms;
+
+            
+    
+        }
         public static CommentViewModel ToCommentViewModel(db_music.Models.Comment comment)
         {
             return new CommentViewModel
@@ -48,7 +103,7 @@ namespace db_music.Utilities
                 CDate = comment.Cdate
             };
         }
-        public static ArtistViewModel ToArtistviewModel(db_music.Models.artist artist)
+        public static ArtistViewModel ToArtistviewModel(db_music.Models.Artist artist)
         {
             var vm = new ArtistViewModel
             {
@@ -60,7 +115,7 @@ namespace db_music.Utilities
                 NumComments = artist.Comments.Count
             };
             var albums = new List<AlbumViewModel>();
-            foreach(var album in artist.albums)
+            foreach(var album in artist.Albums)
             {
                 albums.Add(Mapper.ToAlbumViewModel(album));
             }

@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1730cc46955c48799a661ba053f95e4f" Name="Diagram1" ZoomLevel="77">
-        <EntityTypeShape EntityType="testModel.album" Width="1.5" PointX="3" PointY="1.625" />
-        <EntityTypeShape EntityType="testModel.artist" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="testModel.Album" Width="1.5" PointX="3" PointY="1.625" />
+        <EntityTypeShape EntityType="testModel.Artist" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="testModel.Comment" Width="1.5" PointX="5.25" PointY="2.375" />
-        <EntityTypeShape EntityType="testModel.genre" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="testModel.track" Width="1.5" PointX="3" PointY="13.75" />
-        <EntityTypeShape EntityType="testModel.User" Width="1.5" PointX="3" PointY="23.125" />
-        <EntityTypeShape EntityType="testModel.ViewArtistListen" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="testModel.Genre" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="testModel.Track" Width="1.5" PointX="3" PointY="11.125" />
+        <EntityTypeShape EntityType="testModel.User" Width="1.5" PointX="3" PointY="8.125" />
+        <EntityTypeShape EntityType="testModel.ViewArtistListen" Width="1.5" PointX="7.75" PointY="3.75" />
         <AssociationConnector Association="testModel.FK_albums_artists" />
         <AssociationConnector Association="testModel.FK_Comment_albums" />
         <AssociationConnector Association="testModel.FK_Comment_artists" />

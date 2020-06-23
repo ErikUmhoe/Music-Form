@@ -12,10 +12,10 @@ namespace db_music.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class track
+    public partial class Track
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public track()
+        public Track()
         {
             this.Comments = new HashSet<Comment>();
         }

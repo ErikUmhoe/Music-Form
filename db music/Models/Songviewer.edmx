@@ -5,7 +5,7 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="albums">
+        <EntityType Name="Albums">
           <Key>
             <PropertyRef Name="album_id" />
           </Key>
@@ -30,7 +30,7 @@
           <Property Name="artist_url" Type="nvarchar(max)" />
           <Property Name="tags" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="artists">
+        <EntityType Name="Artists">
           <Key>
             <PropertyRef Name="artist_id" />
           </Key>
@@ -60,7 +60,7 @@
           <Property Name="artist_wikipedia_page" Type="nvarchar(max)" />
           <Property Name="tags" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="Comment">
+        <EntityType Name="Comments">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -75,7 +75,7 @@
           <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Cdate" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="genres">
+        <EntityType Name="Genres">
           <Key>
             <PropertyRef Name="genre_id" />
           </Key>
@@ -85,7 +85,7 @@
           <Property Name="genre_parent_id" Type="int" />
           <Property Name="genre_title" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="tracks">
+        <EntityType Name="Tracks">
           <Key>
             <PropertyRef Name="track_id" />
           </Key>
@@ -150,61 +150,61 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="ArtistListens" Type="int" />
         </EntityType>
         <Association Name="FK_albums_artists">
-          <End Role="artists" Type="Self.artists" Multiplicity="0..1" />
-          <End Role="albums" Type="Self.albums" Multiplicity="*" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="Albums" Type="Self.Albums" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="artists">
+            <Principal Role="Artists">
               <PropertyRef Name="artist_id" />
             </Principal>
-            <Dependent Role="albums">
+            <Dependent Role="Albums">
               <PropertyRef Name="artist_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_albums">
-          <End Role="albums" Type="Self.albums" Multiplicity="0..1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <End Role="Albums" Type="Self.Albums" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="albums">
+            <Principal Role="Albums">
               <PropertyRef Name="album_id" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="Comments">
               <PropertyRef Name="AlbumId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_artists">
-          <End Role="artists" Type="Self.artists" Multiplicity="0..1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="artists">
+            <Principal Role="Artists">
               <PropertyRef Name="artist_id" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="Comments">
               <PropertyRef Name="ArtistId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_track">
-          <End Role="tracks" Type="Self.tracks" Multiplicity="0..1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tracks">
+            <Principal Role="Tracks">
               <PropertyRef Name="track_id" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="Comments">
               <PropertyRef Name="TrackId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Comment">
+            <Dependent Role="Comments">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -213,11 +213,11 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Parameter Name="artistName" Type="nvarchar(max)" Mode="In" />
         </Function>
         <EntityContainer Name="testModelStoreContainer">
-          <EntitySet Name="albums" EntityType="Self.albums" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="artists" EntityType="Self.artists" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tracks" EntityType="Self.tracks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Albums" EntityType="Self.Albums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tracks" EntityType="Self.Tracks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewArtistListens" EntityType="Self.ViewArtistListens" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -227,24 +227,24 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
     FROM [dbo].[ViewArtistListens] AS [ViewArtistListens]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_albums_artists" Association="Self.FK_albums_artists">
-            <End Role="artists" EntitySet="artists" />
-            <End Role="albums" EntitySet="albums" />
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Albums" EntitySet="Albums" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_albums" Association="Self.FK_Comment_albums">
-            <End Role="albums" EntitySet="albums" />
-            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_artists" Association="Self.FK_Comment_artists">
-            <End Role="artists" EntitySet="artists" />
-            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_track" Association="Self.FK_Comment_track">
-            <End Role="tracks" EntitySet="tracks" />
-            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_Users" Association="Self.FK_Comment_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="Comment" EntitySet="Comment" />
+            <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -252,27 +252,27 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
     <edmx:ConceptualModels>
       <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="albums" EntityType="testModel.album" />
-          <EntitySet Name="artists" EntityType="testModel.artist" />
+          <EntitySet Name="Albums" EntityType="testModel.Album" />
+          <EntitySet Name="Artists" EntityType="testModel.Artist" />
           <EntitySet Name="Comments" EntityType="testModel.Comment" />
-          <EntitySet Name="genres" EntityType="testModel.genre" />
-          <EntitySet Name="tracks" EntityType="testModel.track" />
+          <EntitySet Name="Genres" EntityType="testModel.Genre" />
+          <EntitySet Name="Tracks" EntityType="testModel.Track" />
           <EntitySet Name="Users" EntityType="testModel.User" />
           <EntitySet Name="ViewArtistListens" EntityType="testModel.ViewArtistListen" />
           <AssociationSet Name="FK_albums_artists" Association="testModel.FK_albums_artists">
-            <End Role="artist" EntitySet="artists" />
-            <End Role="album" EntitySet="albums" />
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Album" EntitySet="Albums" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_albums" Association="testModel.FK_Comment_albums">
-            <End Role="album" EntitySet="albums" />
+            <End Role="Album" EntitySet="Albums" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_artists" Association="testModel.FK_Comment_artists">
-            <End Role="artist" EntitySet="artists" />
+            <End Role="Artist" EntitySet="Artists" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_track" Association="testModel.FK_Comment_track">
-            <End Role="track" EntitySet="tracks" />
+            <End Role="Track" EntitySet="Tracks" />
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
           <AssociationSet Name="FK_Comment_Users" Association="testModel.FK_Comment_Users">
@@ -280,7 +280,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
             <End Role="Comment" EntitySet="Comments" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="album">
+        <EntityType Name="Album">
           <Key>
             <PropertyRef Name="album_id" />
           </Key>
@@ -304,10 +304,10 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="artist" Relationship="testModel.FK_albums_artists" FromRole="album" ToRole="artist" />
-          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_albums" FromRole="album" ToRole="Comment" />
+          <NavigationProperty Name="Artist" Relationship="testModel.FK_albums_artists" FromRole="Album" ToRole="Artist" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_albums" FromRole="Album" ToRole="Comment" />
         </EntityType>
-        <EntityType Name="artist">
+        <EntityType Name="Artist">
           <Key>
             <PropertyRef Name="artist_id" />
           </Key>
@@ -336,8 +336,8 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="artist_website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_wikipedia_page" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="albums" Relationship="testModel.FK_albums_artists" FromRole="artist" ToRole="album" />
-          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_artists" FromRole="artist" ToRole="Comment" />
+          <NavigationProperty Name="Albums" Relationship="testModel.FK_albums_artists" FromRole="Artist" ToRole="Album" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_artists" FromRole="Artist" ToRole="Comment" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -353,12 +353,12 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Cdate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="album" Relationship="testModel.FK_Comment_albums" FromRole="Comment" ToRole="album" />
-          <NavigationProperty Name="artist" Relationship="testModel.FK_Comment_artists" FromRole="Comment" ToRole="artist" />
-          <NavigationProperty Name="track" Relationship="testModel.FK_Comment_track" FromRole="Comment" ToRole="track" />
+          <NavigationProperty Name="Album" Relationship="testModel.FK_Comment_albums" FromRole="Comment" ToRole="Album" />
+          <NavigationProperty Name="Artist" Relationship="testModel.FK_Comment_artists" FromRole="Comment" ToRole="Artist" />
+          <NavigationProperty Name="Track" Relationship="testModel.FK_Comment_track" FromRole="Comment" ToRole="Track" />
           <NavigationProperty Name="User" Relationship="testModel.FK_Comment_Users" FromRole="Comment" ToRole="User" />
         </EntityType>
-        <EntityType Name="genre">
+        <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="genre_id" />
           </Key>
@@ -368,7 +368,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="genre_parent_id" Type="Int32" />
           <Property Name="genre_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="track">
+        <EntityType Name="Track">
           <Key>
             <PropertyRef Name="track_id" />
           </Key>
@@ -411,7 +411,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="track_publisher" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_track" FromRole="track" ToRole="Comment" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_track" FromRole="Track" ToRole="Comment" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -433,22 +433,22 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="ArtistListens" Type="Int32" />
         </EntityType>
         <Association Name="FK_albums_artists">
-          <End Type="testModel.artist" Role="artist" Multiplicity="0..1" />
-          <End Type="testModel.album" Role="album" Multiplicity="*" />
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1" />
+          <End Type="testModel.Album" Role="Album" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="artist">
+            <Principal Role="Artist">
               <PropertyRef Name="artist_id" />
             </Principal>
-            <Dependent Role="album">
+            <Dependent Role="Album">
               <PropertyRef Name="artist_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_albums">
-          <End Type="testModel.album" Role="album" Multiplicity="0..1" />
+          <End Type="testModel.Album" Role="Album" Multiplicity="0..1" />
           <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="album">
+            <Principal Role="Album">
               <PropertyRef Name="album_id" />
             </Principal>
             <Dependent Role="Comment">
@@ -457,10 +457,10 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_artists">
-          <End Type="testModel.artist" Role="artist" Multiplicity="0..1" />
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1" />
           <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="artist">
+            <Principal Role="Artist">
               <PropertyRef Name="artist_id" />
             </Principal>
             <Dependent Role="Comment">
@@ -469,10 +469,10 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_track">
-          <End Type="testModel.track" Role="track" Multiplicity="0..1" />
+          <End Type="testModel.Track" Role="Track" Multiplicity="0..1" />
           <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="track">
+            <Principal Role="Track">
               <PropertyRef Name="track_id" />
             </Principal>
             <Dependent Role="Comment">
@@ -498,9 +498,9 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities">
-          <EntitySetMapping Name="albums">
-            <EntityTypeMapping TypeName="testModel.album">
-              <MappingFragment StoreEntitySet="albums">
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="testModel.Album">
+              <MappingFragment StoreEntitySet="Albums">
                 <ScalarProperty Name="tags" ColumnName="tags" />
                 <ScalarProperty Name="artist_url" ColumnName="artist_url" />
                 <ScalarProperty Name="artist_name" ColumnName="artist_name" />
@@ -524,9 +524,9 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="artists">
-            <EntityTypeMapping TypeName="testModel.artist">
-              <MappingFragment StoreEntitySet="artists">
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="testModel.Artist">
+              <MappingFragment StoreEntitySet="Artists">
                 <ScalarProperty Name="tags" ColumnName="tags" />
                 <ScalarProperty Name="artist_wikipedia_page" ColumnName="artist_wikipedia_page" />
                 <ScalarProperty Name="artist_website" ColumnName="artist_website" />
@@ -557,7 +557,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="testModel.Comment">
-              <MappingFragment StoreEntitySet="Comment">
+              <MappingFragment StoreEntitySet="Comments">
                 <ScalarProperty Name="Cdate" ColumnName="Cdate" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
@@ -571,9 +571,9 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="genres">
-            <EntityTypeMapping TypeName="testModel.genre">
-              <MappingFragment StoreEntitySet="genres">
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="testModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
                 <ScalarProperty Name="genre_title" ColumnName="genre_title" />
                 <ScalarProperty Name="genre_parent_id" ColumnName="genre_parent_id" />
                 <ScalarProperty Name="genre_handle" ColumnName="genre_handle" />
@@ -582,9 +582,9 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tracks">
-            <EntityTypeMapping TypeName="testModel.track">
-              <MappingFragment StoreEntitySet="tracks">
+          <EntitySetMapping Name="Tracks">
+            <EntityTypeMapping TypeName="testModel.Track">
+              <MappingFragment StoreEntitySet="Tracks">
                 <ScalarProperty Name="track_url" ColumnName="track_url" />
                 <ScalarProperty Name="track_title" ColumnName="track_title" />
                 <ScalarProperty Name="track_publisher" ColumnName="track_publisher" />

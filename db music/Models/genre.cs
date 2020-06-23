@@ -12,7 +12,7 @@ namespace db_music.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class genre
+    public partial class Genre
     {
         public int genre_id { get; set; }
         public string genre_color { get; set; }
