@@ -342,6 +342,7 @@
     <Content Include="Views\Tracks\Details.cshtml" />
     <Content Include="Views\Tracks\Edit.cshtml" />
     <Content Include="Views\Tracks\Index.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
