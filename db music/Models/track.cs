@@ -18,6 +18,7 @@ namespace db_music.Models
         public Track()
         {
             this.Comments = new HashSet<Comment>();
+            this.Genres = new HashSet<Genre>();
         }
     
         public int track_id { get; set; }
@@ -47,7 +48,6 @@ namespace db_music.Models
         public string track_explicit_notes { get; set; }
         public string track_favorites { get; set; }
         public string track_file { get; set; }
-        public string track_genres { get; set; }
         public string track_image_file { get; set; }
         public string track_information { get; set; }
         public string track_instrumental { get; set; }
@@ -62,5 +62,7 @@ namespace db_music.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Genre> Genres { get; set; }
     }
 }

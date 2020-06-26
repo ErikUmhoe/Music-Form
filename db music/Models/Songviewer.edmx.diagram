@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1730cc46955c48799a661ba053f95e4f" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="1730cc46955c48799a661ba053f95e4f" Name="Diagram1" ZoomLevel="61">
         <EntityTypeShape EntityType="testModel.Album" Width="1.5" PointX="3" PointY="1.625" />
         <EntityTypeShape EntityType="testModel.Artist" Width="1.5" PointX="0.75" PointY="1.125" />
         <EntityTypeShape EntityType="testModel.Comment" Width="1.5" PointX="5.25" PointY="2.375" />
@@ -17,6 +17,7 @@
         <AssociationConnector Association="testModel.FK_Comment_artists" />
         <AssociationConnector Association="testModel.FK_Comment_track" />
         <AssociationConnector Association="testModel.FK_Comment_Users" />
+        <AssociationConnector Association="testModel.TrackGenres" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
 using db_music.Utilities;
+using PagedList;
+
+
 
 namespace db_music.Controllers
 {
@@ -16,51 +19,14 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
 
         // GET: artists
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             var index = new ArtistIndexViewModel();
             
             foreach(var artist in db.Artists)
             {
-                var albums = new List<AlbumViewModel>();
-                foreach(var album in artist.Albums)
-                {
-                    albums.Add(new AlbumViewModel
-                    {
-                        Title = album.album_title,
-                        Tracks = album.album_tracks,
-                        Id = album.album_id,
-                        DateCreated = album.album_date_created,
-                        DateReleased = album.album_date_released,
-                        Type = album.album_type,
-                        Artist = album.artist_name,
-                        Producer = album.album_producer,
-                        NumComments = album.Comments.Count(),
-
-                    });
-                    var comments = new List<CommentViewModel>();
-                    foreach(var comment in album.Comments)
-                    {
-                        comments.Add(Mapper.ToCommentViewModel(comment));
-                    }
-                }
-                var vm = new ArtistViewModel
-                {
-                    Name = artist.artist_name,
-                    Id = artist.artist_id,
-                    Bio = $"{artist.artist_bio.Substring(0,30)}...",
-                    Albums = albums,
-                    ArtistUrl = artist.artist_url,
-                    Website = artist.artist_website,
-                    Wiki = artist.artist_wikipedia_page
-                };
-                foreach(var comment in artist.Comments)
-                {
-                    vm.Comments.Add(Mapper.ToCommentViewModel(comment));
-                }
-                index.Artists.Add(vm);
+                index.Artists.Add(Mapper.ToArtistviewModel(artist));
             }
-            
             return View(index.Artists);
         }
 

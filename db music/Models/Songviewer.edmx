@@ -85,6 +85,16 @@
           <Property Name="genre_parent_id" Type="int" />
           <Property Name="genre_title" Type="nvarchar(max)" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'music.dbo.TrackGenres' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TrackGenres">
+          <Key>
+            <PropertyRef Name="TrackId" />
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="TrackId" Type="int" Nullable="false" />
+          <Property Name="GenreId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tracks">
           <Key>
             <PropertyRef Name="track_id" />
@@ -116,7 +126,6 @@
           <Property Name="track_explicit_notes" Type="nvarchar(max)" />
           <Property Name="track_favorites" Type="nvarchar(max)" />
           <Property Name="track_file" Type="nvarchar(max)" />
-          <Property Name="track_genres" Type="nvarchar(max)" />
           <Property Name="track_image_file" Type="nvarchar(max)" />
           <Property Name="track_information" Type="nvarchar(max)" />
           <Property Name="track_instrumental" Type="nvarchar(max)" />
@@ -209,6 +218,30 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TrackGenres_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="TrackGenres" Type="Self.TrackGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="genre_id" />
+            </Principal>
+            <Dependent Role="TrackGenres">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackGenres_Tracks">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="TrackGenres" Type="Self.TrackGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="TrackGenres">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="GetArtistId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="artistName" Type="nvarchar(max)" Mode="In" />
         </Function>
@@ -219,6 +252,12 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tracks" EntityType="Self.Tracks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrackGenres" EntityType="Self.TrackGenres" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TrackGenres].[TrackId] AS [TrackId], 
+    [TrackGenres].[GenreId] AS [GenreId]
+    FROM [dbo].[TrackGenres] AS [TrackGenres]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ViewArtistListens" EntityType="Self.ViewArtistListens" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ViewArtistListens].[artist_id] AS [artist_id], 
@@ -245,6 +284,14 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <AssociationSet Name="FK_Comment_Users" Association="Self.FK_Comment_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackGenres_Genres" Association="Self.FK_TrackGenres_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="TrackGenres" EntitySet="TrackGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackGenres_Tracks" Association="Self.FK_TrackGenres_Tracks">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="TrackGenres" EntitySet="TrackGenres" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -278,6 +325,10 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <AssociationSet Name="FK_Comment_Users" Association="testModel.FK_Comment_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="TrackGenres" Association="testModel.TrackGenres">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Track" EntitySet="Tracks" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Album">
@@ -367,6 +418,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="genre_handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="genre_parent_id" Type="Int32" />
           <Property Name="genre_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tracks" Relationship="testModel.TrackGenres" FromRole="Genre" ToRole="Track" />
         </EntityType>
         <EntityType Name="Track">
           <Key>
@@ -399,7 +451,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="track_explicit_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_genres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_information" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_instrumental" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -412,6 +463,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="track_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_track" FromRole="Track" ToRole="Comment" />
+          <NavigationProperty Name="Genres" Relationship="testModel.TrackGenres" FromRole="Track" ToRole="Genre" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -491,6 +543,10 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="TrackGenres">
+          <End Type="testModel.Genre" Role="Genre" Multiplicity="*" />
+          <End Type="testModel.Track" Role="Track" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -596,7 +652,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
                 <ScalarProperty Name="track_instrumental" ColumnName="track_instrumental" />
                 <ScalarProperty Name="track_information" ColumnName="track_information" />
                 <ScalarProperty Name="track_image_file" ColumnName="track_image_file" />
-                <ScalarProperty Name="track_genres" ColumnName="track_genres" />
                 <ScalarProperty Name="track_file" ColumnName="track_file" />
                 <ScalarProperty Name="track_favorites" ColumnName="track_favorites" />
                 <ScalarProperty Name="track_explicit_notes" ColumnName="track_explicit_notes" />
@@ -647,6 +702,14 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="TrackGenres" TypeName="testModel.TrackGenres" StoreEntitySet="TrackGenres">
+            <EndProperty Name="Track">
+              <ScalarProperty Name="track_id" ColumnName="TrackId" />
+            </EndProperty>
+            <EndProperty Name="Genre">
+              <ScalarProperty Name="genre_id" ColumnName="GenreId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
