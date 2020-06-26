@@ -64,24 +64,18 @@ namespace db_music.Utilities
             {
                 vm.Comments.Add(Mapper.ToCommentViewModel(comment));
             };
-            vm.Genres = Mapper.ToGenreViewModel(track.track_genres);
+            vm.Genres = Mapper.ToGenreViewModel(track.Genres.ToList());
             return vm;
         }
-        public static List<GenreViewModel> ToGenreViewModel(string genreList)
+        public static List<GenreViewModel> ToGenreViewModel(List<Genre> genreList)
         {
             List<GenreViewModel> vms = new List<GenreViewModel>();
-            var split = genreList.Split('}').ToList();
-            string newStr = "";
-            foreach (var str in split)
+            foreach(var genre in genreList)
             {
-                var s = str.Replace("{", "").Replace("}", "").Replace("'", "");
-                var split2 = s.Split(',');
-                Int32.TryParse(split2[0].Split(':')[1], out var genreId);
-                var genreTitle = split2[1].Split(':')[1];
                 vms.Add(new GenreViewModel
                 {
-                    Id = genreId,
-                    Title = genreTitle
+                    Id = genre.genre_id,
+                    Title = genre.genre_title
                 });
             }
             return vms;
