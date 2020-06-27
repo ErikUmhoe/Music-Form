@@ -21,13 +21,51 @@ namespace db_music.Controllers
         // GET: artists
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var index = new ArtistIndexViewModel();
-            
-            foreach(var artist in db.Artists)
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.FavoritesSortParam = String.IsNullOrEmpty(sortOrder) ? "favorites_desc" : "";
+            ViewBag.RatingSortParam = String.IsNullOrEmpty(sortOrder) ? "rating_desc" : "";
+            if (searchString != null)
             {
-                index.Artists.Add(Mapper.ToArtistviewModel(artist));
+                page = 1;
             }
-            return View(index.Artists);
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            var index = new ArtistIndexViewModel();
+            var dbArtists = from a in db.Artists
+                            select a;
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                dbArtists = dbArtists.Where(x => x.artist_name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    dbArtists = dbArtists.OrderByDescending(s => s.artist_name);
+                    break;
+                case "Favorites":
+                    dbArtists = dbArtists.OrderBy(s => s.artist_favorites);
+                    break;
+                case "favorites_desc":
+                    dbArtists = dbArtists.OrderByDescending(s => s.artist_favorites);
+                    break;
+                //case "Rating":
+                //    index.Artists = index.Artists.OrderBy(s => s.AvgRating).ToList();
+                //    break;
+                //case "rating_desc":
+                //    index.Artists = index.Artists.OrderByDescending(s => s.AvgRating).ToList();
+                //    break;
+                default:  // Name ascending 
+                    dbArtists = dbArtists.OrderBy(s => s.artist_name);
+                    break;
+            }
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            return View(dbArtists.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: artists/Details/5
@@ -42,19 +80,7 @@ namespace db_music.Controllers
             {
                 return HttpNotFound();
             }
-            var vm = new ArtistViewModel
-            {
-                Name = artist.artist_name,
-                Id = artist.artist_id,
-                Bio = artist.artist_bio,
-                ArtistUrl = artist.artist_url,
-                Website = artist.artist_website,
-                Wiki = artist.artist_wikipedia_page
-            };
-            foreach (var comment in artist.Comments)
-            {
-                vm.Comments.Add(Mapper.ToCommentViewModel(comment));
-            }
+            var vm = Mapper.ToArtistviewModel(artist);
             return View(vm);
         }
 

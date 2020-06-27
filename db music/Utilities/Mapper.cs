@@ -34,7 +34,11 @@ namespace db_music.Utilities
                 comments.Add(Mapper.ToCommentViewModel(comment));
             }
             vm.Comments = comments;
-            vm.AvgRating = comments.Count() / (decimal)comments.Sum(x => x.Rating);
+            if(comments.Count > 0)
+            {
+                vm.AvgRating = comments.Count() / (decimal)comments.Sum(x => x.Rating);
+            }
+
             return vm;
         }
 
@@ -99,6 +103,7 @@ namespace db_music.Utilities
         }
         public static ArtistViewModel ToArtistviewModel(db_music.Models.Artist artist)
         {
+            Int32.TryParse(artist.artist_favorites, out var faves);
             var vm = new ArtistViewModel
             {
                 Name = artist.artist_name,
@@ -106,22 +111,27 @@ namespace db_music.Utilities
                 Bio = artist.artist_bio,
                 Wiki = artist.artist_wikipedia_page,
                 Website = artist.artist_website,
-                NumComments = artist.Comments.Count
+                NumComments = artist.Comments.Count,
+                Favorites = faves
             };
             var albums = new List<AlbumViewModel>();
-            foreach(var album in artist.Albums)
+            foreach (var album in artist.Albums)
             {
                 albums.Add(Mapper.ToAlbumViewModel(album));
             }
             var comments = new List<CommentViewModel>();
-            foreach(var comment in artist.Comments)
+            foreach (var comment in artist.Comments)
             {
                 comments.Add(Mapper.ToCommentViewModel(comment));
             }
             vm.Comments = comments;
             vm.Albums = albums;
             vm.NumAlbums = albums.Count;
-            vm.AvgRating = comments.Count / (decimal)comments.Sum(x => x.Rating);
+            if (comments.Count > 0)
+            {
+
+                vm.AvgRating = comments.Count / (decimal)comments.Sum(x => x.Rating);
+            }
             return vm;
         }
     }

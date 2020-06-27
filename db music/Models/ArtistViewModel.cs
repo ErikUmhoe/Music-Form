@@ -27,6 +27,8 @@ namespace db_music.Models
         public int NumAlbums { get; set; }
         [DisplayName("Average Rating")]
         public decimal AvgRating { get; set; }
+        [DisplayName("Favorites")]
+        public int Favorites { get; set; }
         public ArtistViewModel()
         {
             Comments = new List<CommentViewModel>();

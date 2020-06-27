@@ -10,7 +10,7 @@ namespace db_music.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "TracksController");
+            return RedirectToAction("Index", "Artists");
         }
 
         public ActionResult About()
