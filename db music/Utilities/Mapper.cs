@@ -23,7 +23,6 @@ namespace db_music.Utilities
                 DateCreated = album.album_date_created,
                 DateReleased = album.album_date_released,
                 Type = album.album_type,
-                Artist = album.artist_name,
                 Producer = album.album_producer,
                 NumComments = album.Comments.Count
             };
@@ -47,9 +46,8 @@ namespace db_music.Utilities
             var vm = new TrackViewModel
             {
                 Id = track.track_id,
-                AlbumTitle = track.album_title,
-                ArtistName = track.artist_name,
-                Tags = string.Join(", ", track.tags.Split(',')),
+                ArtistId = track.artist_id,
+                AlbumId = track.album_id,
                 NumComments = track.Comments.Count,
                 AvgRating = track.Comments.Sum(x => x.Rating) / (decimal)track.Comments.Count,
                 Cdate = track.track_date_created,

@@ -9,8 +9,8 @@ namespace db_music.Models
     {
         public List<CommentViewModel> Comments { get; set; }
         public int Id { get; set; }
-        public string AlbumTitle { get; set; }
-        public string ArtistName { get; set; }
+        public int? AlbumId { get; set; }
+        public int ArtistId { get; set; }
         public string Tags { get; set; }
         public int NumComments { get; set; }
         public decimal AvgRating { get; set; }

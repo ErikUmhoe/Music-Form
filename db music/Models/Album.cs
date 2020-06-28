@@ -27,8 +27,6 @@ namespace db_music.Models
         public string album_engineer { get; set; }
         public string album_favorites { get; set; }
         public string album_handle { get; set; }
-        public string album_image_file { get; set; }
-        public string album_images { get; set; }
         public string album_information { get; set; }
         public int album_listens { get; set; }
         public string album_producer { get; set; }
@@ -37,9 +35,6 @@ namespace db_music.Models
         public string album_type { get; set; }
         public string album_url { get; set; }
         public Nullable<int> artist_id { get; set; }
-        public string artist_name { get; set; }
-        public string artist_url { get; set; }
-        public string tags { get; set; }
     
         public virtual Artist Artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

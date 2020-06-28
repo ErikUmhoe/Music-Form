@@ -7,10 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
-using db_music.Utilities;
 using PagedList;
-
-
 
 namespace db_music.Controllers
 {
@@ -18,7 +15,6 @@ namespace db_music.Controllers
     {
         private testEntities db = new testEntities();
 
-        // GET: artists
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -37,7 +33,7 @@ namespace db_music.Controllers
             var index = new ArtistIndexViewModel();
             var dbArtists = from a in db.Artists
                             select a;
-            if(!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(searchString))
             {
                 dbArtists = dbArtists.Where(x => x.artist_name.Contains(searchString));
             }
@@ -68,7 +64,7 @@ namespace db_music.Controllers
             return View(dbArtists.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: artists/Details/5
+        // GET: Artists/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -80,22 +76,21 @@ namespace db_music.Controllers
             {
                 return HttpNotFound();
             }
-            var vm = Mapper.ToArtistviewModel(artist);
-            return View(vm);
+            return View(artist);
         }
 
-        // GET: artists/Create
+        // GET: Artists/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: artists/Create
+        // POST: Artists/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_associated_labels,artist_bio,artist_comments,artist_contact,artist_date_created,artist_donation_url,artist_favorites,artist_flattr_name,artist_handle,artist_image_file,artist_images,artist_latitude,artist_location,artist_longitude,artist_members,artist_name,artist_paypal_name,artist_related_projects,artist_url,artist_website,artist_wikipedia_page,tags")] Artist artist)
+        public ActionResult Create([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_bio,artist_comments,artist_contact,artist_date_created,artist_favorites,artist_handle,artist_location,artist_name,artist_url,artist_website,artist_wikipedia_page")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -103,11 +98,11 @@ namespace db_music.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            var vm = Mapper.ToArtistviewModel(artist);
-            return View(vm);
+
+            return View(artist);
         }
 
-        // GET: artists/Edit/5
+        // GET: Artists/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -122,12 +117,12 @@ namespace db_music.Controllers
             return View(artist);
         }
 
-        // POST: artists/Edit/5
+        // POST: Artists/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_associated_labels,artist_bio,artist_comments,artist_contact,artist_date_created,artist_donation_url,artist_favorites,artist_flattr_name,artist_handle,artist_image_file,artist_images,artist_latitude,artist_location,artist_longitude,artist_members,artist_name,artist_paypal_name,artist_related_projects,artist_url,artist_website,artist_wikipedia_page,tags")] Artist artist)
+        public ActionResult Edit([Bind(Include = "artist_id,artist_active_year_begin,artist_active_year_end,artist_bio,artist_comments,artist_contact,artist_date_created,artist_favorites,artist_handle,artist_location,artist_name,artist_url,artist_website,artist_wikipedia_page")] Artist artist)
         {
             if (ModelState.IsValid)
             {
@@ -138,7 +133,7 @@ namespace db_music.Controllers
             return View(artist);
         }
 
-        // GET: artists/Delete/5
+        // GET: Artists/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -153,7 +148,7 @@ namespace db_music.Controllers
             return View(artist);
         }
 
-        // POST: artists/Delete/5
+        // POST: Artists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

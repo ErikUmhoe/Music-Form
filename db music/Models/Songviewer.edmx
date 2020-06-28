@@ -16,8 +16,6 @@
           <Property Name="album_engineer" Type="nvarchar(max)" />
           <Property Name="album_favorites" Type="nvarchar(max)" />
           <Property Name="album_handle" Type="nvarchar(max)" />
-          <Property Name="album_image_file" Type="nvarchar(max)" />
-          <Property Name="album_images" Type="nvarchar(max)" />
           <Property Name="album_information" Type="nvarchar(max)" />
           <Property Name="album_listens" Type="int" Nullable="false" />
           <Property Name="album_producer" Type="nvarchar(max)" />
@@ -26,9 +24,15 @@
           <Property Name="album_type" Type="nvarchar(max)" />
           <Property Name="album_url" Type="nvarchar(max)" />
           <Property Name="artist_id" Type="int" />
-          <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="artist_url" Type="nvarchar(max)" />
-          <Property Name="tags" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'music.dbo.ArtistMembers' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ArtistMembers">
+          <Key>
+            <PropertyRef Name="artist_id" />
+          </Key>
+          <Property Name="artist_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Member" Type="varchar" MaxLength="8000" />
         </EntityType>
         <EntityType Name="Artists">
           <Key>
@@ -37,28 +41,17 @@
           <Property Name="artist_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="artist_active_year_begin" Type="int" />
           <Property Name="artist_active_year_end" Type="nvarchar(max)" />
-          <Property Name="artist_associated_labels" Type="nvarchar(max)" />
           <Property Name="artist_bio" Type="nvarchar(max)" />
           <Property Name="artist_comments" Type="nvarchar(max)" />
           <Property Name="artist_contact" Type="nvarchar(max)" />
           <Property Name="artist_date_created" Type="datetime2" Precision="7" />
-          <Property Name="artist_donation_url" Type="nvarchar(max)" />
           <Property Name="artist_favorites" Type="nvarchar(max)" />
-          <Property Name="artist_flattr_name" Type="nvarchar(max)" />
           <Property Name="artist_handle" Type="nvarchar(max)" />
-          <Property Name="artist_image_file" Type="nvarchar(max)" />
-          <Property Name="artist_images" Type="nvarchar(max)" />
-          <Property Name="artist_latitude" Type="float" />
           <Property Name="artist_location" Type="nvarchar(max)" />
-          <Property Name="artist_longitude" Type="float" />
-          <Property Name="artist_members" Type="nvarchar(max)" />
           <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="artist_paypal_name" Type="nvarchar(max)" />
-          <Property Name="artist_related_projects" Type="nvarchar(max)" />
           <Property Name="artist_url" Type="nvarchar(max)" />
           <Property Name="artist_website" Type="nvarchar(max)" />
           <Property Name="artist_wikipedia_page" Type="nvarchar(max)" />
-          <Property Name="tags" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -100,24 +93,12 @@ warning 6002: The table/view 'music.dbo.TrackGenres' does not have a primary key
             <PropertyRef Name="track_id" />
           </Key>
           <Property Name="track_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="album_id" Type="nvarchar(max)" />
-          <Property Name="album_title" Type="nvarchar(max)" />
-          <Property Name="album_url" Type="nvarchar(max)" />
-          <Property Name="artist_id" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="artist_url" Type="nvarchar(max)" />
-          <Property Name="artist_website" Type="nvarchar(max)" />
-          <Property Name="art" Type="nvarchar(max)" />
-          <Property Name="license_image_file_large" Type="nvarchar(max)" />
-          <Property Name="license_parent_id" Type="int" />
+          <Property Name="album_id" Type="int" />
+          <Property Name="artist_id" Type="int" Nullable="false" />
           <Property Name="license_title" Type="nvarchar(max)" />
-          <Property Name="license_url" Type="nvarchar(max)" />
-          <Property Name="tags" Type="nvarchar(max)" />
           <Property Name="track_bit_rate" Type="int" />
           <Property Name="track_comments" Type="nvarchar(max)" />
           <Property Name="track_composer" Type="nvarchar(max)" />
-          <Property Name="track_copyright_c" Type="nvarchar(max)" />
-          <Property Name="track_copyright_p" Type="nvarchar(max)" />
           <Property Name="track_date_created" Type="datetime2" Precision="7" />
           <Property Name="track_date_recorded" Type="datetime2" Precision="7" />
           <Property Name="track_disc_number" Type="nvarchar(max)" />
@@ -125,8 +106,6 @@ warning 6002: The table/view 'music.dbo.TrackGenres' does not have a primary key
           <Property Name="track_explicit" Type="nvarchar(max)" />
           <Property Name="track_explicit_notes" Type="nvarchar(max)" />
           <Property Name="track_favorites" Type="nvarchar(max)" />
-          <Property Name="track_file" Type="nvarchar(max)" />
-          <Property Name="track_image_file" Type="nvarchar(max)" />
           <Property Name="track_information" Type="nvarchar(max)" />
           <Property Name="track_instrumental" Type="nvarchar(max)" />
           <Property Name="track_interest" Type="int" />
@@ -252,6 +231,12 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tracks" EntityType="Self.Tracks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArtistMembers" EntityType="Self.ArtistMembers" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ArtistMembers].[artist_id] AS [artist_id], 
+    [ArtistMembers].[Member] AS [Member]
+    FROM [dbo].[ArtistMembers] AS [ArtistMembers]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="TrackGenres" EntityType="Self.TrackGenres" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TrackGenres].[TrackId] AS [TrackId], 
@@ -305,6 +290,7 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <EntitySet Name="Genres" EntityType="testModel.Genre" />
           <EntitySet Name="Tracks" EntityType="testModel.Track" />
           <EntitySet Name="Users" EntityType="testModel.User" />
+          <EntitySet Name="ArtistMembers" EntityType="testModel.ArtistMember" />
           <EntitySet Name="ViewArtistListens" EntityType="testModel.ViewArtistListen" />
           <AssociationSet Name="FK_albums_artists" Association="testModel.FK_albums_artists">
             <End Role="Artist" EntitySet="Artists" />
@@ -342,8 +328,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="album_engineer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_information" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_listens" Type="Int32" Nullable="false" />
           <Property Name="album_producer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -352,9 +336,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="album_type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_id" Type="Int32" />
-          <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Artist" Relationship="testModel.FK_albums_artists" FromRole="Album" ToRole="Artist" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_albums" FromRole="Album" ToRole="Comment" />
         </EntityType>
@@ -365,28 +346,17 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="artist_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="artist_active_year_begin" Type="Int32" />
           <Property Name="artist_active_year_end" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_associated_labels" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_contact" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_date_created" Type="DateTime" Precision="7" />
-          <Property Name="artist_donation_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_flattr_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_latitude" Type="Double" />
           <Property Name="artist_location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_longitude" Type="Double" />
-          <Property Name="artist_members" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_paypal_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_related_projects" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_wikipedia_page" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Albums" Relationship="testModel.FK_albums_artists" FromRole="Artist" ToRole="Album" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_artists" FromRole="Artist" ToRole="Comment" />
         </EntityType>
@@ -425,24 +395,12 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
             <PropertyRef Name="track_id" />
           </Key>
           <Property Name="track_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="album_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_id" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="art" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="license_image_file_large" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="license_parent_id" Type="Int32" />
+          <Property Name="album_id" Type="Int32" />
+          <Property Name="artist_id" Type="Int32" Nullable="false" />
           <Property Name="license_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="license_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_bit_rate" Type="Int32" />
           <Property Name="track_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_composer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_copyright_c" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_copyright_p" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_date_created" Type="DateTime" Precision="7" />
           <Property Name="track_date_recorded" Type="DateTime" Precision="7" />
           <Property Name="track_disc_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -450,8 +408,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="track_explicit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_explicit_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_information" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_instrumental" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_interest" Type="Int32" />
@@ -475,6 +431,13 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <Property Name="Cdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Comments" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comments1" Relationship="testModel.FK_Comment_Users" FromRole="User" ToRole="Comment" />
+        </EntityType>
+        <EntityType Name="ArtistMember">
+          <Key>
+            <PropertyRef Name="artist_id" />
+          </Key>
+          <Property Name="artist_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Member" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ViewArtistListen">
           <Key>
@@ -557,9 +520,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <EntitySetMapping Name="Albums">
             <EntityTypeMapping TypeName="testModel.Album">
               <MappingFragment StoreEntitySet="Albums">
-                <ScalarProperty Name="tags" ColumnName="tags" />
-                <ScalarProperty Name="artist_url" ColumnName="artist_url" />
-                <ScalarProperty Name="artist_name" ColumnName="artist_name" />
                 <ScalarProperty Name="artist_id" ColumnName="artist_id" />
                 <ScalarProperty Name="album_url" ColumnName="album_url" />
                 <ScalarProperty Name="album_type" ColumnName="album_type" />
@@ -568,8 +528,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
                 <ScalarProperty Name="album_producer" ColumnName="album_producer" />
                 <ScalarProperty Name="album_listens" ColumnName="album_listens" />
                 <ScalarProperty Name="album_information" ColumnName="album_information" />
-                <ScalarProperty Name="album_images" ColumnName="album_images" />
-                <ScalarProperty Name="album_image_file" ColumnName="album_image_file" />
                 <ScalarProperty Name="album_handle" ColumnName="album_handle" />
                 <ScalarProperty Name="album_favorites" ColumnName="album_favorites" />
                 <ScalarProperty Name="album_engineer" ColumnName="album_engineer" />
@@ -583,28 +541,17 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
           <EntitySetMapping Name="Artists">
             <EntityTypeMapping TypeName="testModel.Artist">
               <MappingFragment StoreEntitySet="Artists">
-                <ScalarProperty Name="tags" ColumnName="tags" />
                 <ScalarProperty Name="artist_wikipedia_page" ColumnName="artist_wikipedia_page" />
                 <ScalarProperty Name="artist_website" ColumnName="artist_website" />
                 <ScalarProperty Name="artist_url" ColumnName="artist_url" />
-                <ScalarProperty Name="artist_related_projects" ColumnName="artist_related_projects" />
-                <ScalarProperty Name="artist_paypal_name" ColumnName="artist_paypal_name" />
                 <ScalarProperty Name="artist_name" ColumnName="artist_name" />
-                <ScalarProperty Name="artist_members" ColumnName="artist_members" />
-                <ScalarProperty Name="artist_longitude" ColumnName="artist_longitude" />
                 <ScalarProperty Name="artist_location" ColumnName="artist_location" />
-                <ScalarProperty Name="artist_latitude" ColumnName="artist_latitude" />
-                <ScalarProperty Name="artist_images" ColumnName="artist_images" />
-                <ScalarProperty Name="artist_image_file" ColumnName="artist_image_file" />
                 <ScalarProperty Name="artist_handle" ColumnName="artist_handle" />
-                <ScalarProperty Name="artist_flattr_name" ColumnName="artist_flattr_name" />
                 <ScalarProperty Name="artist_favorites" ColumnName="artist_favorites" />
-                <ScalarProperty Name="artist_donation_url" ColumnName="artist_donation_url" />
                 <ScalarProperty Name="artist_date_created" ColumnName="artist_date_created" />
                 <ScalarProperty Name="artist_contact" ColumnName="artist_contact" />
                 <ScalarProperty Name="artist_comments" ColumnName="artist_comments" />
                 <ScalarProperty Name="artist_bio" ColumnName="artist_bio" />
-                <ScalarProperty Name="artist_associated_labels" ColumnName="artist_associated_labels" />
                 <ScalarProperty Name="artist_active_year_end" ColumnName="artist_active_year_end" />
                 <ScalarProperty Name="artist_active_year_begin" ColumnName="artist_active_year_begin" />
                 <ScalarProperty Name="artist_id" ColumnName="artist_id" />
@@ -651,8 +598,6 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
                 <ScalarProperty Name="track_interest" ColumnName="track_interest" />
                 <ScalarProperty Name="track_instrumental" ColumnName="track_instrumental" />
                 <ScalarProperty Name="track_information" ColumnName="track_information" />
-                <ScalarProperty Name="track_image_file" ColumnName="track_image_file" />
-                <ScalarProperty Name="track_file" ColumnName="track_file" />
                 <ScalarProperty Name="track_favorites" ColumnName="track_favorites" />
                 <ScalarProperty Name="track_explicit_notes" ColumnName="track_explicit_notes" />
                 <ScalarProperty Name="track_explicit" ColumnName="track_explicit" />
@@ -660,23 +605,11 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
                 <ScalarProperty Name="track_disc_number" ColumnName="track_disc_number" />
                 <ScalarProperty Name="track_date_recorded" ColumnName="track_date_recorded" />
                 <ScalarProperty Name="track_date_created" ColumnName="track_date_created" />
-                <ScalarProperty Name="track_copyright_p" ColumnName="track_copyright_p" />
-                <ScalarProperty Name="track_copyright_c" ColumnName="track_copyright_c" />
                 <ScalarProperty Name="track_composer" ColumnName="track_composer" />
                 <ScalarProperty Name="track_comments" ColumnName="track_comments" />
                 <ScalarProperty Name="track_bit_rate" ColumnName="track_bit_rate" />
-                <ScalarProperty Name="tags" ColumnName="tags" />
-                <ScalarProperty Name="license_url" ColumnName="license_url" />
                 <ScalarProperty Name="license_title" ColumnName="license_title" />
-                <ScalarProperty Name="license_parent_id" ColumnName="license_parent_id" />
-                <ScalarProperty Name="license_image_file_large" ColumnName="license_image_file_large" />
-                <ScalarProperty Name="art" ColumnName="art" />
-                <ScalarProperty Name="artist_website" ColumnName="artist_website" />
-                <ScalarProperty Name="artist_url" ColumnName="artist_url" />
-                <ScalarProperty Name="artist_name" ColumnName="artist_name" />
                 <ScalarProperty Name="artist_id" ColumnName="artist_id" />
-                <ScalarProperty Name="album_url" ColumnName="album_url" />
-                <ScalarProperty Name="album_title" ColumnName="album_title" />
                 <ScalarProperty Name="album_id" ColumnName="album_id" />
                 <ScalarProperty Name="track_id" ColumnName="track_id" />
               </MappingFragment>
@@ -690,6 +623,14 @@ warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a prima
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtistMembers">
+            <EntityTypeMapping TypeName="testModel.ArtistMember">
+              <MappingFragment StoreEntitySet="ArtistMembers">
+                <ScalarProperty Name="Member" ColumnName="Member" />
+                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

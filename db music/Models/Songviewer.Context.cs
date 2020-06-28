@@ -31,6 +31,7 @@ namespace db_music.Models
         public virtual DbSet<Genre> Genres { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ArtistMember> ArtistMembers { get; set; }
         public virtual DbSet<ViewArtistListen> ViewArtistListens { get; set; }
     }
 }

@@ -223,6 +223,9 @@
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistIndexViewModel.cs" />
+    <Compile Include="Models\ArtistMember.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\Comment.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
