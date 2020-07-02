@@ -17,16 +17,13 @@ namespace db_music.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Genre()
         {
-            this.Tracks = new HashSet<Track>();
+            this.TrackGenres = new HashSet<TrackGenre>();
         }
     
         public int genre_id { get; set; }
-        public string genre_color { get; set; }
-        public string genre_handle { get; set; }
-        public Nullable<int> genre_parent_id { get; set; }
         public string genre_title { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Track> Tracks { get; set; }
+        public virtual ICollection<TrackGenre> TrackGenres { get; set; }
     }
 }

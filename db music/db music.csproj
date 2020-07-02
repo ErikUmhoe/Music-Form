@@ -208,6 +208,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TracksController.cs" />
@@ -218,12 +219,18 @@
     <Compile Include="Models\Album.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlbumTag.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\Artist.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistIndexViewModel.cs" />
     <Compile Include="Models\ArtistMember.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtistTag.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistViewModel.cs" />
@@ -255,11 +262,14 @@
     <Compile Include="Models\Track.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TrackViewModel.cs" />
-    <Compile Include="Models\User.cs">
+    <Compile Include="Models\TrackGenre.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewArtistListen.cs">
+    <Compile Include="Models\TrackTag.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TrackViewModel.cs" />
+    <Compile Include="Models\User.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -17,16 +17,15 @@ namespace db_music.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Comments1 = new HashSet<Comment>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public System.DateTime Cdate { get; set; }
-        public int Comments { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments1 { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

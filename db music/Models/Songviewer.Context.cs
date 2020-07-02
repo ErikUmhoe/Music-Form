@@ -26,12 +26,15 @@ namespace db_music.Models
         }
     
         public virtual DbSet<Album> Albums { get; set; }
+        public virtual DbSet<AlbumTag> AlbumTags { get; set; }
+        public virtual DbSet<ArtistMember> ArtistMembers { get; set; }
         public virtual DbSet<Artist> Artists { get; set; }
+        public virtual DbSet<ArtistTag> ArtistTags { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Genre> Genres { get; set; }
+        public virtual DbSet<TrackGenre> TrackGenres { get; set; }
         public virtual DbSet<Track> Tracks { get; set; }
+        public virtual DbSet<TrackTag> TrackTags { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<ArtistMember> ArtistMembers { get; set; }
-        public virtual DbSet<ViewArtistListen> ViewArtistListens { get; set; }
     }
 }

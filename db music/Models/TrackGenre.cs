@@ -12,10 +12,13 @@ namespace db_music.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ViewArtistListen
+    public partial class TrackGenre
     {
-        public int artist_id { get; set; }
-        public string artist_name { get; set; }
-        public Nullable<int> ArtistListens { get; set; }
+        public long TrackGenreId { get; set; }
+        public int TrackId { get; set; }
+        public int GenreId { get; set; }
+    
+        public virtual Genre Genre { get; set; }
+        public virtual Track Track { get; set; }
     }
 }

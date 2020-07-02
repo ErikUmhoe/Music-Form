@@ -12,11 +12,11 @@ namespace db_music.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ArtistMember
+    public partial class ArtistTag
     {
-        public string MemberName { get; set; }
-        public int Artist_Id { get; set; }
-        public int MemberId { get; set; }
+        public int artist_id { get; set; }
+        public string Tag { get; set; }
+        public long ArtistTagId { get; set; }
     
         public virtual Artist Artist { get; set; }
     }

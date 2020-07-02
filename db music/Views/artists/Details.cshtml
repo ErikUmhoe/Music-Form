@@ -1,54 +1,145 @@
-﻿@model db_music.Models.ArtistViewModel
+﻿@model db_music.Models.Artist
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Artist Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.artist_name Details</h2>
 
 <div>
-    <h4>artist</h4>
     <hr />
     <dl class="dl-horizontal">
-      
+
         <dt>
-            @Html.DisplayNameFor(model => model.Bio)
+            Artist Name
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Bio)
+            @Html.DisplayFor(model => model.artist_name)
         </dd>
+        @if (Model.artist_active_year_begin != null)
+        {
+            <dt>
+                Year Arist Began Producing
+            </dt>
 
+            <dd>
+                @Model.artist_active_year_begin
+            </dd>
+        }
+        @if (Model.artist_active_year_end != null)
+        {
+            <dt>
+                Year Artist Finished Producing
+            </dt>
+
+            <dd>
+                @Model.artist_active_year_end
+            </dd>
+        }
         <dt>
-            @Html.DisplayNameFor(model => model.Comments)
+            Artist Bio
         </dt>
 
         <dd>
-           @foreach(var comment in Model.Comments)
-           {
-                <p>@(comment.Comment)</p>
-           }
+            @Html.Raw(WebUtility.HtmlDecode(Model.artist_bio))
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            Number of Favorites
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Model.artist_favorites
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Website)
+            Location
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Website)
+            @Model.artist_location
         </dd>
-
+        @if (!String.IsNullOrEmpty(Model.artist_website))
+        {
+            <dt>
+                Website
+            </dt>
+            <dd>
+                <a href="@Model.artist_website" target="_blank">Click Here to visit the Artist's Website</a>
+            </dd>
+        }
     </dl>
 </div>
+@if (Model.Comments.Count > 0)
+{
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Comment
+                    </th>
+                    <th>
+                        Rating
+                    </th>
+                    <th>
+                        User
+                    </th>
+                    <th>
+                        Comment Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model.Comments)
+                {
+                    <tr>
+                        <td>@comment.Text</td>
+                        <td>@comment.Rating</td>
+                        <td><i>@comment.User.Username</i></td>
+                        <td>@comment.Cdate.ToShortDateString()</td>
+                    </tr>
+                }
+                <tr>
+                    <td>Average Raging</td>
+                    <td>@(Model.Comments.Sum(x => x.Rating) / (decimal)Model.Comments.Count)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
+
+    <div>
+        @using (Html.BeginForm("AddComment", "Artists", FormMethod.Post, new { id = "CommentSubmit" }))
+        {
+            <p>Comment Text</p>
+            @Html.TextBox("CommentText")
+            <p>Rating</p>
+            @Html.TextBox("CommentRating")
+            @Html.Hidden("Username", HttpContext.Current.User.Identity.Name)
+            @Html.HiddenFor(x => x.artist_id)
+        }
+        <button id="submitButton" onclick="validateInput()">Submit Comment</button>
+    </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.artist_id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+@section Scripts{
+    <script type="text/javascript">
+        function validateInput() {
+            var commentText = document.getElementById("CommentText").value;
+            console.log(commentText);
+            var rating = document.getElementById("CommentRating").value;
+            if (!commentText) {
+                alert("Enter a comment");
+            }
+            else if (isNaN(rating) || rating < 1 || rating > 10) {
+                alert("Enter a rating from 1-10");
+            }
+            else {
+                document.getElementById("CommentSubmit").submit();
+            }
+        }
+    </script>
+}

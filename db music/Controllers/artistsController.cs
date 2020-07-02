@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,7 +16,6 @@ namespace db_music.Controllers
     public class ArtistsController : Controller
     {
         private testEntities db = new testEntities();
-
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -30,7 +31,6 @@ namespace db_music.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
-            var index = new ArtistIndexViewModel();
             var dbArtists = from a in db.Artists
                             select a;
             if (!String.IsNullOrEmpty(searchString))
@@ -49,19 +49,13 @@ namespace db_music.Controllers
                 case "favorites_desc":
                     dbArtists = dbArtists.OrderByDescending(s => s.artist_favorites);
                     break;
-                //case "Rating":
-                //    index.Artists = index.Artists.OrderBy(s => s.AvgRating).ToList();
-                //    break;
-                //case "rating_desc":
-                //    index.Artists = index.Artists.OrderByDescending(s => s.AvgRating).ToList();
-                //    break;
                 default:  // Name ascending 
                     dbArtists = dbArtists.OrderBy(s => s.artist_name);
                     break;
             }
             int pageSize = 20;
             int pageNumber = (page ?? 1);
-            return View(dbArtists.ToPagedList(pageNumber, pageSize));
+            return View(dbArtists.ToPagedList(pageNumber, 5));
         }
 
         // GET: Artists/Details/5
@@ -77,6 +71,36 @@ namespace db_music.Controllers
                 return HttpNotFound();
             }
             return View(artist);
+        }
+        [HttpPost]
+        public ActionResult AddComment(string CommentText, string CommentRating, string Username, int artist_id)
+        {
+            try
+            {
+                var newComment = db.Comments.Create();
+                newComment.Text = CommentText;
+                newComment.Rating = Int32.Parse(CommentRating);
+                newComment.UserId = db.Users.Where(x => x.Username == Username).SingleOrDefault().Id;
+                newComment.ArtistId = artist_id;
+                newComment.Type = "Artist";
+                newComment.Cdate = DateTime.Now;
+                db.Comments.Add(newComment);
+                db.SaveChanges();
+            }
+            catch(DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
+          
+            return RedirectToAction("Index");
         }
 
         // GET: Artists/Create

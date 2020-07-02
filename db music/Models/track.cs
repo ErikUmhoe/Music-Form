@@ -18,7 +18,8 @@ namespace db_music.Models
         public Track()
         {
             this.Comments = new HashSet<Comment>();
-            this.Genres = new HashSet<Genre>();
+            this.TrackGenres = new HashSet<TrackGenre>();
+            this.TrackTags = new HashSet<TrackTag>();
         }
     
         public int track_id { get; set; }
@@ -49,6 +50,8 @@ namespace db_music.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<TrackGenre> TrackGenres { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TrackTag> TrackTags { get; set; }
     }
 }

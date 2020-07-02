@@ -20,7 +20,7 @@ namespace db_music.Models
         public Nullable<int> AlbumId { get; set; }
         public Nullable<int> TrackId { get; set; }
         public Nullable<int> ArtistId { get; set; }
-        public string Comment1 { get; set; }
+        public string Text { get; set; }
         public int Rating { get; set; }
         public string Type { get; set; }
         public System.DateTime Cdate { get; set; }
