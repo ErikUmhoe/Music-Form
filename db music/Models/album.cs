@@ -17,6 +17,7 @@ namespace db_music.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Album()
         {
+            this.AlbumTags = new HashSet<AlbumTag>();
             this.Comments = new HashSet<Comment>();
         }
     
@@ -37,6 +38,8 @@ namespace db_music.Models
         public Nullable<int> artist_id { get; set; }
     
         public virtual Artist Artist { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AlbumTag> AlbumTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
     }
