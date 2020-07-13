@@ -41,24 +41,26 @@ namespace db_music.Controllers
             {
                 dbArtists = dbArtists.Where(x => x.artist_name.Contains(searchString));
             }
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
             switch (sortOrder)
             {
                 case "name_desc":
-                    dbArtists = dbArtists.OrderByDescending(s => s.artist_name);
+                    return View(dbArtists.OrderByDescending(s => s.artist_name).ToPagedList(pageNumber, pageSize));
                     break;
                 case "Favorites":
-                    dbArtists = dbArtists.OrderBy(s => s.artist_favorites);
+                    return View(dbArtists.OrderBy(s => s.artist_favorites).ToPagedList(pageNumber, pageSize));
                     break;
                 case "favorites_desc":
-                    dbArtists = dbArtists.OrderByDescending(s => s.artist_favorites);
+                    return View(dbArtists.OrderByDescending(s => s.artist_favorites).ToPagedList(pageNumber, pageSize));
                     break;
                 default:  // Name ascending 
-                    dbArtists = dbArtists.OrderBy(s => s.artist_name);
+                    return View(dbArtists.OrderBy(s => s.artist_name).ToPagedList(pageNumber, pageSize));
                     break;
             }
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
-            return View(dbArtists.ToPagedList(pageNumber, 5));
+
+            //var pagedQuery = dbArtists.Skip(pageSize * (pageNumber - 1)).Take(pageSize);
+            return View(dbArtists);
         }
 
         // GET: Artists/Details/5
