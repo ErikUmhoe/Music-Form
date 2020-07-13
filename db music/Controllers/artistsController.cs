@@ -6,14 +6,18 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
+using Newtonsoft.Json;
 using PagedList;
 
 namespace db_music.Controllers
 {
-    public class ArtistsController : Controller
+    public class ArtistsController : BaseController
     {
         private testEntities db = new testEntities();
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
@@ -37,7 +41,6 @@ namespace db_music.Controllers
             {
                 dbArtists = dbArtists.Where(x => x.artist_name.Contains(searchString));
             }
-
             switch (sortOrder)
             {
                 case "name_desc":
@@ -101,6 +104,33 @@ namespace db_music.Controllers
             }
           
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> ArtistRecommend(string artist_name)
+        {
+           
+            HttpClient client = new HttpClient();
+            var token = AccountController.GetAccessToken();
+            client.DefaultRequestHeaders.Authorization
+                        = new AuthenticationHeaderValue("Bearer", token);
+            var searchString = "https://api.spotify.com/v1/search?q=" + artist_name + "&type=artist";
+            HttpResponseMessage response = await client.GetAsync(searchString);
+            response.EnsureSuccessStatusCode();
+            if (response != null)
+            {
+                var jsonString = await response.Content.ReadAsStringAsync();
+                var jsonObj = JsonConvert.DeserializeObject<SpotifyResult>(jsonString);
+                if(!jsonObj.artists.artistList.Any(x => x.name.Equals(artist_name)))
+                {
+                   TempData["Msg"] = $"No artist with name {artist_name} found on Spotify";
+                    return Redirect(Request.UrlReferrer.PathAndQuery);
+                }
+                var artist = jsonObj.artists.artistList.Where(x => x.name.Equals(artist_name)).First();
+                System.Diagnostics.Debug.WriteLine("ArtistId: " + artist.id );
+                System.Diagnostics.Debug.WriteLine("ArtistUrl: " + artist.external_urls.spotify.ToString());
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         // GET: Artists/Create

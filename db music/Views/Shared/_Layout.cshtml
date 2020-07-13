@@ -39,6 +39,26 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
+    <script>
+        $(function () {
+            {
+            @if (TempData["Notifications"] != null)
+            {
+            var messages = (List<UserMessageModel>)TempData["Notifications"];
+            foreach (var note in messages)
+            {
+            <text>showNotification("@note.Message", "@note.Title", "@note.Type");</text>
+            }
+            }
+            @{
+            ViewBag.Notifications = string.Empty;
+            }
+            }
+});
+    </script>
+    @Scripts.Render("~/bundles/toastr")
     @RenderSection("scripts", required: false)
 </body>
 </html>

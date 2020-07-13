@@ -108,7 +108,13 @@
         </table>
     </div>
 }
-
+<div>
+    @using (Html.BeginForm("ArtistRecommend", "Artists", FormMethod.Get))
+    {
+        @Html.HiddenFor(x => x.artist_name)
+        <input id="recommendArtist" type="submit" value="Get Recommendations for @Model.artist_name" />
+    }
+</div>
     <div>
         @using (Html.BeginForm("AddComment", "Artists", FormMethod.Post, new { id = "CommentSubmit" }))
         {
@@ -126,7 +132,7 @@
     @Html.ActionLink("Back to List", "Index")
 </p>
 @section Scripts{
-    <script type="text/javascript">
+<script type="text/javascript">
         function validateInput() {
             var commentText = document.getElementById("CommentText").value;
             console.log(commentText);
@@ -141,5 +147,11 @@
                 document.getElementById("CommentSubmit").submit();
             }
         }
+        $(function(){
+            var msg = "@(TempData["Msg"] as string)";
+            if (msg !== "") {
+                toastr.error(msg);
+            }
+        });
     </script>
 }

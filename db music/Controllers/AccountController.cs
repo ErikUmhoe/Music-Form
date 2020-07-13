@@ -11,6 +11,12 @@ using Microsoft.Owin.Security;
 using db_music;
 using System.Data.Entity.Infrastructure;
 using db_music.Models;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using System.Text;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace db_music.Controllers
 {
@@ -54,6 +60,45 @@ namespace db_music.Controllers
             }
         }
 
+        public static string GetAccessToken()
+        {
+            SpotifyToken token = new SpotifyToken();
+            string url5 = "https://accounts.spotify.com/api/token";
+            var clientid = "6d55b178dc9443959410c9a85dd82d29";
+            var clientsecret = "ad6f620c909c4e898f7643e30d12c083";
+
+            //request to get the access token
+            var encode_clientid_clientsecret = Convert.ToBase64String(Encoding.UTF8.GetBytes(string.Format("{0}:{1}", clientid, clientsecret)));
+
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url5);
+
+            webRequest.Method = "POST";
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.Accept = "application/json";
+            webRequest.Headers.Add("Authorization: Basic " + encode_clientid_clientsecret);
+
+            var request = ("grant_type=client_credentials");
+            byte[] req_bytes = Encoding.ASCII.GetBytes(request);
+            webRequest.ContentLength = req_bytes.Length;
+
+            Stream strm = webRequest.GetRequestStream();
+            strm.Write(req_bytes, 0, req_bytes.Length);
+            strm.Close();
+
+            HttpWebResponse resp = (HttpWebResponse)webRequest.GetResponse();
+            String json = "";
+            using (Stream respStr = resp.GetResponseStream())
+            {
+                using (StreamReader rdr = new StreamReader(respStr, Encoding.UTF8))
+                {
+                    //should get back a string i can then turn to json and parse for accesstoken
+                    json = rdr.ReadToEnd();
+                    rdr.Close();
+                }
+            }
+            token = JsonConvert.DeserializeObject<SpotifyToken>(json);
+            return token.access_token;
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -486,5 +531,14 @@ namespace db_music.Controllers
             }
         }
         #endregion
+    }
+    public class SpotifyToken
+    {
+        [JsonProperty("access_token")]
+        public string access_token { get; set; }
+        [JsonProperty("token_type")]
+        public string token_type { get; set; }
+        [JsonProperty("expires_in")]
+        public int expires_in { get; set; }
     }
 }
