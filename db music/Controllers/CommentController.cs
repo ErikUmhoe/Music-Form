@@ -130,7 +130,7 @@ namespace db_music.Controllers
             {
                 return HttpNotFound();
             }
-            return View(Comment);
+            return View(comment);
         }
 
         // POST: artists/Edit/5
