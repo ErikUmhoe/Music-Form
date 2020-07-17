@@ -212,6 +212,9 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DAL\MusicContext.cs" />
+    <Compile Include="Models\SpotifyArtistRecommend.cs" />
     <Compile Include="Models\SpotifyResult.cs" />
     <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Global.asax.cs">
@@ -312,6 +315,7 @@
     </Content>
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include=".gitignore" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -373,6 +377,12 @@
     <Content Include="Views\Tracks\Edit.cshtml" />
     <Content Include="Views\Tracks\Index.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Shared\_RecommendedTrackTable.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

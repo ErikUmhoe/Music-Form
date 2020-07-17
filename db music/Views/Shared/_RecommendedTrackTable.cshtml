@@ -1,0 +1,21 @@
+﻿@model  List<db_music.Models.SpotifyArtistRecommend.Track>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Track Name</th>
+            <th>Album</th>
+            <th>Artist</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var track in Model)
+        {
+            <tr>
+                <td>@track.Name</td>
+                <td>@track.Album.Name</td>
+                <td>@(String.Join(", ", track.Artists.Select(x => x.Name)))</td>
+            </tr>
+        }
+    </tbody>
+</table>

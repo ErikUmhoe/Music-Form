@@ -10,107 +10,107 @@ using db_music.Models;
 
 namespace db_music.Controllers
 {
-    public class TracksController : Controller
+    public class UsersController : Controller
     {
         private testEntities db = new testEntities();
 
-        // GET: Tracks
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Tracks.Take(20).ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Tracks/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Track track = db.Tracks.Find(id);
-            if (track == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(track);
+            return View(user);
         }
 
-        // GET: Tracks/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Tracks/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "track_id,album_id,artist_id,license_title,track_bit_rate,track_comments,track_composer,track_date_created,track_date_recorded,track_disc_number,track_duration,track_explicit,track_explicit_notes,track_favorites,track_information,track_instrumental,track_interest,track_language_code,track_listens,track_lyricist,track_number,track_publisher,track_title,track_url")] Track track)
+        public ActionResult Create([Bind(Include = "Id,Username,Password,Cdate")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Tracks.Add(track);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(track);
+            return View(user);
         }
 
-        // GET: Tracks/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Track track = db.Tracks.Find(id);
-            if (track == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(track);
+            return View(user);
         }
 
-        // POST: Tracks/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "track_id,album_id,artist_id,license_title,track_bit_rate,track_comments,track_composer,track_date_created,track_date_recorded,track_disc_number,track_duration,track_explicit,track_explicit_notes,track_favorites,track_information,track_instrumental,track_interest,track_language_code,track_listens,track_lyricist,track_number,track_publisher,track_title,track_url")] Track track)
+        public ActionResult Edit([Bind(Include = "Id,Username,Password,Cdate")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(track).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(track);
+            return View(user);
         }
 
-        // GET: Tracks/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Track track = db.Tracks.Find(id);
-            if (track == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(track);
+            return View(user);
         }
 
-        // POST: Tracks/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Track track = db.Tracks.Find(id);
-            db.Tracks.Remove(track);
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

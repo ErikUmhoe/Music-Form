@@ -1,4 +1,6 @@
 ﻿@using PagedList.Mvc;
+
+
 @model  PagedList.IPagedList<db_music.Models.Artist>
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
@@ -34,8 +36,8 @@
             @Html.ActionLink("Favorites", "Index", new { sortOrder = ViewBag.FavoritesSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         @*<th>
-            @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
-        </th>*@
+                @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>*@
         <th>
             Average Rating
         </th>
@@ -82,9 +84,9 @@
 
 </table>
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
-<link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" /> 
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />

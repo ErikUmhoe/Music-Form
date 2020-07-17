@@ -13,7 +13,7 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Artists");
+            return View();
         }
 
         public ActionResult About()
