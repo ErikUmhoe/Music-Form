@@ -33,6 +33,14 @@
           <Property Name="Tag" Type="varchar" MaxLength="8000" />
           <Property Name="AlbumTagId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="AlbumTracks">
+          <Key>
+            <PropertyRef Name="TrackId" />
+            <PropertyRef Name="AlbumId" />
+          </Key>
+          <Property Name="TrackId" Type="int" Nullable="false" />
+          <Property Name="AlbumId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ArtistMembers">
           <Key>
             <PropertyRef Name="MemberId" />
@@ -90,6 +98,14 @@
           <Property Name="genre_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="genre_title" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="TrackArtists">
+          <Key>
+            <PropertyRef Name="TrackId" />
+            <PropertyRef Name="ArtistId" />
+          </Key>
+          <Property Name="TrackId" Type="int" Nullable="false" />
+          <Property Name="ArtistId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TrackGenres">
           <Key>
             <PropertyRef Name="TrackGenreId" />
@@ -144,8 +160,20 @@
           <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Cdate" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'music.dbo.ViewArtistListens' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewArtistListens">
+          <Key>
+            <PropertyRef Name="artist_id" />
+          </Key>
+          <Property Name="artist_id" Type="int" Nullable="false" />
+          <Property Name="artist_name" Type="nvarchar(max)" />
+          <Property Name="ArtistListens" Type="int" />
+        </EntityType>
         <Association Name="FK_albums_artists">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Albums" Type="Self.Albums" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
@@ -157,7 +185,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlbumTags_Albums">
-          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="AlbumTags" Type="Self.AlbumTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Albums">
@@ -168,8 +198,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AlbumTracks_Albums">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="AlbumTracks" Type="Self.AlbumTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="album_id" />
+            </Principal>
+            <Dependent Role="AlbumTracks">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumTracks_Tracks">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="AlbumTracks" Type="Self.AlbumTracks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="AlbumTracks">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ArtistMembers_Artists">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ArtistMembers" Type="Self.ArtistMembers" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
@@ -181,7 +237,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ArtistTags_Artists">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ArtistTags" Type="Self.ArtistTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
@@ -205,7 +263,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_artists">
-          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artists">
@@ -240,8 +300,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TrackArtists_Artists">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="TrackArtists" Type="Self.TrackArtists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="TrackArtists">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackArtists_Tracks">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="TrackArtists" Type="Self.TrackArtists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="TrackArtists">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TrackGenres_Genres">
-          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TrackGenres" Type="Self.TrackGenres" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genres">
@@ -253,7 +339,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TrackGenres_Tracks">
-          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="TrackGenres" Type="Self.TrackGenres" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tracks">
@@ -264,33 +352,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TrackTags_Tracks">
-          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
-          <End Role="TrackTags" Type="Self.TrackTags" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tracks">
-              <PropertyRef Name="track_id" />
-            </Principal>
-            <Dependent Role="TrackTags">
-              <PropertyRef Name="track_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="DelimitedSplit8K" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pString" Type="varchar" Mode="In" />
+          <Parameter Name="pDelimiter" Type="char" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ItemNumber" Type="bigint" />
+                <Property Name="Item" Type="varchar" MaxLength="8000" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="GetArtistId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
           <Parameter Name="artistName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetArtistMembers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="artist_name" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetTrackGenres" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TrackName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetUserCommentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="nvarchar(max)" Mode="In" />
         </Function>
         <EntityContainer Name="testModelStoreContainer">
           <EntitySet Name="Albums" EntityType="Self.Albums" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AlbumTags" EntityType="Self.AlbumTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbumTracks" EntityType="Self.AlbumTracks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ArtistMembers" EntityType="Self.ArtistMembers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ArtistTags" EntityType="Self.ArtistTags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrackArtists" EntityType="Self.TrackArtists" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrackGenres" EntityType="Self.TrackGenres" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tracks" EntityType="Self.Tracks" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TrackTags" EntityType="Self.TrackTags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewArtistListens" EntityType="Self.ViewArtistListens" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewArtistListens].[artist_id] AS [artist_id], 
+    [ViewArtistListens].[artist_name] AS [artist_name], 
+    [ViewArtistListens].[ArtistListens] AS [ArtistListens]
+    FROM [dbo].[ViewArtistListens] AS [ViewArtistListens]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_albums_artists" Association="Self.FK_albums_artists">
             <End Role="Artists" EntitySet="Artists" />
             <End Role="Albums" EntitySet="Albums" />
@@ -298,6 +404,14 @@
           <AssociationSet Name="FK_AlbumTags_Albums" Association="Self.FK_AlbumTags_Albums">
             <End Role="Albums" EntitySet="Albums" />
             <End Role="AlbumTags" EntitySet="AlbumTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumTracks_Albums" Association="Self.FK_AlbumTracks_Albums">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="AlbumTracks" EntitySet="AlbumTracks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumTracks_Tracks" Association="Self.FK_AlbumTracks_Tracks">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="AlbumTracks" EntitySet="AlbumTracks" />
           </AssociationSet>
           <AssociationSet Name="FK_ArtistMembers_Artists" Association="Self.FK_ArtistMembers_Artists">
             <End Role="Artists" EntitySet="Artists" />
@@ -323,6 +437,14 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="Comments" EntitySet="Comments" />
           </AssociationSet>
+          <AssociationSet Name="FK_TrackArtists_Artists" Association="Self.FK_TrackArtists_Artists">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="TrackArtists" EntitySet="TrackArtists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackArtists_Tracks" Association="Self.FK_TrackArtists_Tracks">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="TrackArtists" EntitySet="TrackArtists" />
+          </AssociationSet>
           <AssociationSet Name="FK_TrackGenres_Genres" Association="Self.FK_TrackGenres_Genres">
             <End Role="Genres" EntitySet="Genres" />
             <End Role="TrackGenres" EntitySet="TrackGenres" />
@@ -331,16 +453,25 @@
             <End Role="Tracks" EntitySet="Tracks" />
             <End Role="TrackGenres" EntitySet="TrackGenres" />
           </AssociationSet>
-          <AssociationSet Name="FK_TrackTags_Tracks" Association="Self.FK_TrackTags_Tracks">
-            <End Role="Tracks" EntitySet="Tracks" />
-            <End Role="TrackTags" EntitySet="TrackTags" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="DelimitedSplit8K" IsComposable="true" ReturnType="Collection(testModel.DelimitedSplit8K_Result)">
+            <Parameter Name="pString" Mode="In" Type="String" />
+            <Parameter Name="pDelimiter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetArtistMembers" ReturnType="Collection(String)">
+          <Parameter Name="artist_name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTrackGenres" ReturnType="Collection(String)">
+          <Parameter Name="TrackName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserCommentInfo" ReturnType="Collection(testModel.GetUserCommentInfo_Result)">
+          <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="Albums" EntityType="testModel.Album" />
           <EntitySet Name="AlbumTags" EntityType="testModel.AlbumTag" />
           <EntitySet Name="ArtistMembers" EntityType="testModel.ArtistMember" />
@@ -352,6 +483,7 @@
           <EntitySet Name="Tracks" EntityType="testModel.Track" />
           <EntitySet Name="TrackTags" EntityType="testModel.TrackTag" />
           <EntitySet Name="Users" EntityType="testModel.User" />
+          <EntitySet Name="ViewArtistListens" EntityType="testModel.ViewArtistListen" />
           <AssociationSet Name="FK_albums_artists" Association="testModel.FK_albums_artists">
             <End Role="Artist" EntitySet="Artists" />
             <End Role="Album" EntitySet="Albums" />
@@ -392,11 +524,24 @@
             <End Role="Track" EntitySet="Tracks" />
             <End Role="TrackGenre" EntitySet="TrackGenres" />
           </AssociationSet>
-          <AssociationSet Name="FK_TrackTags_Tracks" Association="testModel.FK_TrackTags_Tracks">
+          <AssociationSet Name="AlbumTracks" Association="testModel.AlbumTracks">
+            <End Role="Album" EntitySet="Albums" />
             <End Role="Track" EntitySet="Tracks" />
-            <End Role="TrackTag" EntitySet="TrackTags" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="TrackArtists" Association="testModel.TrackArtists">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Track" EntitySet="Tracks" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="DelimitedSplit8K_Result">
+          <Property Type="Int64" Name="ItemNumber" Nullable="true" />
+          <Property Type="String" Name="Item" Nullable="true" MaxLength="8000" />
+        </ComplexType>
+        <ComplexType Name="GetUserCommentInfo_Result">
+          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Type" Nullable="false" />
+          <Property Type="DateTime" Name="Cdate" Nullable="false" Precision="23" />
+        </ComplexType>
         <EntityType Name="Album">
           <Key>
             <PropertyRef Name="album_id" />
@@ -419,6 +564,7 @@
           <NavigationProperty Name="Artist" Relationship="testModel.FK_albums_artists" FromRole="Album" ToRole="Artist" />
           <NavigationProperty Name="AlbumTags" Relationship="testModel.FK_AlbumTags_Albums" FromRole="Album" ToRole="AlbumTag" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_albums" FromRole="Album" ToRole="Comment" />
+          <NavigationProperty Name="Tracks" Relationship="testModel.AlbumTracks" FromRole="Album" ToRole="Track" />
         </EntityType>
         <EntityType Name="AlbumTag">
           <Key>
@@ -460,6 +606,7 @@
           <NavigationProperty Name="ArtistMembers" Relationship="testModel.FK_ArtistMembers_Artists" FromRole="Artist" ToRole="ArtistMember" />
           <NavigationProperty Name="ArtistTags" Relationship="testModel.FK_ArtistTags_Artists" FromRole="Artist" ToRole="ArtistTag" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_artists" FromRole="Artist" ToRole="Comment" />
+          <NavigationProperty Name="Tracks" Relationship="testModel.TrackArtists" FromRole="Artist" ToRole="Track" />
         </EntityType>
         <EntityType Name="ArtistTag">
           <Key>
@@ -537,7 +684,8 @@
           <Property Name="track_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_track" FromRole="Track" ToRole="Comment" />
           <NavigationProperty Name="TrackGenres" Relationship="testModel.FK_TrackGenres_Tracks" FromRole="Track" ToRole="TrackGenre" />
-          <NavigationProperty Name="TrackTags" Relationship="testModel.FK_TrackTags_Tracks" FromRole="Track" ToRole="TrackTag" />
+          <NavigationProperty Name="Albums" Relationship="testModel.AlbumTracks" FromRole="Track" ToRole="Album" />
+          <NavigationProperty Name="Artists" Relationship="testModel.TrackArtists" FromRole="Track" ToRole="Artist" />
         </EntityType>
         <EntityType Name="TrackTag">
           <Key>
@@ -546,7 +694,6 @@
           <Property Name="track_id" Type="Int32" Nullable="false" />
           <Property Name="Tag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="TrackTagId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Track" Relationship="testModel.FK_TrackTags_Tracks" FromRole="TrackTag" ToRole="Track" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -558,8 +705,18 @@
           <Property Name="Cdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_Users" FromRole="User" ToRole="Comment" />
         </EntityType>
+        <EntityType Name="ViewArtistListen">
+          <Key>
+            <PropertyRef Name="artist_id" />
+          </Key>
+          <Property Name="artist_id" Type="Int32" Nullable="false" />
+          <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ArtistListens" Type="Int32" />
+        </EntityType>
         <Association Name="FK_albums_artists">
-          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1" />
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.Album" Role="Album" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artist">
@@ -571,7 +728,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_AlbumTags_Albums">
-          <End Type="testModel.Album" Role="Album" Multiplicity="1" />
+          <End Type="testModel.Album" Role="Album" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.AlbumTag" Role="AlbumTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Album">
@@ -595,7 +754,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ArtistMembers_Artists">
-          <End Type="testModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.ArtistMember" Role="ArtistMember" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artist">
@@ -607,7 +768,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ArtistTags_Artists">
-          <End Type="testModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.ArtistTag" Role="ArtistTag" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artist">
@@ -619,7 +782,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comment_artists">
-          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1" />
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Artist">
@@ -655,7 +820,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TrackGenres_Genres">
-          <End Type="testModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="testModel.Genre" Role="Genre" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.TrackGenre" Role="TrackGenre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genre">
@@ -667,7 +834,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TrackGenres_Tracks">
-          <End Type="testModel.Track" Role="Track" Multiplicity="1" />
+          <End Type="testModel.Track" Role="Track" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="testModel.TrackGenre" Role="TrackGenre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Track">
@@ -678,17 +847,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TrackTags_Tracks">
-          <End Type="testModel.Track" Role="Track" Multiplicity="1" />
-          <End Type="testModel.TrackTag" Role="TrackTag" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Track">
-              <PropertyRef Name="track_id" />
-            </Principal>
-            <Dependent Role="TrackTag">
-              <PropertyRef Name="track_id" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="AlbumTracks">
+          <End Type="testModel.Album" Role="Album" Multiplicity="*" />
+          <End Type="testModel.Track" Role="Track" Multiplicity="*" />
+        </Association>
+        <Association Name="TrackArtists">
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="*" />
+          <End Type="testModel.Track" Role="Track" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -696,6 +861,25 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities">
+          <FunctionImportMapping FunctionImportName="DelimitedSplit8K" FunctionName="testModel.Store.DelimitedSplit8K">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="testModel.DelimitedSplit8K_Result">
+                <ScalarProperty Name="ItemNumber" ColumnName="ItemNumber" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetArtistMembers" FunctionName="testModel.Store.GetArtistMembers" />
+          <FunctionImportMapping FunctionImportName="GetTrackGenres" FunctionName="testModel.Store.GetTrackGenres" />
+          <FunctionImportMapping FunctionImportName="GetUserCommentInfo" FunctionName="testModel.Store.GetUserCommentInfo">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="testModel.GetUserCommentInfo_Result">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Cdate" ColumnName="Cdate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Albums">
             <EntityTypeMapping TypeName="testModel.Album">
               <MappingFragment StoreEntitySet="Albums">
@@ -846,7 +1030,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="ViewArtistListens">
+            <EntityTypeMapping TypeName="testModel.ViewArtistListen">
+              <MappingFragment StoreEntitySet="ViewArtistListens">
+                <ScalarProperty Name="ArtistListens" ColumnName="ArtistListens" />
+                <ScalarProperty Name="artist_name" ColumnName="artist_name" />
+                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AlbumTracks" TypeName="testModel.AlbumTracks" StoreEntitySet="AlbumTracks">
+            <EndProperty Name="Track">
+              <ScalarProperty Name="track_id" ColumnName="TrackId" />
+            </EndProperty>
+            <EndProperty Name="Album">
+              <ScalarProperty Name="album_id" ColumnName="AlbumId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="TrackArtists" TypeName="testModel.TrackArtists" StoreEntitySet="TrackArtists">
+            <EndProperty Name="Track">
+              <ScalarProperty Name="track_id" ColumnName="TrackId" />
+            </EndProperty>
+            <EndProperty Name="Artist">
+              <ScalarProperty Name="artist_id" ColumnName="ArtistId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

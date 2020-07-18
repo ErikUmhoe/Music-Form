@@ -21,6 +21,7 @@ namespace db_music.Models
             this.ArtistMembers = new HashSet<ArtistMember>();
             this.ArtistTags = new HashSet<ArtistTag>();
             this.Comments = new HashSet<Comment>();
+            this.Tracks = new HashSet<Track>();
         }
     
         public int artist_id { get; set; }
@@ -46,5 +47,7 @@ namespace db_music.Models
         public virtual ICollection<ArtistTag> ArtistTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

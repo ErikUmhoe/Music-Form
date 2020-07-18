@@ -213,6 +213,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Models\DelimitedSplit8K_Result.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetUserCommentInfo_Result.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SpotifyArtistRecommend.cs" />
     <Compile Include="Models\SpotifyResult.cs" />
     <Compile Include="Controllers\TracksController.cs" />
@@ -275,6 +281,9 @@
     </Compile>
     <Compile Include="Models\TrackViewModel.cs" />
     <Compile Include="Models\User.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewArtistListen.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -365,10 +374,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Artists\Create.cshtml" />
-    <Content Include="Views\Artists\Delete.cshtml" />
     <Content Include="Views\Artists\Details.cshtml" />
-    <Content Include="Views\Artists\Edit.cshtml" />
     <Content Include="Views\Artists\Index.cshtml" />
     <Content Include="Views\Tracks\Create.cshtml" />
     <Content Include="Views\Tracks\Delete.cshtml" />

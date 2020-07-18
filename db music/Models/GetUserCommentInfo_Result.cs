@@ -10,12 +10,11 @@
 namespace db_music.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TrackTag
+    public partial class GetUserCommentInfo_Result
     {
-        public int track_id { get; set; }
-        public string Tag { get; set; }
-        public long TrackTagId { get; set; }
+        public string Text { get; set; }
+        public string Type { get; set; }
+        public System.DateTime Cdate { get; set; }
     }
 }
