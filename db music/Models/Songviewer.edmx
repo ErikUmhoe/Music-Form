@@ -4,94 +4,111 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="albums">
+    <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Albums">
           <Key>
             <PropertyRef Name="album_id" />
           </Key>
-          <Property Name="album_id" Type="int" Nullable="false" />
-          <Property Name="album_comments" Type="nvarchar(max)" />
+          <Property Name="album_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="album_comments" Type="int" Nullable="false" />
           <Property Name="album_date_created" Type="datetime2" Precision="7" />
           <Property Name="album_date_released" Type="datetime2" Precision="7" />
           <Property Name="album_engineer" Type="nvarchar(max)" />
           <Property Name="album_favorites" Type="nvarchar(max)" />
           <Property Name="album_handle" Type="nvarchar(max)" />
-          <Property Name="album_image_file" Type="nvarchar(max)" />
-          <Property Name="album_images" Type="nvarchar(max)" />
           <Property Name="album_information" Type="nvarchar(max)" />
-          <Property Name="album_listens" Type="int" />
+          <Property Name="album_listens" Type="int" Nullable="false" />
           <Property Name="album_producer" Type="nvarchar(max)" />
           <Property Name="album_title" Type="nvarchar(max)" />
-          <Property Name="album_tracks" Type="nvarchar(max)" />
+          <Property Name="album_tracks" Type="int" Nullable="false" />
           <Property Name="album_type" Type="nvarchar(max)" />
           <Property Name="album_url" Type="nvarchar(max)" />
-          <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="artist_url" Type="nvarchar(max)" />
-          <Property Name="tags" Type="nvarchar(max)" />
+          <Property Name="artist_id" Type="int" />
         </EntityType>
-        <EntityType Name="artists">
+        <EntityType Name="AlbumTags">
+          <Key>
+            <PropertyRef Name="AlbumTagId" />
+          </Key>
+          <Property Name="album_id" Type="int" Nullable="false" />
+          <Property Name="Tag" Type="varchar" MaxLength="8000" />
+          <Property Name="AlbumTagId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArtistMembers">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Artist_Id" Type="int" Nullable="false" />
+          <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Artists">
           <Key>
             <PropertyRef Name="artist_id" />
           </Key>
-          <Property Name="artist_id" Type="int" Nullable="false" />
+          <Property Name="artist_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="artist_active_year_begin" Type="int" />
           <Property Name="artist_active_year_end" Type="nvarchar(max)" />
-          <Property Name="artist_associated_labels" Type="nvarchar(max)" />
           <Property Name="artist_bio" Type="nvarchar(max)" />
           <Property Name="artist_comments" Type="nvarchar(max)" />
           <Property Name="artist_contact" Type="nvarchar(max)" />
           <Property Name="artist_date_created" Type="datetime2" Precision="7" />
-          <Property Name="artist_donation_url" Type="nvarchar(max)" />
           <Property Name="artist_favorites" Type="nvarchar(max)" />
-          <Property Name="artist_flattr_name" Type="nvarchar(max)" />
           <Property Name="artist_handle" Type="nvarchar(max)" />
-          <Property Name="artist_image_file" Type="nvarchar(max)" />
-          <Property Name="artist_images" Type="nvarchar(max)" />
-          <Property Name="artist_latitude" Type="float" />
           <Property Name="artist_location" Type="nvarchar(max)" />
-          <Property Name="artist_longitude" Type="float" />
-          <Property Name="artist_members" Type="nvarchar(max)" />
           <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="artist_paypal_name" Type="nvarchar(max)" />
-          <Property Name="artist_related_projects" Type="nvarchar(max)" />
           <Property Name="artist_url" Type="nvarchar(max)" />
           <Property Name="artist_website" Type="nvarchar(max)" />
           <Property Name="artist_wikipedia_page" Type="nvarchar(max)" />
-          <Property Name="tags" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="genres">
+        <EntityType Name="ArtistTags">
+          <Key>
+            <PropertyRef Name="ArtistTagId" />
+          </Key>
+          <Property Name="artist_id" Type="int" Nullable="false" />
+          <Property Name="Tag" Type="varchar" MaxLength="8000" />
+          <Property Name="ArtistTagId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SongId" Type="int" />
+          <Property Name="AlbumId" Type="int" />
+          <Property Name="TrackId" Type="int" />
+          <Property Name="ArtistId" Type="int" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Cdate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genres">
           <Key>
             <PropertyRef Name="genre_id" />
           </Key>
-          <Property Name="genre_id" Type="int" Nullable="false" />
-          <Property Name="genre_color" Type="nvarchar(max)" />
-          <Property Name="genre_handle" Type="nvarchar(max)" />
-          <Property Name="genre_parent_id" Type="int" />
-          <Property Name="genre_title" Type="nvarchar(max)" />
+          <Property Name="genre_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="genre_title" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="tracks">
+        <EntityType Name="TrackGenres">
+          <Key>
+            <PropertyRef Name="TrackGenreId" />
+          </Key>
+          <Property Name="TrackGenreId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrackId" Type="int" Nullable="false" />
+          <Property Name="GenreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tracks">
           <Key>
             <PropertyRef Name="track_id" />
           </Key>
-          <Property Name="track_id" Type="int" Nullable="false" />
-          <Property Name="album_id" Type="nvarchar(max)" />
-          <Property Name="album_title" Type="nvarchar(max)" />
-          <Property Name="album_url" Type="nvarchar(max)" />
-          <Property Name="artist_id" Type="nvarchar(max)" />
-          <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="artist_url" Type="nvarchar(max)" />
-          <Property Name="artist_website" Type="nvarchar(max)" />
-          <Property Name="art" Type="nvarchar(max)" />
-          <Property Name="license_image_file_large" Type="nvarchar(max)" />
-          <Property Name="license_parent_id" Type="int" />
+          <Property Name="track_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="album_id" Type="int" />
+          <Property Name="artist_id" Type="int" Nullable="false" />
           <Property Name="license_title" Type="nvarchar(max)" />
-          <Property Name="license_url" Type="nvarchar(max)" />
-          <Property Name="tags" Type="nvarchar(max)" />
           <Property Name="track_bit_rate" Type="int" />
           <Property Name="track_comments" Type="nvarchar(max)" />
           <Property Name="track_composer" Type="nvarchar(max)" />
-          <Property Name="track_copyright_c" Type="nvarchar(max)" />
-          <Property Name="track_copyright_p" Type="nvarchar(max)" />
           <Property Name="track_date_created" Type="datetime2" Precision="7" />
           <Property Name="track_date_recorded" Type="datetime2" Precision="7" />
           <Property Name="track_disc_number" Type="nvarchar(max)" />
@@ -99,9 +116,6 @@
           <Property Name="track_explicit" Type="nvarchar(max)" />
           <Property Name="track_explicit_notes" Type="nvarchar(max)" />
           <Property Name="track_favorites" Type="nvarchar(max)" />
-          <Property Name="track_file" Type="nvarchar(max)" />
-          <Property Name="track_genres" Type="nvarchar(max)" />
-          <Property Name="track_image_file" Type="nvarchar(max)" />
           <Property Name="track_information" Type="nvarchar(max)" />
           <Property Name="track_instrumental" Type="nvarchar(max)" />
           <Property Name="track_interest" Type="int" />
@@ -113,121 +127,397 @@
           <Property Name="track_title" Type="nvarchar(max)" />
           <Property Name="track_url" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'test .dbo.ViewArtistListens' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="ViewArtistListens">
+        <EntityType Name="TrackTags">
           <Key>
-            <PropertyRef Name="artist_id" />
+            <PropertyRef Name="TrackTagId" />
           </Key>
-          <Property Name="artist_id" Type="int" Nullable="false" />
-          <Property Name="artist_name" Type="nvarchar(max)" />
-          <Property Name="ArtistListens" Type="int" />
+          <Property Name="track_id" Type="int" Nullable="false" />
+          <Property Name="Tag" Type="nvarchar(max)" />
+          <Property Name="TrackTagId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Cdate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_albums_artists">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="Albums" Type="Self.Albums" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="Albums">
+              <PropertyRef Name="artist_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumTags_Albums">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="1" />
+          <End Role="AlbumTags" Type="Self.AlbumTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="album_id" />
+            </Principal>
+            <Dependent Role="AlbumTags">
+              <PropertyRef Name="album_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtistMembers_Artists">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="ArtistMembers" Type="Self.ArtistMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="ArtistMembers">
+              <PropertyRef Name="Artist_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtistTags_Artists">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="1" />
+          <End Role="ArtistTags" Type="Self.ArtistTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="ArtistTags">
+              <PropertyRef Name="artist_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_albums">
+          <End Role="Albums" Type="Self.Albums" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Albums">
+              <PropertyRef Name="album_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_artists">
+          <End Role="Artists" Type="Self.Artists" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artists">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_track">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackGenres_Genres">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="1" />
+          <End Role="TrackGenres" Type="Self.TrackGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="genre_id" />
+            </Principal>
+            <Dependent Role="TrackGenres">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackGenres_Tracks">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="TrackGenres" Type="Self.TrackGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="TrackGenres">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackTags_Tracks">
+          <End Role="Tracks" Type="Self.Tracks" Multiplicity="1" />
+          <End Role="TrackTags" Type="Self.TrackTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tracks">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="TrackTags">
+              <PropertyRef Name="track_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetArtistId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="artistName" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="testModelStoreContainer">
-          <EntitySet Name="albums" EntityType="Self.albums" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="artists" EntityType="Self.artists" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="genres" EntityType="Self.genres" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tracks" EntityType="Self.tracks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ViewArtistListens" EntityType="Self.ViewArtistListens" store:Type="Views" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ViewArtistListens].[artist_id] AS [artist_id], 
-    [ViewArtistListens].[artist_name] AS [artist_name], 
-    [ViewArtistListens].[ArtistListens] AS [ArtistListens]
-    FROM [dbo].[ViewArtistListens] AS [ViewArtistListens]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="Albums" EntityType="Self.Albums" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AlbumTags" EntityType="Self.AlbumTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArtistMembers" EntityType="Self.ArtistMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Artists" EntityType="Self.Artists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArtistTags" EntityType="Self.ArtistTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrackGenres" EntityType="Self.TrackGenres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tracks" EntityType="Self.Tracks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TrackTags" EntityType="Self.TrackTags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_albums_artists" Association="Self.FK_albums_artists">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Albums" EntitySet="Albums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumTags_Albums" Association="Self.FK_AlbumTags_Albums">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="AlbumTags" EntitySet="AlbumTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtistMembers_Artists" Association="Self.FK_ArtistMembers_Artists">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="ArtistMembers" EntitySet="ArtistMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtistTags_Artists" Association="Self.FK_ArtistTags_Artists">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="ArtistTags" EntitySet="ArtistTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_albums" Association="Self.FK_Comment_albums">
+            <End Role="Albums" EntitySet="Albums" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_artists" Association="Self.FK_Comment_artists">
+            <End Role="Artists" EntitySet="Artists" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_track" Association="Self.FK_Comment_track">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Users" Association="Self.FK_Comment_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackGenres_Genres" Association="Self.FK_TrackGenres_Genres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="TrackGenres" EntitySet="TrackGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackGenres_Tracks" Association="Self.FK_TrackGenres_Tracks">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="TrackGenres" EntitySet="TrackGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackTags_Tracks" Association="Self.FK_TrackTags_Tracks">
+            <End Role="Tracks" EntitySet="Tracks" />
+            <End Role="TrackTags" EntitySet="TrackTags" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="album">
+        <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Albums" EntityType="testModel.Album" />
+          <EntitySet Name="AlbumTags" EntityType="testModel.AlbumTag" />
+          <EntitySet Name="ArtistMembers" EntityType="testModel.ArtistMember" />
+          <EntitySet Name="Artists" EntityType="testModel.Artist" />
+          <EntitySet Name="ArtistTags" EntityType="testModel.ArtistTag" />
+          <EntitySet Name="Comments" EntityType="testModel.Comment" />
+          <EntitySet Name="Genres" EntityType="testModel.Genre" />
+          <EntitySet Name="TrackGenres" EntityType="testModel.TrackGenre" />
+          <EntitySet Name="Tracks" EntityType="testModel.Track" />
+          <EntitySet Name="TrackTags" EntityType="testModel.TrackTag" />
+          <EntitySet Name="Users" EntityType="testModel.User" />
+          <AssociationSet Name="FK_albums_artists" Association="testModel.FK_albums_artists">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Album" EntitySet="Albums" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AlbumTags_Albums" Association="testModel.FK_AlbumTags_Albums">
+            <End Role="Album" EntitySet="Albums" />
+            <End Role="AlbumTag" EntitySet="AlbumTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_albums" Association="testModel.FK_Comment_albums">
+            <End Role="Album" EntitySet="Albums" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtistMembers_Artists" Association="testModel.FK_ArtistMembers_Artists">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="ArtistMember" EntitySet="ArtistMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArtistTags_Artists" Association="testModel.FK_ArtistTags_Artists">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="ArtistTag" EntitySet="ArtistTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_artists" Association="testModel.FK_Comment_artists">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_track" Association="testModel.FK_Comment_track">
+            <End Role="Track" EntitySet="Tracks" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Users" Association="testModel.FK_Comment_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackGenres_Genres" Association="testModel.FK_TrackGenres_Genres">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="TrackGenre" EntitySet="TrackGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackGenres_Tracks" Association="testModel.FK_TrackGenres_Tracks">
+            <End Role="Track" EntitySet="Tracks" />
+            <End Role="TrackGenre" EntitySet="TrackGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TrackTags_Tracks" Association="testModel.FK_TrackTags_Tracks">
+            <End Role="Track" EntitySet="Tracks" />
+            <End Role="TrackTag" EntitySet="TrackTags" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Album">
           <Key>
             <PropertyRef Name="album_id" />
           </Key>
-          <Property Name="album_id" Type="Int32" Nullable="false" />
-          <Property Name="album_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="album_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="album_comments" Type="Int32" Nullable="false" />
           <Property Name="album_date_created" Type="DateTime" Precision="7" />
           <Property Name="album_date_released" Type="DateTime" Precision="7" />
           <Property Name="album_engineer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_information" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_listens" Type="Int32" />
+          <Property Name="album_listens" Type="Int32" Nullable="false" />
           <Property Name="album_producer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_tracks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="album_tracks" Type="Int32" Nullable="false" />
           <Property Name="album_type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="album_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="artist_id" Type="Int32" />
+          <NavigationProperty Name="Artist" Relationship="testModel.FK_albums_artists" FromRole="Album" ToRole="Artist" />
+          <NavigationProperty Name="AlbumTags" Relationship="testModel.FK_AlbumTags_Albums" FromRole="Album" ToRole="AlbumTag" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_albums" FromRole="Album" ToRole="Comment" />
         </EntityType>
-        <EntityType Name="artist">
+        <EntityType Name="AlbumTag">
+          <Key>
+            <PropertyRef Name="AlbumTagId" />
+          </Key>
+          <Property Name="album_id" Type="Int32" Nullable="false" />
+          <Property Name="Tag" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="AlbumTagId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Album" Relationship="testModel.FK_AlbumTags_Albums" FromRole="AlbumTag" ToRole="Album" />
+        </EntityType>
+        <EntityType Name="ArtistMember">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Artist_Id" Type="Int32" Nullable="false" />
+          <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Artist" Relationship="testModel.FK_ArtistMembers_Artists" FromRole="ArtistMember" ToRole="Artist" />
+        </EntityType>
+        <EntityType Name="Artist">
           <Key>
             <PropertyRef Name="artist_id" />
           </Key>
-          <Property Name="artist_id" Type="Int32" Nullable="false" />
+          <Property Name="artist_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="artist_active_year_begin" Type="Int32" />
           <Property Name="artist_active_year_end" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_associated_labels" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_bio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_contact" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_date_created" Type="DateTime" Precision="7" />
-          <Property Name="artist_donation_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_flattr_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_images" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_latitude" Type="Double" />
           <Property Name="artist_location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_longitude" Type="Double" />
-          <Property Name="artist_members" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_paypal_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_related_projects" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="artist_wikipedia_page" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Albums" Relationship="testModel.FK_albums_artists" FromRole="Artist" ToRole="Album" />
+          <NavigationProperty Name="ArtistMembers" Relationship="testModel.FK_ArtistMembers_Artists" FromRole="Artist" ToRole="ArtistMember" />
+          <NavigationProperty Name="ArtistTags" Relationship="testModel.FK_ArtistTags_Artists" FromRole="Artist" ToRole="ArtistTag" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_artists" FromRole="Artist" ToRole="Comment" />
         </EntityType>
-        <EntityType Name="genre">
+        <EntityType Name="ArtistTag">
+          <Key>
+            <PropertyRef Name="ArtistTagId" />
+          </Key>
+          <Property Name="artist_id" Type="Int32" Nullable="false" />
+          <Property Name="Tag" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="ArtistTagId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Artist" Relationship="testModel.FK_ArtistTags_Artists" FromRole="ArtistTag" ToRole="Artist" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="SongId" Type="Int32" />
+          <Property Name="AlbumId" Type="Int32" />
+          <Property Name="TrackId" Type="Int32" />
+          <Property Name="ArtistId" Type="Int32" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cdate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Album" Relationship="testModel.FK_Comment_albums" FromRole="Comment" ToRole="Album" />
+          <NavigationProperty Name="Artist" Relationship="testModel.FK_Comment_artists" FromRole="Comment" ToRole="Artist" />
+          <NavigationProperty Name="Track" Relationship="testModel.FK_Comment_track" FromRole="Comment" ToRole="Track" />
+          <NavigationProperty Name="User" Relationship="testModel.FK_Comment_Users" FromRole="Comment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Genre">
           <Key>
             <PropertyRef Name="genre_id" />
           </Key>
-          <Property Name="genre_id" Type="Int32" Nullable="false" />
-          <Property Name="genre_color" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="genre_handle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="genre_parent_id" Type="Int32" />
-          <Property Name="genre_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="genre_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="genre_title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TrackGenres" Relationship="testModel.FK_TrackGenres_Genres" FromRole="Genre" ToRole="TrackGenre" />
         </EntityType>
-        <EntityType Name="track">
+        <EntityType Name="TrackGenre">
+          <Key>
+            <PropertyRef Name="TrackGenreId" />
+          </Key>
+          <Property Name="TrackGenreId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrackId" Type="Int32" Nullable="false" />
+          <Property Name="GenreId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Genre" Relationship="testModel.FK_TrackGenres_Genres" FromRole="TrackGenre" ToRole="Genre" />
+          <NavigationProperty Name="Track" Relationship="testModel.FK_TrackGenres_Tracks" FromRole="TrackGenre" ToRole="Track" />
+        </EntityType>
+        <EntityType Name="Track">
           <Key>
             <PropertyRef Name="track_id" />
           </Key>
-          <Property Name="track_id" Type="Int32" Nullable="false" />
-          <Property Name="album_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="album_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="artist_website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="art" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="license_image_file_large" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="license_parent_id" Type="Int32" />
+          <Property Name="track_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="album_id" Type="Int32" />
+          <Property Name="artist_id" Type="Int32" Nullable="false" />
           <Property Name="license_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="license_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="tags" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_bit_rate" Type="Int32" />
           <Property Name="track_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_composer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_copyright_c" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_copyright_p" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_date_created" Type="DateTime" Precision="7" />
           <Property Name="track_date_recorded" Type="DateTime" Precision="7" />
           <Property Name="track_disc_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -235,159 +525,324 @@ warning 6002: The table/view 'test .dbo.ViewArtistListens' does not have a prima
           <Property Name="track_explicit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_explicit_notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_favorites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_genres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_image_file" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_information" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_instrumental" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_interest" Type="Int32" />
           <Property Name="track_language_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="track_listens" Type="Int32" />
           <Property Name="track_lyricist" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="track_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="track_number" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_publisher" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="track_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_track" FromRole="Track" ToRole="Comment" />
+          <NavigationProperty Name="TrackGenres" Relationship="testModel.FK_TrackGenres_Tracks" FromRole="Track" ToRole="TrackGenre" />
+          <NavigationProperty Name="TrackTags" Relationship="testModel.FK_TrackTags_Tracks" FromRole="Track" ToRole="TrackTag" />
         </EntityType>
-        <EntityType Name="ViewArtistListen">
+        <EntityType Name="TrackTag">
           <Key>
-            <PropertyRef Name="artist_id" />
+            <PropertyRef Name="TrackTagId" />
           </Key>
-          <Property Name="artist_id" Type="Int32" Nullable="false" />
-          <Property Name="artist_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ArtistListens" Type="Int32" />
+          <Property Name="track_id" Type="Int32" Nullable="false" />
+          <Property Name="Tag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TrackTagId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Track" Relationship="testModel.FK_TrackTags_Tracks" FromRole="TrackTag" ToRole="Track" />
         </EntityType>
-        <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="albums" EntityType="Self.album" />
-          <EntitySet Name="artists" EntityType="Self.artist" />
-          <EntitySet Name="genres" EntityType="Self.genre" />
-          <EntitySet Name="tracks" EntityType="Self.track" />
-          <EntitySet Name="ViewArtistListens" EntityType="Self.ViewArtistListen" />
-        </EntityContainer>
-      </Schema>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cdate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Comments" Relationship="testModel.FK_Comment_Users" FromRole="User" ToRole="Comment" />
+        </EntityType>
+        <Association Name="FK_albums_artists">
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1" />
+          <End Type="testModel.Album" Role="Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="artist_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AlbumTags_Albums">
+          <End Type="testModel.Album" Role="Album" Multiplicity="1" />
+          <End Type="testModel.AlbumTag" Role="AlbumTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="album_id" />
+            </Principal>
+            <Dependent Role="AlbumTag">
+              <PropertyRef Name="album_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_albums">
+          <End Type="testModel.Album" Role="Album" Multiplicity="0..1" />
+          <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="album_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="AlbumId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtistMembers_Artists">
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="testModel.ArtistMember" Role="ArtistMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="ArtistMember">
+              <PropertyRef Name="Artist_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArtistTags_Artists">
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="1" />
+          <End Type="testModel.ArtistTag" Role="ArtistTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="ArtistTag">
+              <PropertyRef Name="artist_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_artists">
+          <End Type="testModel.Artist" Role="Artist" Multiplicity="0..1" />
+          <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="artist_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ArtistId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_track">
+          <End Type="testModel.Track" Role="Track" Multiplicity="0..1" />
+          <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Track">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Users">
+          <End Type="testModel.User" Role="User" Multiplicity="1" />
+          <End Type="testModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackGenres_Genres">
+          <End Type="testModel.Genre" Role="Genre" Multiplicity="1" />
+          <End Type="testModel.TrackGenre" Role="TrackGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="genre_id" />
+            </Principal>
+            <Dependent Role="TrackGenre">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackGenres_Tracks">
+          <End Type="testModel.Track" Role="Track" Multiplicity="1" />
+          <End Type="testModel.TrackGenre" Role="TrackGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Track">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="TrackGenre">
+              <PropertyRef Name="TrackId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TrackTags_Tracks">
+          <End Type="testModel.Track" Role="Track" Multiplicity="1" />
+          <End Type="testModel.TrackTag" Role="TrackTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Track">
+              <PropertyRef Name="track_id" />
+            </Principal>
+            <Dependent Role="TrackTag">
+              <PropertyRef Name="track_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities">
-          <EntitySetMapping Name="albums">
-            <EntityTypeMapping TypeName="testModel.album">
-              <MappingFragment StoreEntitySet="albums">
-                <ScalarProperty Name="album_id" ColumnName="album_id" />
-                <ScalarProperty Name="album_comments" ColumnName="album_comments" />
-                <ScalarProperty Name="album_date_created" ColumnName="album_date_created" />
-                <ScalarProperty Name="album_date_released" ColumnName="album_date_released" />
-                <ScalarProperty Name="album_engineer" ColumnName="album_engineer" />
-                <ScalarProperty Name="album_favorites" ColumnName="album_favorites" />
-                <ScalarProperty Name="album_handle" ColumnName="album_handle" />
-                <ScalarProperty Name="album_image_file" ColumnName="album_image_file" />
-                <ScalarProperty Name="album_images" ColumnName="album_images" />
-                <ScalarProperty Name="album_information" ColumnName="album_information" />
-                <ScalarProperty Name="album_listens" ColumnName="album_listens" />
-                <ScalarProperty Name="album_producer" ColumnName="album_producer" />
-                <ScalarProperty Name="album_title" ColumnName="album_title" />
-                <ScalarProperty Name="album_tracks" ColumnName="album_tracks" />
+          <EntitySetMapping Name="Albums">
+            <EntityTypeMapping TypeName="testModel.Album">
+              <MappingFragment StoreEntitySet="Albums">
+                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
+                <ScalarProperty Name="album_url" ColumnName="album_url" />
                 <ScalarProperty Name="album_type" ColumnName="album_type" />
-                <ScalarProperty Name="album_url" ColumnName="album_url" />
-                <ScalarProperty Name="artist_name" ColumnName="artist_name" />
-                <ScalarProperty Name="artist_url" ColumnName="artist_url" />
-                <ScalarProperty Name="tags" ColumnName="tags" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="artists">
-            <EntityTypeMapping TypeName="testModel.artist">
-              <MappingFragment StoreEntitySet="artists">
-                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
-                <ScalarProperty Name="artist_active_year_begin" ColumnName="artist_active_year_begin" />
-                <ScalarProperty Name="artist_active_year_end" ColumnName="artist_active_year_end" />
-                <ScalarProperty Name="artist_associated_labels" ColumnName="artist_associated_labels" />
-                <ScalarProperty Name="artist_bio" ColumnName="artist_bio" />
-                <ScalarProperty Name="artist_comments" ColumnName="artist_comments" />
-                <ScalarProperty Name="artist_contact" ColumnName="artist_contact" />
-                <ScalarProperty Name="artist_date_created" ColumnName="artist_date_created" />
-                <ScalarProperty Name="artist_donation_url" ColumnName="artist_donation_url" />
-                <ScalarProperty Name="artist_favorites" ColumnName="artist_favorites" />
-                <ScalarProperty Name="artist_flattr_name" ColumnName="artist_flattr_name" />
-                <ScalarProperty Name="artist_handle" ColumnName="artist_handle" />
-                <ScalarProperty Name="artist_image_file" ColumnName="artist_image_file" />
-                <ScalarProperty Name="artist_images" ColumnName="artist_images" />
-                <ScalarProperty Name="artist_latitude" ColumnName="artist_latitude" />
-                <ScalarProperty Name="artist_location" ColumnName="artist_location" />
-                <ScalarProperty Name="artist_longitude" ColumnName="artist_longitude" />
-                <ScalarProperty Name="artist_members" ColumnName="artist_members" />
-                <ScalarProperty Name="artist_name" ColumnName="artist_name" />
-                <ScalarProperty Name="artist_paypal_name" ColumnName="artist_paypal_name" />
-                <ScalarProperty Name="artist_related_projects" ColumnName="artist_related_projects" />
-                <ScalarProperty Name="artist_url" ColumnName="artist_url" />
-                <ScalarProperty Name="artist_website" ColumnName="artist_website" />
-                <ScalarProperty Name="artist_wikipedia_page" ColumnName="artist_wikipedia_page" />
-                <ScalarProperty Name="tags" ColumnName="tags" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="genres">
-            <EntityTypeMapping TypeName="testModel.genre">
-              <MappingFragment StoreEntitySet="genres">
-                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
-                <ScalarProperty Name="genre_color" ColumnName="genre_color" />
-                <ScalarProperty Name="genre_handle" ColumnName="genre_handle" />
-                <ScalarProperty Name="genre_parent_id" ColumnName="genre_parent_id" />
-                <ScalarProperty Name="genre_title" ColumnName="genre_title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tracks">
-            <EntityTypeMapping TypeName="testModel.track">
-              <MappingFragment StoreEntitySet="tracks">
-                <ScalarProperty Name="track_id" ColumnName="track_id" />
-                <ScalarProperty Name="album_id" ColumnName="album_id" />
+                <ScalarProperty Name="album_tracks" ColumnName="album_tracks" />
                 <ScalarProperty Name="album_title" ColumnName="album_title" />
-                <ScalarProperty Name="album_url" ColumnName="album_url" />
-                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
-                <ScalarProperty Name="artist_name" ColumnName="artist_name" />
-                <ScalarProperty Name="artist_url" ColumnName="artist_url" />
-                <ScalarProperty Name="artist_website" ColumnName="artist_website" />
-                <ScalarProperty Name="art" ColumnName="art" />
-                <ScalarProperty Name="license_image_file_large" ColumnName="license_image_file_large" />
-                <ScalarProperty Name="license_parent_id" ColumnName="license_parent_id" />
-                <ScalarProperty Name="license_title" ColumnName="license_title" />
-                <ScalarProperty Name="license_url" ColumnName="license_url" />
-                <ScalarProperty Name="tags" ColumnName="tags" />
-                <ScalarProperty Name="track_bit_rate" ColumnName="track_bit_rate" />
-                <ScalarProperty Name="track_comments" ColumnName="track_comments" />
-                <ScalarProperty Name="track_composer" ColumnName="track_composer" />
-                <ScalarProperty Name="track_copyright_c" ColumnName="track_copyright_c" />
-                <ScalarProperty Name="track_copyright_p" ColumnName="track_copyright_p" />
-                <ScalarProperty Name="track_date_created" ColumnName="track_date_created" />
-                <ScalarProperty Name="track_date_recorded" ColumnName="track_date_recorded" />
-                <ScalarProperty Name="track_disc_number" ColumnName="track_disc_number" />
-                <ScalarProperty Name="track_duration" ColumnName="track_duration" />
-                <ScalarProperty Name="track_explicit" ColumnName="track_explicit" />
-                <ScalarProperty Name="track_explicit_notes" ColumnName="track_explicit_notes" />
-                <ScalarProperty Name="track_favorites" ColumnName="track_favorites" />
-                <ScalarProperty Name="track_file" ColumnName="track_file" />
-                <ScalarProperty Name="track_genres" ColumnName="track_genres" />
-                <ScalarProperty Name="track_image_file" ColumnName="track_image_file" />
-                <ScalarProperty Name="track_information" ColumnName="track_information" />
-                <ScalarProperty Name="track_instrumental" ColumnName="track_instrumental" />
-                <ScalarProperty Name="track_interest" ColumnName="track_interest" />
-                <ScalarProperty Name="track_language_code" ColumnName="track_language_code" />
-                <ScalarProperty Name="track_listens" ColumnName="track_listens" />
-                <ScalarProperty Name="track_lyricist" ColumnName="track_lyricist" />
-                <ScalarProperty Name="track_number" ColumnName="track_number" />
-                <ScalarProperty Name="track_publisher" ColumnName="track_publisher" />
-                <ScalarProperty Name="track_title" ColumnName="track_title" />
-                <ScalarProperty Name="track_url" ColumnName="track_url" />
+                <ScalarProperty Name="album_producer" ColumnName="album_producer" />
+                <ScalarProperty Name="album_listens" ColumnName="album_listens" />
+                <ScalarProperty Name="album_information" ColumnName="album_information" />
+                <ScalarProperty Name="album_handle" ColumnName="album_handle" />
+                <ScalarProperty Name="album_favorites" ColumnName="album_favorites" />
+                <ScalarProperty Name="album_engineer" ColumnName="album_engineer" />
+                <ScalarProperty Name="album_date_released" ColumnName="album_date_released" />
+                <ScalarProperty Name="album_date_created" ColumnName="album_date_created" />
+                <ScalarProperty Name="album_comments" ColumnName="album_comments" />
+                <ScalarProperty Name="album_id" ColumnName="album_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ViewArtistListens">
-            <EntityTypeMapping TypeName="testModel.ViewArtistListen">
-              <MappingFragment StoreEntitySet="ViewArtistListens">
-                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
+          <EntitySetMapping Name="AlbumTags">
+            <EntityTypeMapping TypeName="testModel.AlbumTag">
+              <MappingFragment StoreEntitySet="AlbumTags">
+                <ScalarProperty Name="AlbumTagId" ColumnName="AlbumTagId" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="album_id" ColumnName="album_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtistMembers">
+            <EntityTypeMapping TypeName="testModel.ArtistMember">
+              <MappingFragment StoreEntitySet="ArtistMembers">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="Artist_Id" ColumnName="Artist_Id" />
+                <ScalarProperty Name="MemberName" ColumnName="MemberName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="testModel.Artist">
+              <MappingFragment StoreEntitySet="Artists">
+                <ScalarProperty Name="artist_wikipedia_page" ColumnName="artist_wikipedia_page" />
+                <ScalarProperty Name="artist_website" ColumnName="artist_website" />
+                <ScalarProperty Name="artist_url" ColumnName="artist_url" />
                 <ScalarProperty Name="artist_name" ColumnName="artist_name" />
-                <ScalarProperty Name="ArtistListens" ColumnName="ArtistListens" />
+                <ScalarProperty Name="artist_location" ColumnName="artist_location" />
+                <ScalarProperty Name="artist_handle" ColumnName="artist_handle" />
+                <ScalarProperty Name="artist_favorites" ColumnName="artist_favorites" />
+                <ScalarProperty Name="artist_date_created" ColumnName="artist_date_created" />
+                <ScalarProperty Name="artist_contact" ColumnName="artist_contact" />
+                <ScalarProperty Name="artist_comments" ColumnName="artist_comments" />
+                <ScalarProperty Name="artist_bio" ColumnName="artist_bio" />
+                <ScalarProperty Name="artist_active_year_end" ColumnName="artist_active_year_end" />
+                <ScalarProperty Name="artist_active_year_begin" ColumnName="artist_active_year_begin" />
+                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ArtistTags">
+            <EntityTypeMapping TypeName="testModel.ArtistTag">
+              <MappingFragment StoreEntitySet="ArtistTags">
+                <ScalarProperty Name="ArtistTagId" ColumnName="ArtistTagId" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="testModel.Comment">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="Cdate" ColumnName="Cdate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ArtistId" ColumnName="ArtistId" />
+                <ScalarProperty Name="TrackId" ColumnName="TrackId" />
+                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
+                <ScalarProperty Name="SongId" ColumnName="SongId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="testModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="genre_title" ColumnName="genre_title" />
+                <ScalarProperty Name="genre_id" ColumnName="genre_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrackGenres">
+            <EntityTypeMapping TypeName="testModel.TrackGenre">
+              <MappingFragment StoreEntitySet="TrackGenres">
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+                <ScalarProperty Name="TrackId" ColumnName="TrackId" />
+                <ScalarProperty Name="TrackGenreId" ColumnName="TrackGenreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tracks">
+            <EntityTypeMapping TypeName="testModel.Track">
+              <MappingFragment StoreEntitySet="Tracks">
+                <ScalarProperty Name="track_url" ColumnName="track_url" />
+                <ScalarProperty Name="track_title" ColumnName="track_title" />
+                <ScalarProperty Name="track_publisher" ColumnName="track_publisher" />
+                <ScalarProperty Name="track_number" ColumnName="track_number" />
+                <ScalarProperty Name="track_lyricist" ColumnName="track_lyricist" />
+                <ScalarProperty Name="track_listens" ColumnName="track_listens" />
+                <ScalarProperty Name="track_language_code" ColumnName="track_language_code" />
+                <ScalarProperty Name="track_interest" ColumnName="track_interest" />
+                <ScalarProperty Name="track_instrumental" ColumnName="track_instrumental" />
+                <ScalarProperty Name="track_information" ColumnName="track_information" />
+                <ScalarProperty Name="track_favorites" ColumnName="track_favorites" />
+                <ScalarProperty Name="track_explicit_notes" ColumnName="track_explicit_notes" />
+                <ScalarProperty Name="track_explicit" ColumnName="track_explicit" />
+                <ScalarProperty Name="track_duration" ColumnName="track_duration" />
+                <ScalarProperty Name="track_disc_number" ColumnName="track_disc_number" />
+                <ScalarProperty Name="track_date_recorded" ColumnName="track_date_recorded" />
+                <ScalarProperty Name="track_date_created" ColumnName="track_date_created" />
+                <ScalarProperty Name="track_composer" ColumnName="track_composer" />
+                <ScalarProperty Name="track_comments" ColumnName="track_comments" />
+                <ScalarProperty Name="track_bit_rate" ColumnName="track_bit_rate" />
+                <ScalarProperty Name="license_title" ColumnName="license_title" />
+                <ScalarProperty Name="artist_id" ColumnName="artist_id" />
+                <ScalarProperty Name="album_id" ColumnName="album_id" />
+                <ScalarProperty Name="track_id" ColumnName="track_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TrackTags">
+            <EntityTypeMapping TypeName="testModel.TrackTag">
+              <MappingFragment StoreEntitySet="TrackTags">
+                <ScalarProperty Name="TrackTagId" ColumnName="TrackTagId" />
+                <ScalarProperty Name="Tag" ColumnName="Tag" />
+                <ScalarProperty Name="track_id" ColumnName="track_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="testModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Cdate" ColumnName="Cdate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,0 +1,92 @@
+﻿@using PagedList.Mvc;
+
+
+@model  PagedList.IPagedList<db_music.Models.Artist>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Artists";
+}
+
+<h2>Artists</h2>
+@using (Html.BeginForm("Index", "Artists", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            Biography
+        </th>
+        <th>
+            Number of Albums
+        </th>
+        <th>
+            @Html.ActionLink("Favorites", "Index", new { sortOrder = ViewBag.FavoritesSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        @*<th>
+                @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>*@
+        <th>
+            Average Rating
+        </th>
+        <th>
+            Number of Comments
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        var avgRating = item.Comments.Count > 0 ? item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating) : 0;
+        var bio = WebUtility.HtmlDecode(item.artist_bio);
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.artist_name)
+            </td>
+            <td>
+                @Html.Raw(bio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Albums.Count)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.artist_favorites)
+            </td>
+            <td>
+                @Html.Display(avgRating.ToString())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments.Count)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.artist_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.artist_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.artist_id })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />

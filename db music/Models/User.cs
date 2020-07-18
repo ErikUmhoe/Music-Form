@@ -12,18 +12,20 @@ namespace db_music.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Genre
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Genre()
+        public User()
         {
-            this.TrackGenres = new HashSet<TrackGenre>();
+            this.Comments = new HashSet<Comment>();
         }
     
-        public int genre_id { get; set; }
-        public string genre_title { get; set; }
+        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public System.DateTime Cdate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TrackGenre> TrackGenres { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

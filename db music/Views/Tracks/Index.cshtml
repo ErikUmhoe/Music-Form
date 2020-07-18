@@ -1,0 +1,150 @@
+﻿@model IEnumerable<db_music.Models.Track>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.album_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.artist_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_bit_rate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_comments)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_composer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_date_created)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_date_recorded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_disc_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_explicit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_explicit_notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_favorites)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_information)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_instrumental)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_interest)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_language_code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_listens)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_lyricist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_publisher)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.track_url)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.album_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.artist_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_date_created)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_date_recorded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_disc_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_explicit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_explicit_notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_favorites)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_information)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_instrumental)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_interest)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_language_code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_listens)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_lyricist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_publisher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.track_url)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.track_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.track_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.track_id })
+        </td>
+    </tr>
+}
+
+</table>

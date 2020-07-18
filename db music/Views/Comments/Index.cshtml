@@ -1,0 +1,62 @@
+@model List<db_music.Models.CommentViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(x => x.First().Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.First().CDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.First().Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor( x => x.First().ArtistId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.First().AlbumId)
+        </th>
+        </th>
+            @Html.DisplayNameFor(x => x.First().TrackId)
+        </th>
+        </th>
+            @Html.DisplayNameFor(x => x.First().Comment)
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArtistId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AlbumId)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.TrackId)
+        </td>
+        <td>
+          @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+    </tr>
+}
+
+</table>

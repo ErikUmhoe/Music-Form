@@ -59,6 +59,12 @@
     <Reference Include="MySql.Data.Entity.EF6, Version=6.10.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.Entity.6.10.9\lib\net452\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.Configuration.Install" />
@@ -201,21 +207,45 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArtistsController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Models\SpotifyArtistRecommend.cs" />
+    <Compile Include="Models\SpotifyResult.cs" />
+    <Compile Include="Controllers\TracksController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\album.cs">
+    <Compile Include="Models\Album.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\artist.cs">
+    <Compile Include="Models\AlbumTag.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\genre.cs">
+    <Compile Include="Models\AlbumViewModel.cs" />
+    <Compile Include="Models\Artist.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArtistIndexViewModel.cs" />
+    <Compile Include="Models\ArtistMember.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtistTag.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArtistViewModel.cs" />
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\Genre.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Songviewer.Context.cs">
@@ -233,20 +263,32 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Songviewer.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\track.cs">
+    <Compile Include="Models\SpotifyArtist.cs" />
+    <Compile Include="Models\Track.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewArtistListen.cs">
+    <Compile Include="Models\TrackGenre.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TrackTag.cs">
+      <DependentUpon>Songviewer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TrackViewModel.cs" />
+    <Compile Include="Models\User.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\Mapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -270,6 +312,9 @@
     <Content Include="Models\Songviewer.edmx.diagram">
       <DependentUpon>Songviewer.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
+    <Content Include=".gitignore" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -281,6 +326,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\toastrHelper.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -317,9 +365,27 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Artists\Create.cshtml" />
+    <Content Include="Views\Artists\Delete.cshtml" />
+    <Content Include="Views\Artists\Details.cshtml" />
+    <Content Include="Views\Artists\Edit.cshtml" />
+    <Content Include="Views\Artists\Index.cshtml" />
+    <Content Include="Views\Tracks\Create.cshtml" />
+    <Content Include="Views\Tracks\Delete.cshtml" />
+    <Content Include="Views\Tracks\Details.cshtml" />
+    <Content Include="Views\Tracks\Edit.cshtml" />
+    <Content Include="Views\Tracks\Index.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Shared\_RecommendedTrackTable.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
