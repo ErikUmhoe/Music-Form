@@ -10,12 +10,10 @@
 namespace db_music.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TrackTag
+    public partial class DelimitedSplit8K_Result
     {
-        public int track_id { get; set; }
-        public string Tag { get; set; }
-        public long TrackTagId { get; set; }
+        public Nullable<long> ItemNumber { get; set; }
+        public string Item { get; set; }
     }
 }

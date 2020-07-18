@@ -12,6 +12,8 @@ namespace db_music.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class testEntities : DbContext
     {
@@ -36,5 +38,47 @@ namespace db_music.Models
         public virtual DbSet<Track> Tracks { get; set; }
         public virtual DbSet<TrackTag> TrackTags { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ViewArtistListen> ViewArtistListens { get; set; }
+    
+        [DbFunction("testEntities", "DelimitedSplit8K")]
+        public virtual IQueryable<DelimitedSplit8K_Result> DelimitedSplit8K(string pString, string pDelimiter)
+        {
+            var pStringParameter = pString != null ?
+                new ObjectParameter("pString", pString) :
+                new ObjectParameter("pString", typeof(string));
+    
+            var pDelimiterParameter = pDelimiter != null ?
+                new ObjectParameter("pDelimiter", pDelimiter) :
+                new ObjectParameter("pDelimiter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DelimitedSplit8K_Result>("[testEntities].[DelimitedSplit8K](@pString, @pDelimiter)", pStringParameter, pDelimiterParameter);
+        }
+    
+        public virtual ObjectResult<string> GetArtistMembers(string artist_name)
+        {
+            var artist_nameParameter = artist_name != null ?
+                new ObjectParameter("artist_name", artist_name) :
+                new ObjectParameter("artist_name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetArtistMembers", artist_nameParameter);
+        }
+    
+        public virtual ObjectResult<string> GetTrackGenres(string trackName)
+        {
+            var trackNameParameter = trackName != null ?
+                new ObjectParameter("TrackName", trackName) :
+                new ObjectParameter("TrackName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetTrackGenres", trackNameParameter);
+        }
+    
+        public virtual ObjectResult<GetUserCommentInfo_Result> GetUserCommentInfo(string userName)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserCommentInfo_Result>("GetUserCommentInfo", userNameParameter);
+        }
     }
 }

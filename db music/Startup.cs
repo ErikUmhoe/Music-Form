@@ -8,6 +8,7 @@ namespace db_music
     {
         public void Configuration(IAppBuilder app)
         {
+           
             ConfigureAuth(app);
         }
     }
