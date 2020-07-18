@@ -1,255 +1,79 @@
-﻿@model IEnumerable<db_music.Models.Track>
+﻿@using PagedList.Mvc;
+
+
+@model PagedList.IPagedList<db_music.Models.Track>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Tracks";
 }
 
-<h2>Index</h2>
-
+<h2>Tracks</h2>
+@using (Html.BeginForm("Index", "Tracks", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.album_id)
+            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.album_title)
+            @Html.ActionLink("Favorites", "Index", new { sortOrder = ViewBag.FavoritesSortParam, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        @*<th>
+                @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>*@
+        <th>
+            Average Rating
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.album_url)
+            Number of Comments
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.artist_id)
+            Actions
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.artist_name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.artist_url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.artist_website)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.art)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.license_image_file_large)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.license_parent_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.license_title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.license_url)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tags)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_bit_rate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_comments)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_composer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_copyright_c)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_copyright_p)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_date_created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_date_recorded)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_disc_number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_explicit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_explicit_notes)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_favorites)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_file)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_genres)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_image_file)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_information)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_instrumental)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_interest)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_language_code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_listens)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_lyricist)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_number)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_publisher)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.track_url)
-        </th>
-        <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.album_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.album_title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.album_url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.artist_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.artist_name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.artist_url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.artist_website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.art)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.license_image_file_large)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.license_parent_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.license_title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.license_url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tags)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_bit_rate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_comments)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_composer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_copyright_c)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_copyright_p)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_date_created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_date_recorded)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_disc_number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_explicit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_explicit_notes)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_favorites)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_file)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_genres)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_image_file)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_information)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_instrumental)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_interest)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_language_code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_listens)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_lyricist)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_number)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.track_url)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.track_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.track_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.track_id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+
+        var avgRating = item.Comments.Count > 0 ? item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating) : 0;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.track_title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.track_favorites)
+            </td>
+            <td>
+                @Html.Display(avgRating.ToString())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments.Count)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.track_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.track_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.track_id })
+            </td>
+        </tr>
+    }
 
 </table>
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />

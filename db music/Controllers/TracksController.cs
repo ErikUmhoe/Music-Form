@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
+using PagedList;
 
 namespace db_music.Controllers
 {
@@ -15,9 +16,52 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
 
         // GET: Tracks
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Tracks.Take(20).ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.FavoritesSortParam = String.IsNullOrEmpty(sortOrder) ? "favorites_desc" : "";
+            ViewBag.RatingSortParam = String.IsNullOrEmpty(sortOrder) ? "rating_desc" : "";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            /*Main query to gett artists is SELECT TOP(20) FROM Artists 
+            This implements pagination to reduce the size of the query when we hit the database, only keeping the first
+            20 results that return back from the query built by the following search criteria and order by.
+            With pagination, when a user moves to the next page they will load the next twenty results from the query.
+            */
+            IQueryable<Track> dbArtists = from a in db.Tracks
+                                           select a;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                //This is equivalent to SELECT TOP(20) * FROM Artists WHERE Artists.artist_name = searchString
+                dbArtists = dbArtists.Where(x => x.track_title.Contains(searchString));
+            }
+
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            //This logic is equivalent to adding an ORDER BY clause to the query
+            switch (sortOrder)
+            {
+                //ORDER BY artist_name DESC
+                case "name_desc":
+                    return View(dbArtists.OrderByDescending(s => s.track_title).ToPagedList(pageNumber, pageSize));
+                //ORDER BY favorites
+                case "Favorites":
+                    return View(dbArtists.OrderBy(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
+                //ORDER BY favorites DESC
+                case "favorites_desc":
+                    return View(dbArtists.OrderByDescending(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
+                //ORDER BY artist_name
+                default:
+                    return View(dbArtists.OrderBy(s => s.track_title).ToPagedList(pageNumber, pageSize));
+            }
         }
 
         // GET: Tracks/Details/5
