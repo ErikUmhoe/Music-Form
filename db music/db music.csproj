@@ -213,7 +213,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="DAL\MusicContext.cs" />
     <Compile Include="Models\SpotifyArtistRecommend.cs" />
     <Compile Include="Models\SpotifyResult.cs" />
     <Compile Include="Controllers\TracksController.cs" />
