@@ -22,7 +22,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Albums.First().album_title)
+            @Html.ActionLink(Model.Albums.First().album_title, "Details", "Albums", new { id = Model.album_id }, null)
         </dd>
 
         <dt>
@@ -30,168 +30,179 @@
         </dt>
 
         <dd>
-            @Html.ActionLink(Model.Artists.First().artist_name, "Artist", "Details", "Details", new { id = Model.artist_id })
+            @Html.ActionLink(Model.Artists.First().artist_name, "Details", "Artists", new { id = Model.artist_id }, null)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.license_title)
+            Genre
         </dt>
+        @foreach (var trackGenre in Model.TrackGenres)
+        {
+            <dd>
+                @Html.DisplayFor(model => trackGenre.Genre.genre_title)
+            </dd>
+        }
+        @if (Model.license_title != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.license_title)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.license_title)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.license_title)
+            </dd>
+        }
+        @if (Model.track_bit_rate != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_bit_rate)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_bit_rate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_bit_rate)
+            </dd>
+        }
+        @if (Model.track_composer != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_composer)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_bit_rate)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_composer)
+            </dd>
+        }
+        @if (Model.track_date_created != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_date_created)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_comments)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_date_created)
+            </dd>
+        }
+        @if (Model.track_date_recorded != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_date_recorded)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_comments)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_date_recorded)
+            </dd>
+        }
+        @if (Model.track_disc_number != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_disc_number)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_composer)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_disc_number)
+            </dd>
+        }
+        @if (Model.track_duration != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_duration)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_composer)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_duration)
+            </dd>
+        }
+        @if (Model.track_explicit != null)
+        {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_date_created)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.track_explicit)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_date_created)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_explicit)
+            </dd>
+        }
+        @if (Model.track_favorites != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_favorites)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_date_recorded)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_favorites)
+            </dd>
+        }
+        @if (Model.track_information != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_information)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_date_recorded)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_information)
+            </dd>
+        }
+        @if (Model.track_instrumental != null)
+        {
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_disc_number)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.track_instrumental)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_instrumental)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_disc_number)
-        </dd>
+        }
+        @if (Model.track_listens != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_listens)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_duration)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_listens)
+            </dd>
+        }
+        @if (Model.track_lyricist != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_lyricist)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_duration)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_lyricist)
+            </dd>
+        }
+        @if (Model.track_number != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_number)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_explicit)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.track_number)
+            </dd>
+        }
+        @if (Model.track_publisher != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.track_publisher)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.track_explicit)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.track_publisher)
+            </dd>
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.track_explicit_notes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_explicit_notes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_favorites)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_favorites)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_information)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_information)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_instrumental)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_instrumental)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_interest)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_interest)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_language_code)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_language_code)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_listens)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_listens)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_lyricist)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_lyricist)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_number)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_number)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_publisher)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_publisher)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.track_url)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_url)
-        </dd>
+        @if (!String.IsNullOrEmpty(Model.track_url))
+        {
+            <dt>
+                URL
+            </dt>
+            <dd>
+                <a href="@Model.track_url" target="_blank">Listen on the Free Music Archive</a>
+            </dd>
+        }
 
     </dl>
 </div>
