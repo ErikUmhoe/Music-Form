@@ -209,6 +209,23 @@ namespace db_music.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                     /*
+                        * Add a new user to the Users Table:
+                        * USE [music]
+                           GO
+
+                           INSERT INTO [dbo].[Users]
+                                      ([Username]
+                                      ,[Password]
+                                      ,[Cdate])
+                                VALUES
+                                      (user.Username
+                                      ,user.Password
+                                      ,GETDATE())
+                           GO
+
+
+                    */
                     var newUser = new User { Username = model.Email, Password = model.Password, Cdate = DateTime.Now};
                     var context = new testEntities();
                     context.Users.Add(newUser);

@@ -91,7 +91,7 @@ namespace db_music.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,SongId,AlbumId,TrackId,ArtistId,Text,Rating,Type,Cdate")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Id,UserId,AlbumId,TrackId,ArtistId,Text,Rating,Type,Cdate")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -99,10 +99,23 @@ namespace db_music.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AlbumId = new SelectList(db.Albums, "album_id", "album_engineer", comment.AlbumId);
-            ViewBag.ArtistId = new SelectList(db.Artists, "artist_id", "artist_active_year_end", comment.ArtistId);
-            ViewBag.TrackId = new SelectList(db.Tracks, "track_id", "license_title", comment.TrackId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Username", comment.UserId);
+            /*
+             *Given the passed in attributes from comment, this will execute the follow SQL Code to update a comment:
+             * USE [music]
+                GO
+
+                UPDATE [dbo].[Comments]
+                   SET [UserId] = UserId
+                      ,[AlbumId] = AlbumId
+                      ,[TrackId] = TrackId
+                      ,[ArtistId] =  ArtistId
+                      ,[Text] =  Text
+                      ,[Rating] = Rating
+                      ,[Type] = Type
+                      ,[Cdate] =  Cdate
+                 WHERE Id = Id
+                GO
+             */
             return View(comment);
         }
 
@@ -126,6 +139,15 @@ namespace db_music.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            /*
+             This executes the following SQL Command:
+             USE [music]
+            GO
+
+            DELETE FROM [dbo].[Comments]
+                    WHERE Id = Id
+            GO
+             */
             Comment comment = db.Comments.Find(id);
             db.Comments.Remove(comment);
             db.SaveChanges();
