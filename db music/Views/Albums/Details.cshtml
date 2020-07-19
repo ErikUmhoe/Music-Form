@@ -1,4 +1,4 @@
-﻿@model db_music.Models.Track
+﻿@model db_music.Models.Album
 
 @{
     ViewBag.Title = "Details";
@@ -7,171 +7,92 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Track</h4>
+    <h4>Album Details</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            Track Title
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.track_title)
-        </dd>
         <dt>
             Album Title
         </dt>
 
         <dd>
-            @Html.ActionLink(Model.Albums.First().album_title, "Details", "Albums", new { id = Model.album_id }, null)
+            @Html.DisplayFor(model => model.album_title)
         </dd>
-
         <dt>
             Artist Name
         </dt>
-
         <dd>
-            @Html.ActionLink(Model.Artists.First().artist_name, "Details", "Artists", new { id = Model.artist_id }, null)
+            @Html.ActionLink(Model.Artist.artist_name, "Details", "Artists", new { id = Model.Artist.artist_id }, null)
         </dd>
         <dt>
-            Genre
+            Track Listing
         </dt>
-        @foreach (var trackGenre in Model.TrackGenres)
+        @foreach (var track in Model.Tracks)
         {
             <dd>
-                @Html.DisplayFor(model => trackGenre.Genre.genre_title)
+                @Html.ActionLink(track.track_title, "Details", "Tracks", new { id = track.track_id }, null)
             </dd>
         }
-        @if (Model.license_title != null)
-        {
-            <dt>
-                License Title
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.license_title)
-            </dd>
-        }
-        @if (Model.track_bit_rate != null)
-        {
-            <dt>
-                Bit Rate
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.track_bit_rate)
-            </dd>
-        }
-        @if (Model.track_composer != null)
-        {
-            <dt>
-                Composer
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.track_composer)
-            </dd>
-        }
-        @if (Model.track_date_created != null)
+        @if (Model.album_date_created != null)
         {
             <dt>
                 Date Created
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.track_date_created)
+                @Html.DisplayFor(model => model.album_date_created)
             </dd>
         }
-        @if (Model.track_date_recorded != null)
+        @if (Model.album_date_released != null)
         {
             <dt>
-                Date Recorded
+                Date Released
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.track_date_recorded)
+                @Html.DisplayFor(model => model.album_date_released)
             </dd>
         }
-        @if (Model.track_duration != null)
+        @if (Model.album_engineer != null)
         {
             <dt>
-                Track Duration
+                Album Engineer
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.track_duration)
+                @Html.DisplayFor(model => model.album_engineer)
             </dd>
         }
-        @if (Model.track_explicit != null)
+        @if (Model.album_producer != null)
         {
-
             <dt>
-                Explicit
+                Album Producer
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.track_explicit)
+                @Html.DisplayFor(model => model.album_producer)
             </dd>
         }
-        @if (Model.track_favorites != null)
+        @if (Model.album_type != null)
+        {
+            <dt>
+                Album Type
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.album_type)
+            </dd>
+        }
+        @if (Model.album_favorites != null)
         {
             <dt>
                 Favorites
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.track_favorites)
-            </dd>
-        }
-        @if (Model.track_information != null)
-        {
-            <dt>
-                Track Information
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.track_information)
-            </dd>
-        }
-        @if (Model.track_listens != null)
-        {
-            <dt>
-                Track Listens
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.track_listens)
-            </dd>
-        }
-        @if (Model.track_lyricist != null)
-        {
-            <dt>
-                Lyricist
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.track_lyricist)
-            </dd>
-        }
-        @if (Model.track_publisher != null)
-        {
-            <dt>
-                Publisher
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.track_publisher)
+                @Html.DisplayFor(model => model.album_favorites)
             </dd>
         }
 
-        @if (!String.IsNullOrEmpty(Model.track_url))
-        {
-            <dt>
-                URL
-            </dt>
-            <dd>
-                <a href="@Model.track_url" target="_blank">Listen on the Free Music Archive</a>
-            </dd>
-        }
 
     </dl>
 </div>
@@ -214,19 +135,18 @@
     </div>
 }
 <div>
-    @using (Html.BeginForm("AddComment", "Tracks", FormMethod.Post, new { id = "CommentSubmit" }))
+    @using (Html.BeginForm("AddComment", "Albums", FormMethod.Post, new { id = "CommentSubmit" }))
     {
         <p>Comment Text</p>
         @Html.TextBox("CommentText")
         <p>Rating</p>
         @Html.TextBox("CommentRating")
         @Html.Hidden("Username", HttpContext.Current.User.Identity.Name)
-        @Html.HiddenFor(x => x.track_id)
+        @Html.HiddenFor(x => x.album_id)
     }
     <button id="submitButton" onclick="validateInput()">Submit Comment</button>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.track_id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 @section Scripts{

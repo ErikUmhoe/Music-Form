@@ -16,6 +16,15 @@
         <dd>
             @Html.DisplayFor(model => model.artist_name)
         </dd>
+        <dt>
+            Artist Albums
+        </dt>
+        @foreach (var album in Model.Albums)
+        {
+            <dd>
+                @Html.ActionLink(album.album_title, "Details", "Albums", new { id = album.album_id }, null)
+            </dd>
+        }
         @if (Model.artist_active_year_begin != null)
         {
             <dt>
