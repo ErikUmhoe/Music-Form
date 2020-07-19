@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
+using PagedList;
 
 namespace db_music.Controllers
 {
@@ -15,9 +18,52 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
 
         // GET: Tracks
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Tracks.Take(20).ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.FavoritesSortParam = String.IsNullOrEmpty(sortOrder) ? "favorites_desc" : "";
+            ViewBag.RatingSortParam = String.IsNullOrEmpty(sortOrder) ? "rating_desc" : "";
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            /*Main query to gett artists is SELECT TOP(20) FROM Artists 
+            This implements pagination to reduce the size of the query when we hit the database, only keeping the first
+            20 results that return back from the query built by the following search criteria and order by.
+            With pagination, when a user moves to the next page they will load the next twenty results from the query.
+            */
+            IQueryable<Track> dbArtists = from a in db.Tracks
+                                          select a;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                //This is equivalent to SELECT TOP(20) * FROM Artists WHERE Artists.artist_name = searchString
+                dbArtists = dbArtists.Where(x => x.track_title.Contains(searchString));
+            }
+
+            int pageSize = 20;
+            int pageNumber = (page ?? 1);
+            //This logic is equivalent to adding an ORDER BY clause to the query
+            switch (sortOrder)
+            {
+                //ORDER BY artist_name DESC
+                case "name_desc":
+                    return View(dbArtists.OrderByDescending(s => s.track_title).ToPagedList(pageNumber, pageSize));
+                //ORDER BY favorites
+                case "Favorites":
+                    return View(dbArtists.OrderBy(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
+                //ORDER BY favorites DESC
+                case "favorites_desc":
+                    return View(dbArtists.OrderByDescending(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
+                //ORDER BY artist_name
+                default:
+                    return View(dbArtists.OrderBy(s => s.track_title).ToPagedList(pageNumber, pageSize));
+            }
         }
 
         // GET: Tracks/Details/5
@@ -113,6 +159,36 @@ namespace db_music.Controllers
             db.Tracks.Remove(track);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AddComment(string CommentText, string CommentRating, string Username, int track_id)
+        {
+            try
+            {
+                var newComment = db.Comments.Create();
+                newComment.Text = CommentText;
+                newComment.Rating = Int32.Parse(CommentRating);
+                newComment.UserId = db.Users.Where(x => x.Username == Username).SingleOrDefault().Id;
+                newComment.TrackId = track_id;
+                newComment.Type = "Track";
+                newComment.Cdate = DateTime.Now;
+                db.Comments.Add(newComment);
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
+
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         protected override void Dispose(bool disposing)
