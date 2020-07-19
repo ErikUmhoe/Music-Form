@@ -49,8 +49,7 @@ namespace db_music.Controllers
                 //This is equivalent to SELECT TOP(20) * FROM Artists WHERE Artists.artist_name = searchString
                 dbArtists = dbArtists.Where(x => x.artist_name.Contains(searchString));
             }
-
-            int pageSize = 20;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             //This logic is equivalent to adding an ORDER BY clause to the query
             switch (sortOrder)
@@ -79,7 +78,7 @@ namespace db_music.Controllers
             }
             //This is equivalent to SELECT * FROM Artists WHERE artist_id = id
             Artist artist = db.Artists.Find(id);
-            
+            var tracks = artist.Tracks;
             if (artist == null)
             {
                 return HttpNotFound();
