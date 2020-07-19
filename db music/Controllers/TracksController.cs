@@ -28,6 +28,8 @@ namespace db_music.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Track track = db.Tracks.Find(id);
+            var album = track.Albums;
+            var artist = track.Artists.First();
             if (track == null)
             {
                 return HttpNotFound();

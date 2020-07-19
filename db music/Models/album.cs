@@ -19,6 +19,7 @@ namespace db_music.Models
         {
             this.AlbumTags = new HashSet<AlbumTag>();
             this.Comments = new HashSet<Comment>();
+            this.Tracks = new HashSet<Track>();
         }
     
         public int album_id { get; set; }
@@ -42,5 +43,7 @@ namespace db_music.Models
         public virtual ICollection<AlbumTag> AlbumTags { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Track> Tracks { get; set; }
     }
 }

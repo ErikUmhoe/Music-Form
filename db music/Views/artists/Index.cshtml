@@ -13,15 +13,15 @@
 <h2>Artists</h2>
 @using (Html.BeginForm("Index", "Artists", FormMethod.Get))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+<p>
+    Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+    <input type="submit" value="Search" />
+</p>
 }
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             Biography
@@ -49,7 +49,7 @@
     @foreach (var item in Model)
     {
 
-        var avgRating = item.Comments.Count > 0 ? item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating) : 0;
+        var avgRating = item.Comments.Count > 0 ? (item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating)).ToString("#.##") : "0";
         var bio = WebUtility.HtmlDecode(item.artist_bio);
         <tr>
             <td>
@@ -65,14 +65,14 @@
                 @Html.DisplayFor(modelItem => item.artist_favorites)
             </td>
             <td>
-                @Html.Display(avgRating.ToString())
+                @avgRating
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments.Count)
             </td>
 
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.artist_id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.artist_id })
             </td>
         </tr>
     }

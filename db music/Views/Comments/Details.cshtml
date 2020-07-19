@@ -1,0 +1,90 @@
+﻿@model db_music.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Comment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SongId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SongId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cdate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cdate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Album.album_engineer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Album.album_engineer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Artist.artist_active_year_end)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Artist.artist_active_year_end)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Track.license_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Track.license_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
