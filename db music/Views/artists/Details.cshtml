@@ -106,6 +106,13 @@
                         <td>@comment.Rating</td>
                         <td><i>@comment.User.Username</i></td>
                         <td>@comment.Cdate.ToShortDateString()</td>
+                        @{ 
+                            var username = HttpContext.Current.User.Identity.Name;
+                        }
+                        @if (comment.User.Username == username)
+                        {
+                        <td>@Html.ActionLink("Edit", "Edit", "Comments" ,new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete","Comments", new { id = comment.Id },null)</td>
+                        }
                     </tr>
                 }
                 <tr>

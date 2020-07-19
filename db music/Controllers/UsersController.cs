@@ -48,6 +48,23 @@ namespace db_music.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Username,Password,Cdate")] User user)
         {
+            /*
+             * Add a new user to the Users Table:
+             * USE [music]
+                GO
+
+                INSERT INTO [dbo].[Users]
+                           ([Username]
+                           ,[Password]
+                           ,[Cdate])
+                     VALUES
+                           (user.Username
+                           ,user.Password
+                           ,GETDATE())
+                GO
+
+
+             */
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
