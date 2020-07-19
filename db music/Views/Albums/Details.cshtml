@@ -21,7 +21,7 @@
             Artist Name
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Artist.artist_name)
+            @Html.ActionLink(Model.Artist.artist_name, "Details", "Artists", new { id = Model.Artist.artist_id }, null)
         </dd>
         <dt>
             Track Listing
@@ -35,7 +35,7 @@
         @if (Model.album_date_created != null)
         {
             <dt>
-                @Html.DisplayNameFor(model => model.album_date_created)
+                Date Created
             </dt>
 
             <dd>
@@ -45,7 +45,7 @@
         @if (Model.album_date_released != null)
         {
             <dt>
-                @Html.DisplayNameFor(model => model.album_date_released)
+                Date Released
             </dt>
 
             <dd>
@@ -55,27 +55,17 @@
         @if (Model.album_engineer != null)
         {
             <dt>
-                @Html.DisplayNameFor(model => model.album_engineer)
+                Album Engineer
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.album_engineer)
             </dd>
         }
-        @if (Model.album_favorites != null)
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.album_favorites)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.album_favorites)
-            </dd>
-        }
         @if (Model.album_producer != null)
         {
             <dt>
-                @Html.DisplayNameFor(model => model.album_producer)
+                Album Producer
             </dt>
 
             <dd>
@@ -85,11 +75,21 @@
         @if (Model.album_type != null)
         {
             <dt>
-                @Html.DisplayNameFor(model => model.album_type)
+                Album Type
             </dt>
 
             <dd>
                 @Html.DisplayFor(model => model.album_type)
+            </dd>
+        }
+        @if (Model.album_favorites != null)
+        {
+            <dt>
+                Favorites
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.album_favorites)
             </dd>
         }
 
