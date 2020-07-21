@@ -22,8 +22,7 @@ namespace db_music.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.FavoritesSortParam = String.IsNullOrEmpty(sortOrder) ? "favorites_desc" : "";
-            ViewBag.RatingSortParam = String.IsNullOrEmpty(sortOrder) ? "rating_desc" : "";
+            ViewBag.FavoritesSortParam = sortOrder == "Favorites" ? "favorites_desc" : "Favorites";
             if (searchString != null)
             {
                 page = 1;
