@@ -18,7 +18,7 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
 
         // GET: Tracks
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string genre_title)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -33,6 +33,10 @@ namespace db_music.Controllers
                 searchString = currentFilter;
             }
             ViewBag.CurrentFilter = searchString;
+            if (genre_title == null)
+            {
+                genre_title = ViewBag.genre;
+            }
             /*Main query to gett artists is SELECT TOP(20) FROM Artists 
             This implements pagination to reduce the size of the query when we hit the database, only keeping the first
             20 results that return back from the query built by the following search criteria and order by.
@@ -48,6 +52,21 @@ namespace db_music.Controllers
 
             int pageSize = 20;
             int pageNumber = (page ?? 1);
+            if (!String.IsNullOrEmpty(genre_title))
+            {
+                Genre genre = db.Genres.Where(x => x.genre_title == genre_title).First();
+                //dbArtists = dbArtists.Where(x => x.TrackGenres.FirstOrDefault().GenreId == genre.genre_id);
+                var artists = genre.TrackGenres.Where(x => x.GenreId == genre.genre_id).Select(x => x.Track);
+                ViewBag.genre = genre_title;
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    artists = artists.Where(x => x.track_title.Contains(searchString));
+                }
+                  
+                return View(artists.ToPagedList(pageNumber, pageSize));
+            }
+
+
             //This logic is equivalent to adding an ORDER BY clause to the query
             switch (sortOrder)
             {

@@ -9,8 +9,16 @@
 @{
     ViewBag.Title = "Tracks";
 }
+@if (!String.IsNullOrEmpty(ViewBag.genre))
+{
+    <h2>@ViewBag.genre</h2>
 
-<h2>Tracks</h2>
+}
+else
+{
+    <h2>Tracks</h2>
+}
+
 @using (Html.BeginForm("Index", "Tracks", FormMethod.Get))
 {
     <p>
@@ -72,6 +80,6 @@
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, genre_title = ViewBag.genre }))
 
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />

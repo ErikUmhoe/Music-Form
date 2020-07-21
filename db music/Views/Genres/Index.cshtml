@@ -1,0 +1,52 @@
+﻿@using PagedList.Mvc;
+
+
+@model PagedList.IPagedList<db_music.Models.Genre>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+
+@{
+    ViewBag.Title = "Genres";
+}
+
+<h2>Genres</h2>
+@using (Html.BeginForm("Index", "Genres", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Genre Title
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.genre_title)
+    </td>
+    <td>
+        @Html.ActionLink("View Tracks", "Index", "Tracks", new { genre_title = item.genre_title }, null)
+    </td>
+</tr>
+    }
+
+</table>
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
