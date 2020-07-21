@@ -1,65 +1,79 @@
-﻿@model IEnumerable<db_music.Models.Comment>
+﻿@using PagedList.Mvc;
+
+
+@model PagedList.IPagedList<db_music.Models.Comment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List of All Comments";
 }
 
-<h2>List of Comments </h2>
-
+<h2>List of All Comments</h2>
+@using (Html.BeginForm("Index", "Comments", FormMethod.Get))
+{
+    <p>
+        Find by username: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Text)
+            Text
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Rating)
+            @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.ActionLink("Type", "Index", new { sortOrder = ViewBag.TypeSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Cdate)
+            @Html.ActionLink("Creation Date", "Index", new { sortOrder = ViewBag.DateSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User.Username)
+            @Html.ActionLink("Username", "Index", new { sortOrder = ViewBag.UsernameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Text)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cdate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Username)
-        </td>
-        @if (item.User.Username == HttpContext.Current.User.Identity.Name)
-        {
+    @foreach (var item in Model)
+    {
+        <tr>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>            
-        }
-        else
-        {
-            <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
-        }
-        <td>
-           
-
-        </td>
-    </tr>
-}
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Username)
+            </td>
+            @if (item.User.Username == HttpContext.Current.User.Identity.Name)
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            }
+            else
+            {
+                <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
+            }
+            <td></td>
+        </tr>
+    }
 
 </table>
+<br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />

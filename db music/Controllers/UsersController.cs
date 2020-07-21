@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
+using PagedList;
 
 namespace db_music.Controllers
 {
@@ -15,9 +16,45 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
 
         // GET: Users
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            return View(db.Users.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParam = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParam = sortOrder == "Creation Date" ? "date_desc" : "Creation Date";
+            if(searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            IQueryable<User> dbUsers = from u in db.Users
+                                       select u;
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                dbUsers = dbUsers.Where(x => x.Username.Contains(searchString));
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            //This logic is equivalent to adding an ORDER BY clause to the query
+            switch (sortOrder)
+            {
+                //ORDER BY artist_name DESC
+                case "name_desc":
+                    return View(dbUsers.OrderByDescending(s => s.Username).ToPagedList(pageNumber, pageSize));
+                //ORDER BY favorites
+                case "Creation Date":
+                    return View(dbUsers.OrderBy(s => s.Cdate).ToPagedList(pageNumber, pageSize));
+                //ORDER BY favorites DESC
+                case "date_desc":
+                    return View(dbUsers.OrderByDescending(s => s.Cdate).ToPagedList(pageNumber, pageSize));
+                //ORDER BY artist_name
+                default:
+                    return View(dbUsers.OrderBy(s => s.Username).ToPagedList(pageNumber, pageSize));
+            }
         }
 
         // GET: Users/Details/5

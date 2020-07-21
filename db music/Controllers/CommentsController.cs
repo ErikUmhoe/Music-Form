@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using db_music.Models;
+using PagedList;
 
 namespace db_music.Controllers
 {
@@ -15,10 +16,59 @@ namespace db_music.Controllers
         private testEntities db = new testEntities();
 
         // GET: Comments
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var comments = db.Comments.Include(c => c.Album).Include(c => c.Artist).Include(c => c.Track).Include(c => c.User);
-            return View(comments.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.DateSortParam = String.IsNullOrEmpty(sortOrder) ? "date_desc" : "";
+            ViewBag.RatingSortParam = sortOrder == "Rating" ? "rating_desc" : "Rating";
+            ViewBag.UsernameSortParam = sortOrder == "Username" ? "username_desc" : "Username";
+            ViewBag.TypeSortParam = sortOrder == "Type" ? "type_desc" : "Type";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+            IQueryable<Comment> dbComments = from c in db.Comments
+                                           select c;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+        
+                dbComments = dbComments.Where(x => x.User.Username.Contains(searchString));
+            }
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            //This logic is equivalent to adding an ORDER BY clause to the query
+            switch (sortOrder)
+            {
+                //ORDER BY username DESC
+                case "username_desc":
+                    return View(dbComments.OrderByDescending(s => s.User.Username).ToPagedList(pageNumber, pageSize));
+                case "Username":
+                    return View(dbComments.OrderBy(s => s.User.Username).ToPagedList(pageNumber, pageSize));
+                    //ORDER BY type
+                case "Type":
+                    return View(dbComments.OrderBy(s => s.Type).ToPagedList(pageNumber, pageSize));
+                //ORDER BY type DESC
+                case "type_desc":
+                    return View(dbComments.OrderByDescending(s => s.Type).ToPagedList(pageNumber, pageSize));
+                //Order by cdate DESC
+                case "date_desc":
+                    return View(dbComments.OrderByDescending(s => s.Cdate).ToPagedList(pageNumber, pageSize));
+                //order by rating desc
+                case "rating_desc":
+                    return View(dbComments.OrderByDescending(s => s.Rating).ToPagedList(pageNumber, pageSize));
+                //Order by rating
+                case "Rating":
+                    return View(dbComments.OrderBy(s => s.Rating).ToPagedList(pageNumber, pageSize));
+                    //ORDER BY cdate
+                default:
+                    return View(dbComments.OrderBy(s => s.Cdate).ToPagedList(pageNumber, pageSize));
+            }
         }
 
         // GET: Comments/Details/5

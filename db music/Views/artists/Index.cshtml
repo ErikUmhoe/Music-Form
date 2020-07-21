@@ -7,10 +7,10 @@
 
 
 @{
-    ViewBag.Title = "Artists";
+    ViewBag.Title = "List of All Artists";
 }
 
-<h2>Artists</h2>
+<h2>List of All Artists</h2>
 @using (Html.BeginForm("Index", "Artists", FormMethod.Get))
 {
 <p>
@@ -32,9 +32,6 @@
         <th>
             @Html.ActionLink("Favorites", "Index", new { sortOrder = ViewBag.FavoritesSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
-        @*<th>
-                @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
-            </th>*@
         <th>
             Average Rating
         </th>
