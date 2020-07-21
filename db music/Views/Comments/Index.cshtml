@@ -1,60 +1,63 @@
-@model List<db_music.Models.CommentViewModel>
+﻿@model IEnumerable<db_music.Models.Comment>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>List of Comments </h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(x => x.First().Id)
+            @Html.DisplayNameFor(model => model.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(x => x.First().CDate)
+            @Html.DisplayNameFor(model => model.Rating)
         </th>
         <th>
-            @Html.DisplayNameFor(x => x.First().Type)
+            @Html.DisplayNameFor(model => model.Type)
         </th>
         <th>
-            @Html.DisplayNameFor( x => x.First().ArtistId)
+            @Html.DisplayNameFor(model => model.Cdate)
         </th>
         <th>
-            @Html.DisplayNameFor(x => x.First().AlbumId)
+            @Html.DisplayNameFor(model => model.User.Username)
         </th>
-        </th>
-            @Html.DisplayNameFor(x => x.First().TrackId)
-        </th>
-        </th>
-            @Html.DisplayNameFor(x => x.First().Comment)
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Id)
+            @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CDate)
+            @Html.DisplayFor(modelItem => item.Rating)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ArtistId)
+            @Html.DisplayFor(modelItem => item.Cdate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AlbumId)
+            @Html.DisplayFor(modelItem => item.User.Username)
         </td>
+        @if (item.User.Username == HttpContext.Current.User.Identity.Name)
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>            
+        }
+        else
+        {
+            <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
+        }
         <td>
-          @Html.DisplayFor(modelItem => item.TrackId)
-        </td>
-        <td>
-          @Html.DisplayFor(modelItem => item.Comment)
+           
+
         </td>
     </tr>
 }

@@ -393,6 +393,10 @@
     <Content Include="Views\Albums\Index.cshtml" />
     <Content Include="Views\Albums\Details.cshtml" />
     <Content Include="Views\Genres\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Delete.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
