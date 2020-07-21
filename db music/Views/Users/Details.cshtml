@@ -1,7 +1,14 @@
 ﻿@model db_music.Models.User
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = $"{Model.Username} Details";
+    var avgCommentRating = Model.Comments.Count > 0 ? (Model.Comments.Sum(x => x.Rating) / (decimal)Model.Comments.Count) : 0;
+    int numArtistComment = Model.Comments.Count(x => x.Type.Equals("Artist"));
+    var avgArtistCommentRating = numArtistComment > 0 ? (Model.Comments.Where(x => x.Type.Equals("Artist")).Sum(x => x.Rating) / (decimal)numArtistComment).ToString("#.##") : "0";
+    var numTrackComment = Model.Comments.Count(x => x.Type.Equals("Track"));
+    var avgTrackCommentRating = numTrackComment > 0 ? (Model.Comments.Where(x => x.Type.Equals("Track")).Sum(x => x.Rating) / (decimal)numTrackComment).ToString("#.##") : "0";
+    var numAlbumComment = Model.Comments.Count(x => x.Type.Equals("Album"));
+    var avgAlbumCommentRating = numAlbumComment > 0 ? (Model.Comments.Where(x => x.Type.Equals("Album")).Sum(x => x.Rating) / (decimal)numAlbumComment).ToString("#.##") : "0";
 }
 
 <h2>Details</h2>
@@ -33,10 +40,41 @@
         <dd>
             @Html.DisplayFor(model => model.Cdate)
         </dd>
-
+        <dt>
+            Number of Comments
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments.Count)
+        </dd>
+        <dt>Average Comment Rating</dt>
+        <dd>@avgCommentRating.ToString("#.##")</dd>
+        <dt>
+            Number of Artist Comments
+        </dt>
+        <dd>
+            @numArtistComment.ToString()
+        </dd>
+        <dt>Average Artist Comment Rating</dt>
+        <dd>@avgArtistCommentRating</dd>
+        <dt>
+            Number of Track Comments
+        </dt>
+        <dd>
+            @numTrackComment.ToString()
+        </dd>
+        <dt>Average Track Comment Rating</dt>
+        <dd>@avgTrackCommentRating</dd>
+        <dt>
+            Number of Album Comments
+        </dt>
+        <dd>
+            @numAlbumComment.ToString()
+        </dd>
+        <dt>Average Album Comment Rating</dt>
+        <dd>@avgAlbumCommentRating</dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Show All Comments", "ShowUserComments", new { id = @Model.Id})
 </p>

@@ -232,26 +232,21 @@
     <Compile Include="Models\AlbumTag.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\AlbumViewModel.cs" />
     <Compile Include="Models\Artist.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ArtistIndexViewModel.cs" />
     <Compile Include="Models\ArtistMember.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ArtistTag.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\Comment.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\Genre.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GenreViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Songviewer.Context.cs">
@@ -279,7 +274,6 @@
     <Compile Include="Models\TrackTag.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TrackViewModel.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>Songviewer.tt</DependentUpon>
     </Compile>
@@ -385,10 +379,6 @@
     <Content Include="Views\Tracks\Index.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Shared\_RecommendedTrackTable.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Albums\Index.cshtml" />
     <Content Include="Views\Albums\Details.cshtml" />
@@ -397,6 +387,9 @@
     <Content Include="Views\Comments\Delete.cshtml" />
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\ShowUserComments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
