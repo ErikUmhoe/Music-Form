@@ -55,12 +55,12 @@ namespace db_music.Controllers
             20 results that return back from the query built by the following search criteria and order by.
             With pagination, when a user moves to the next page they will load the next twenty results from the query.
             */
-            IQueryable<Track> dbArtists = from a in db.Tracks
+            IQueryable<Track> dbTracks = from a in db.Tracks
                                           select a;
             if (!String.IsNullOrEmpty(searchString))
             {
-                //This is equivalent to SELECT TOP(20) * FROM Artists WHERE Artists.artist_name = searchString
-                dbArtists = dbArtists.Where(x => x.track_title.Contains(searchString));
+                //This is equivalent to SELECT TOP(20) * FROM Tracks WHERE Tracks.track_title = searchString
+                dbTracks = dbTracks.Where(x => x.track_title.Contains(searchString));
             }
 
             int pageSize = 20;
@@ -69,14 +69,14 @@ namespace db_music.Controllers
             {
                 Genre genre = db.Genres.Where(x => x.genre_title == genre_title).First();
                 //dbArtists = dbArtists.Where(x => x.TrackGenres.FirstOrDefault().GenreId == genre.genre_id);
-                var artists = genre.TrackGenres.Where(x => x.GenreId == genre.genre_id).Select(x => x.Track);
+                var tracks = genre.TrackGenres.Where(x => x.GenreId == genre.genre_id).Select(x => x.Track);
                 ViewBag.genre = genre_title;
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    artists = artists.Where(x => x.track_title.Contains(searchString));
+                    tracks = tracks.Where(x => x.track_title.Contains(searchString));
                 }
                   
-                return View(artists.ToPagedList(pageNumber, pageSize));
+                return View(tracks.ToPagedList(pageNumber, pageSize));
             }
 
 
@@ -85,16 +85,16 @@ namespace db_music.Controllers
             {
                 //ORDER BY artist_name DESC
                 case "name_desc":
-                    return View(dbArtists.OrderByDescending(s => s.track_title).ToPagedList(pageNumber, pageSize));
+                    return View(dbTracks.OrderByDescending(s => s.track_title).ToPagedList(pageNumber, pageSize));
                 //ORDER BY favorites
                 case "Favorites":
-                    return View(dbArtists.OrderBy(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
+                    return View(dbTracks.OrderBy(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
                 //ORDER BY favorites DESC
                 case "favorites_desc":
-                    return View(dbArtists.OrderByDescending(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
+                    return View(dbTracks.OrderByDescending(s => s.track_favorites).ToPagedList(pageNumber, pageSize));
                 //ORDER BY artist_name
                 default:
-                    return View(dbArtists.OrderBy(s => s.track_title).ToPagedList(pageNumber, pageSize));
+                    return View(dbTracks.OrderBy(s => s.track_title).ToPagedList(pageNumber, pageSize));
             }
         }
 
