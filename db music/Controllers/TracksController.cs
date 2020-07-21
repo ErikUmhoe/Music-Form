@@ -17,6 +17,19 @@ namespace db_music.Controllers
     {
         private testEntities db = new testEntities();
 
+        [HttpPost]
+        public ActionResult Index(string genre_title)
+        {
+            if (!String.IsNullOrEmpty(genre_title))
+            {
+                return RedirectToAction("Index", new { genre_title = genre_title });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
         // GET: Tracks
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string genre_title)
         {

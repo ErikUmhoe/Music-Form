@@ -21,10 +21,11 @@ else
 
 @using (Html.BeginForm("Index", "Tracks", FormMethod.Get))
 {
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
+<p>
+    Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+    <input type="submit" value="Search" />
+    <input type="hidden" name="genre_title" value=@ViewBag.genre />
+</p>
 }
 <p>
     @Html.ActionLink("Create New", "Create")
