@@ -97,12 +97,12 @@
                         <td>@comment.Rating</td>
                         <td><i>@comment.User.Username</i></td>
                         <td>@comment.Cdate.ToShortDateString()</td>
-                        @{ 
+                        @{
                             var username = HttpContext.Current.User.Identity.Name;
                         }
                         @if (comment.User.Username == username)
                         {
-                        <td>@Html.ActionLink("Edit", "Edit", "Comments" ,new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete","Comments", new { id = comment.Id },null)</td>
+                            <td>@Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
                         }
                     </tr>
                 }
@@ -121,6 +121,8 @@
         <input id="recommendArtist" type="submit" value="Get Recommendations for @Model.artist_name" />
     }
 </div>
+@if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+{
     <div>
         @using (Html.BeginForm("AddComment", "Artists", FormMethod.Post, new { id = "CommentSubmit" }))
         {
@@ -133,12 +135,14 @@
         }
         <button id="submitButton" onclick="validateInput()">Submit Comment</button>
     </div>
+}
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.artist_id }) |
+
     @Html.ActionLink("Back to List", "Index")
 </p>
 @section Scripts{
-<script type="text/javascript">
+    <script type="text/javascript">
         function validateInput() {
             var commentText = document.getElementById("CommentText").value;
             console.log(commentText);
