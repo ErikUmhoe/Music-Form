@@ -1,26 +1,24 @@
 ﻿@using PagedList.Mvc;
 
 
-@model PagedList.IPagedList<db_music.Models.Track>
+@model PagedList.IPagedList<db_music.Models.Album>
 
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 
 @{
-    ViewBag.Title = "Tracks";
+    ViewBag.Title = "Albums";
 }
 
-<h2>Tracks</h2>
-@using (Html.BeginForm("Index", "Tracks", FormMethod.Get))
+<h2>Albums</h2>
+@using (Html.BeginForm("Index", "Albums", FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -49,10 +47,10 @@
         var avgRating = item.Comments.Count > 0 ? item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating) : 0;
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.track_title)
+                @Html.DisplayFor(modelItem => item.album_title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.track_favorites)
+                @Html.DisplayFor(modelItem => item.album_favorites)
             </td>
             <td>
                 @Html.Display(avgRating.ToString())
@@ -62,7 +60,7 @@
             </td>
 
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.track_id })
+                @Html.ActionLink("Details", "Details", new { id = item.album_id })
             </td>
         </tr>
     }
@@ -72,6 +70,6 @@
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
     @Html.PagedListPager(Model, page => Url.Action("Index",
-                new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+                    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />

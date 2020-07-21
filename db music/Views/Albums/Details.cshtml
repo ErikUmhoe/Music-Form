@@ -1,81 +1,99 @@
-﻿@model db_music.Models.Artist
+﻿@model db_music.Models.Album
 
 @{
-    ViewBag.Title = "Artist Details";
+    ViewBag.Title = "Details";
 }
 
-<h2>@Model.artist_name Details</h2>
+<h2>Details</h2>
 
 <div>
+    <h4>Album Details</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            Album Title
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.album_title)
+        </dd>
         <dt>
             Artist Name
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.artist_name)
+            @Html.ActionLink(Model.Artist.artist_name, "Details", "Artists", new { id = Model.Artist.artist_id }, null)
         </dd>
         <dt>
-            Artist Albums
+            Track Listing
         </dt>
-        @foreach (var album in Model.Albums)
+        @foreach (var track in Model.Tracks)
         {
             <dd>
-                @Html.ActionLink(album.album_title, "Details", "Albums", new { id = album.album_id }, null)
+                @Html.ActionLink(track.track_title, "Details", "Tracks", new { id = track.track_id }, null)
             </dd>
         }
-        @if (Model.artist_active_year_begin != null)
+        @if (Model.album_date_created != null)
         {
             <dt>
-                Year Arist Began Producing
+                Date Created
             </dt>
 
             <dd>
-                @Model.artist_active_year_begin
+                @Html.DisplayFor(model => model.album_date_created)
             </dd>
         }
-        @if (Model.artist_active_year_end != null)
+        @if (Model.album_date_released != null)
         {
             <dt>
-                Year Artist Finished Producing
+                Date Released
             </dt>
 
             <dd>
-                @Model.artist_active_year_end
+                @Html.DisplayFor(model => model.album_date_released)
             </dd>
         }
-        <dt>
-            Artist Bio
-        </dt>
-
-        <dd>
-            @Html.Raw(WebUtility.HtmlDecode(Model.artist_bio))
-        </dd>
-        <dt>
-            Number of Favorites
-        </dt>
-
-        <dd>
-            @Model.artist_favorites
-        </dd>
-
-        <dt>
-            Location
-        </dt>
-
-        <dd>
-            @Model.artist_location
-        </dd>
-        @if (!String.IsNullOrEmpty(Model.artist_website))
+        @if (Model.album_engineer != null)
         {
             <dt>
-                Website
+                Album Engineer
             </dt>
+
             <dd>
-                <a href="@Model.artist_website" target="_blank">Click Here to visit the Artist's Website</a>
+                @Html.DisplayFor(model => model.album_engineer)
             </dd>
         }
+        @if (Model.album_producer != null)
+        {
+            <dt>
+                Album Producer
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.album_producer)
+            </dd>
+        }
+        @if (Model.album_type != null)
+        {
+            <dt>
+                Album Type
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.album_type)
+            </dd>
+        }
+        @if (Model.album_favorites != null)
+        {
+            <dt>
+                Favorites
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.album_favorites)
+            </dd>
+        }
+
+
     </dl>
 </div>
 @if (Model.Comments.Count > 0)
@@ -106,13 +124,6 @@
                         <td>@comment.Rating</td>
                         <td><i>@comment.User.Username</i></td>
                         <td>@comment.Cdate.ToShortDateString()</td>
-                        @{
-                            var username = HttpContext.Current.User.Identity.Name;
-                        }
-                        @if (comment.User.Username == username)
-                        {
-                            <td>@Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
-                        }
                     </tr>
                 }
                 <tr>
@@ -124,30 +135,18 @@
     </div>
 }
 <div>
-    @using (Html.BeginForm("ArtistRecommend", "Artists", FormMethod.Get))
+    @using (Html.BeginForm("AddComment", "Albums", FormMethod.Post, new { id = "CommentSubmit" }))
     {
-        @Html.HiddenFor(x => x.artist_name)
-        <input id="recommendArtist" type="submit" value="Get Recommendations for @Model.artist_name" />
+        <p>Comment Text</p>
+        @Html.TextBox("CommentText")
+        <p>Rating</p>
+        @Html.TextBox("CommentRating")
+        @Html.Hidden("Username", HttpContext.Current.User.Identity.Name)
+        @Html.HiddenFor(x => x.album_id)
     }
+    <button id="submitButton" onclick="validateInput()">Submit Comment</button>
 </div>
-@if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-{
-    <div>
-        @using (Html.BeginForm("AddComment", "Artists", FormMethod.Post, new { id = "CommentSubmit" }))
-        {
-            <p>Comment Text</p>
-            @Html.TextBox("CommentText")
-            <p>Rating</p>
-            @Html.TextBox("CommentRating")
-            @Html.Hidden("Username", HttpContext.Current.User.Identity.Name)
-            @Html.HiddenFor(x => x.artist_id)
-        }
-        <button id="submitButton" onclick="validateInput()">Submit Comment</button>
-    </div>
-}
-
 <p>
-
     @Html.ActionLink("Back to List", "Index")
 </p>
 @section Scripts{
