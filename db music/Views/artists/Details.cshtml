@@ -123,13 +123,6 @@
         </table>
     </div>
 }
-<div>
-    @using (Html.BeginForm("ArtistRecommend", "Artists", FormMethod.Get))
-    {
-        @Html.HiddenFor(x => x.artist_name)
-        <input id="recommendArtist" type="submit" value="Get Recommendations for @Model.artist_name" />
-    }
-</div>
 @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
 {
     <div>

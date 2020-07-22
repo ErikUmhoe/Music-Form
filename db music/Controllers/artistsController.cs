@@ -130,61 +130,61 @@ namespace db_music.Controllers
             return Redirect(Request.UrlReferrer.ToString());
         }
 
-        [HttpGet]
-        public async Task<ActionResult> ArtistRecommend(string artist_name)
-        {
+        //[HttpGet]
+        //public async Task<ActionResult> ArtistRecommend(string artist_name)
+        //{
            
-            HttpClient client = new HttpClient();
-            var token = AccountController.GetAccessToken();
-            client.DefaultRequestHeaders.Authorization
-                        = new AuthenticationHeaderValue("Bearer", token);
-            var searchString = "https://api.spotify.com/v1/search?q=" + artist_name + "&type=artist";
-            HttpResponseMessage response = await client.GetAsync(searchString);
-            response.EnsureSuccessStatusCode();
-            if (response != null)
-            {
-                var jsonString = await response.Content.ReadAsStringAsync();
-                var jsonObj = JsonConvert.DeserializeObject<SpotifyResult>(jsonString);
-                if(!jsonObj.artists.artistList.Any(x => x.name.Equals(artist_name)))
-                {
-                   TempData["Msg"] = $"No artist with name {artist_name} found on Spotify";
-                    return Redirect(Request.UrlReferrer.PathAndQuery);
-                }
-                var artist = jsonObj.artists.artistList.Where(x => x.name.Equals(artist_name)).First();
-                var artistSeed = artist.uri.Substring(artist.uri.LastIndexOf(':')+1);
-                var token2 = AccountController.GetAccessToken();
-                HttpClient client2 = new HttpClient();
-                client2.BaseAddress = new Uri("https://api.spotify.com/v1/recommendations");
-                client2.DefaultRequestHeaders.Authorization
-                        = new AuthenticationHeaderValue("Bearer", token2);
-                client2.DefaultRequestHeaders
-                  .Accept
-                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //    HttpClient client = new HttpClient();
+        //    var token = AccountController.GetAccessToken();
+        //    client.DefaultRequestHeaders.Authorization
+        //                = new AuthenticationHeaderValue("Bearer", token);
+        //    var searchString = "https://api.spotify.com/v1/search?q=" + artist_name + "&type=artist";
+        //    HttpResponseMessage response = await client.GetAsync(searchString);
+        //    response.EnsureSuccessStatusCode();
+        //    if (response != null)
+        //    {
+        //        var jsonString = await response.Content.ReadAsStringAsync();
+        //        var jsonObj = JsonConvert.DeserializeObject<SpotifyResult>(jsonString);
+        //        if(!jsonObj.artists.artistList.Any(x => x.name.Equals(artist_name)))
+        //        {
+        //           TempData["Msg"] = $"No artist with name {artist_name} found on Spotify";
+        //            return Redirect(Request.UrlReferrer.PathAndQuery);
+        //        }
+        //        var artist = jsonObj.artists.artistList.Where(x => x.name.Equals(artist_name)).First();
+        //        var artistSeed = artist.uri.Substring(artist.uri.LastIndexOf(':')+1);
+        //        var token2 = AccountController.GetAccessToken();
+        //        HttpClient client2 = new HttpClient();
+        //        client2.BaseAddress = new Uri("https://api.spotify.com/v1/recommendations");
+        //        client2.DefaultRequestHeaders.Authorization
+        //                = new AuthenticationHeaderValue("Bearer", token2);
+        //        client2.DefaultRequestHeaders
+        //          .Accept
+        //          .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //client2.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                artistSeed = "5FKchcZpQOkqFvXBj1aCvb";
-                //searchString = "https://api.spotify.com/v1/recommendations?limit=10market=US&seed_artists=" + artistSeed;
-                HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, searchString);
-                req.Content = new StringContent("{\"limit\":10, \"market\":\"US\",\"seed_artists\":\"" + artistSeed + "\"", Encoding.UTF8,
-                                    "application/json");
-                //response = await client2.GetAsync(searchString);
+        //        //client2.DefaultRequestHeaders.Add("Content-Type", "application/json");
+        //        artistSeed = "5FKchcZpQOkqFvXBj1aCvb";
+        //        //searchString = "https://api.spotify.com/v1/recommendations?limit=10market=US&seed_artists=" + artistSeed;
+        //        HttpRequestMessage req = new HttpRequestMessage(HttpMethod.Get, searchString);
+        //        req.Content = new StringContent("{\"limit\":10, \"market\":\"US\",\"seed_artists\":\"" + artistSeed + "\"", Encoding.UTF8,
+        //                            "application/json");
+        //        //response = await client2.GetAsync(searchString);
 
-                await client2.SendAsync(req)
-                  .ContinueWith(responseTask =>
-                  {
-                      Console.WriteLine("Response: {0}", responseTask.Result);
-                  });
-                if(response != null)
-                {
-                    jsonString = await response.Content.ReadAsStringAsync();
-                    SpotifyArtistRecommend.Root myDeserializedClass = JsonConvert.DeserializeObject<SpotifyArtistRecommend.Root>(jsonString);
-                    List<SpotifyArtistRecommend.Track> recTracks = myDeserializedClass.Tracks;
-                }
-                return PartialView("Views/Shared/_RecommendedTrackTable.cshtml");
-            }
-            TempData["Msg"] = $"An error occurred getting recommendations.s";
-            return Redirect(Request.UrlReferrer.PathAndQuery);
-        }
+        //        await client2.SendAsync(req)
+        //          .ContinueWith(responseTask =>
+        //          {
+        //              Console.WriteLine("Response: {0}", responseTask.Result);
+        //          });
+        //        if(response != null)
+        //        {
+        //            jsonString = await response.Content.ReadAsStringAsync();
+        //            SpotifyArtistRecommend.Root myDeserializedClass = JsonConvert.DeserializeObject<SpotifyArtistRecommend.Root>(jsonString);
+        //            List<SpotifyArtistRecommend.Track> recTracks = myDeserializedClass.Tracks;
+        //        }
+        //        return PartialView("Views/Shared/_RecommendedTrackTable.cshtml");
+        //    }
+        //    TempData["Msg"] = $"An error occurred getting recommendations.s";
+        //    return Redirect(Request.UrlReferrer.PathAndQuery);
+        //}
 
 
         protected override void Dispose(bool disposing)

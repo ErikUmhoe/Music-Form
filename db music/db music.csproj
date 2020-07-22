@@ -377,7 +377,6 @@
     <Content Include="Views\Tracks\Index.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Shared\_RecommendedTrackTable.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Albums\Index.cshtml" />
     <Content Include="Views\Albums\Details.cshtml" />
     <Content Include="Views\Comments\Create.cshtml" />
