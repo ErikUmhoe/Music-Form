@@ -27,9 +27,7 @@ else
     <input type="hidden" name="genre_title" value=@ViewBag.genre />
 </p>
 }
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -52,7 +50,7 @@ else
     @foreach (var item in Model)
     {
 
-        var avgRating = item.Comments.Count > 0 ? item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating) : 0;
+        var avgRating = item.Comments.Count > 0 ? (item.Comments.Sum(x => x.Rating) / (decimal)item.Comments.Count).ToString("#.##") : "0";
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.track_title)
@@ -61,7 +59,7 @@ else
                 @Html.DisplayFor(modelItem => item.track_favorites)
             </td>
             <td>
-                @Html.Display(avgRating.ToString())
+                @avgRating
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments.Count)

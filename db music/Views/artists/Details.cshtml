@@ -101,23 +101,27 @@
             <tbody>
                 @foreach (var comment in Model.Comments)
                 {
-                    <tr>
-                        <td>@comment.Text</td>
-                        <td>@comment.Rating</td>
-                        <td><i>@comment.User.Username</i></td>
-                        <td>@comment.Cdate.ToShortDateString()</td>
-                        @{
-                            var username = HttpContext.Current.User.Identity.Name;
-                        }
-                        @if (comment.User.Username == username)
-                        {
-                            <td>@Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
-                        }
-                    </tr>
+                <tr>
+                    <td>@comment.Text</td>
+                    <td>@comment.Rating</td>
+                    <td><i>@comment.User.Username</i></td>
+                    <td>@comment.Cdate.ToShortDateString()</td>
+                    @{
+                        var username = HttpContext.Current.User.Identity.Name;
+                    }
+                    @if (comment.User.Username == username)
+                    {
+                        <td>@Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
+                    }
+                </tr>
                 }
                 <tr>
-                    <td><b>Average Raging</b></td>
-                    <td><b>@(Model.Comments.Sum(x => x.Rating) / (decimal)Model.Comments.Count)</b></td>
+                    <td><b>Average Rating</b></td>
+                    <td><b>@((Model.Comments.Sum(x => x.Rating) / (decimal)Model.Comments.Count).ToString("#.##"))</b></td>
                 </tr>
             </tbody>
         </table>

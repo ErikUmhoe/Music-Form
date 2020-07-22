@@ -46,7 +46,7 @@
     @foreach (var item in Model)
     {
 
-        var avgRating = item.Comments.Count > 0 ? (item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating)).ToString("#.##") : "0";
+        var avgRating = item.Comments.Count > 0 ? (item.Comments.Sum(x => x.Rating) / (decimal)item.Comments.Count).ToString("#.##") : "0";
         var bio = WebUtility.HtmlDecode(item.artist_bio);
         <tr>
             <td>

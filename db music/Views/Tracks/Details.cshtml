@@ -17,21 +17,27 @@
         <dd>
             @Html.DisplayFor(model => model.track_title)
         </dd>
-        <dt>
-            Album Title
-        </dt>
+        @if (Model.Albums.Count > 0)
+        {
+            <dt>
+                Album Title
+            </dt>
 
-        <dd>
-            @Html.ActionLink(Model.Albums.First().album_title, "Details", "Albums", new { id = Model.album_id }, null)
-        </dd>
+            <dd>
+                @Html.ActionLink(Model.Albums.First().album_title, "Details", "Albums", new { id = Model.album_id }, null)
+            </dd>
+        }
 
-        <dt>
-            Artist Name
-        </dt>
+        @if (Model.Artists.Count > 0)
+        {
+            <dt>
+                Artist Name
+            </dt>
 
-        <dd>
-            @Html.ActionLink(Model.Artists.First().artist_name, "Details", "Artists", new { id = Model.artist_id }, null)
-        </dd>
+            <dd>
+                @Html.ActionLink(Model.Artists.First().artist_name, "Details", "Artists", new { id = Model.artist_id }, null)
+            </dd>
+        }
         <dt>
             Genre
         </dt>
@@ -198,16 +204,27 @@
             <tbody>
                 @foreach (var comment in Model.Comments)
                 {
-                    <tr>
-                        <td>@comment.Text</td>
-                        <td>@comment.Rating</td>
-                        <td><i>@comment.User.Username</i></td>
-                        <td>@comment.Cdate.ToShortDateString()</td>
-                    </tr>
+                <tr>
+                    <td>@comment.Text</td>
+                    <td>@comment.Rating</td>
+                    <td><i>@comment.User.Username</i></td>
+                    <td>@comment.Cdate.ToShortDateString()</td>
+                    @{
+                        var username = HttpContext.Current.User.Identity.Name;
+                    }
+                    @if (comment.User.Username == username)
+                    {
+                        <td>@Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
+                    }
+                    else
+                    {
+                        <td>@Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
+                    }
+                </tr>
                 }
                 <tr>
-                    <td><b>Average Raging</b></td>
-                    <td><b>@(Model.Comments.Sum(x => x.Rating) / (decimal)Model.Comments.Count)</b></td>
+                    <td><b>Average Rating</b></td>
+                    <td><b>@((Model.Comments.Sum(x => x.Rating) / (decimal)Model.Comments.Count).ToString("#.##"))</b></td>
                 </tr>
             </tbody>
         </table>

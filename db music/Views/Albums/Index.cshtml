@@ -22,14 +22,11 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.ActionLink("Favorites", "Index", new { sortOrder = ViewBag.FavoritesSortParam, currentFilter = ViewBag.CurrentFilter })
         </th>
-        @*<th>
-                @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSortParam, currentFilter = ViewBag.CurrentFilter })
-            </th>*@
         <th>
             Average Rating
         </th>
@@ -44,7 +41,7 @@
     @foreach (var item in Model)
     {
 
-        var avgRating = item.Comments.Count > 0 ? item.Comments.Count / (decimal)item.Comments.Sum(x => x.Rating) : 0;
+        var avgRating = item.Comments.Count > 0 ? (item.Comments.Sum(x => x.Rating) / (decimal)item.Comments.Count).ToString("#.##") : "0";
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.album_title)
@@ -53,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.album_favorites)
             </td>
             <td>
-                @Html.Display(avgRating.ToString())
+                @avgRating
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Comments.Count)

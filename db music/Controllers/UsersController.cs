@@ -36,7 +36,7 @@ namespace db_music.Controllers
             {
                 dbUsers = dbUsers.Where(x => x.Username.Contains(searchString));
             }
-            int pageSize = 5;
+            int pageSize = 20;
             int pageNumber = (page ?? 1);
 
             //This logic is equivalent to adding an ORDER BY clause to the query
