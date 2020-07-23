@@ -11,7 +11,7 @@ using PagedList;
 
 namespace db_music.Controllers
 {
-    public class CommentsController : Controller
+    public class CommentsController : BaseController
     {
         private testEntities db = new testEntities();
 
@@ -129,10 +129,7 @@ namespace db_music.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AlbumId = new SelectList(db.Albums, "album_id", "album_engineer", comment.AlbumId);
-            ViewBag.ArtistId = new SelectList(db.Artists, "artist_id", "artist_active_year_end", comment.ArtistId);
-            ViewBag.TrackId = new SelectList(db.Tracks, "track_id", "license_title", comment.TrackId);
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Username", comment.UserId);
+            ViewBag.RequestUrl = System.Web.HttpContext.Current.Request.UrlReferrer;
             return View(comment);
         }
 
@@ -147,7 +144,15 @@ namespace db_music.Controllers
             {
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                switch(comment.Type)
+                {
+                    case "Artist":
+                        return RedirectToAction("Details", "Artists", new { id = comment.ArtistId });
+                    case "Track":
+                        return RedirectToAction("Details", "Tracks", new { id = comment.TrackId });
+                    case "Album":
+                        return RedirectToAction("Details", "Albums", new { id = comment.AlbumId });
+                }
             }
             /*
              *Given the passed in attributes from comment, this will execute the follow SQL Code to update a comment:
@@ -181,6 +186,7 @@ namespace db_music.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.RequestUrl = System.Web.HttpContext.Current.Request.UrlReferrer;
             return View(comment);
         }
 
@@ -199,9 +205,24 @@ namespace db_music.Controllers
             GO
              */
             Comment comment = db.Comments.Find(id);
+            var type = $"{comment.Type}s";
+            int? rId = null;
+
+            switch (type)
+            {
+                case "Artists":
+                    rId = comment.ArtistId;
+                    break;
+                case "Tracks":
+                    rId = comment.TrackId;
+                    break;
+                case "Albums":
+                    rId = comment.AlbumId;
+                    break;
+            }
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", type, new { id = rId });
         }
 
         protected override void Dispose(bool disposing)
