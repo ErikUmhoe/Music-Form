@@ -112,10 +112,11 @@
                     @if (comment.User.Username == username)
                     {
                         <td>@Html.ActionLink("Edit", "Edit", "Comments", new { id = comment.Id }, null) | @Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
+                        <td>@Html.ActionLink("Details", "Details", "Comments", new { id = comment.Id }, null)</td>
                     }
                     else
                     {
-                        <td>@Html.ActionLink("Delete", "Delete", "Comments", new { id = comment.Id }, null)</td>
+                        <td>@Html.ActionLink("Details", "Details", "Comments", new { id = comment.Id }, null)</td>
                     }
                 </tr>
                 }

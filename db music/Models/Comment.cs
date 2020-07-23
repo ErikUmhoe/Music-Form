@@ -11,8 +11,7 @@ namespace db_music.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Comment
     {
         public int Id { get; set; }
@@ -21,9 +20,7 @@ namespace db_music.Models
         public Nullable<int> AlbumId { get; set; }
         public Nullable<int> TrackId { get; set; }
         public Nullable<int> ArtistId { get; set; }
-        [Required]
         public string Text { get; set; }
-        [Range(0,10)]
         public int Rating { get; set; }
         public string Type { get; set; }
         public System.DateTime Cdate { get; set; }
