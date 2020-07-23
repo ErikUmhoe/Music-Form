@@ -11,7 +11,7 @@ namespace db_music.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class Album
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +21,7 @@ namespace db_music.Models
             this.Comments = new HashSet<Comment>();
             this.Tracks = new HashSet<Track>();
         }
-
+    
         public int album_id { get; set; }
         public int album_comments { get; set; }
         public Nullable<System.DateTime> album_date_created { get; set; }
@@ -37,7 +37,7 @@ namespace db_music.Models
         public string album_type { get; set; }
         public string album_url { get; set; }
         public Nullable<int> artist_id { get; set; }
-
+    
         public virtual Artist Artist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AlbumTag> AlbumTags { get; set; }
